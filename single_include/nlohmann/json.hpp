@@ -11991,6 +11991,16 @@ class binary_reader
             case 'Z':  // null
                 return sax->null();
 
+            case 'B':  // byte
+            {
+                if (input_format != input_format_t::bjdata)
+                {
+                    break;
+                }
+                std::uint8_t number{};
+                return get_number(input_format, number) && sax->number_unsigned(number);
+            }
+
             case 'U':
             {
                 std::uint8_t number{};
@@ -12191,7 +12201,7 @@ class binary_reader
                 return false;
             }
 
-            if (size_and_type.second == 'C')
+            if (size_and_type.second == 'C' || size_and_type.second == 'B')
             {
                 size_and_type.second = 'U';
             }
@@ -12211,6 +12221,13 @@ class binary_reader
             }
 
             return (sax->end_array() && sax->end_object());
+        }
+
+        // If BJData type marker is 'B' decode as binary
+        if (input_format == input_format_t::bjdata && size_and_type.first != npos && size_and_type.second == 'B')
+        {
+            binary_t result;
+            return get_binary(input_format, size_and_type.first, result) && sax->binary(result);
         }
 
         if (size_and_type.first != npos)
@@ -12686,6 +12703,7 @@ class binary_reader
 
 #define JSON_BINARY_READER_MAKE_BJD_TYPES_MAP_ \
     make_array<bjd_type>(                      \
+    bjd_type{'B', "byte"},                     \
     bjd_type{'C', "char"},                     \
     bjd_type{'D', "double"},                   \
     bjd_type{'I', "int16"},                    \
@@ -15646,6 +15664,13 @@ NLOHMANN_JSON_NAMESPACE_BEGIN
 namespace detail
 {
 
+/// how to encode BJData
+enum class bjdata_version_t
+{
+    draft2,
+    draft3,
+};
+
 ///////////////////
 // binary writer //
 ///////////////////
@@ -16353,11 +16378,14 @@ class binary_writer
     @param[in] use_type    whether to use '$' prefixes (optimized format)
     @param[in] add_prefix  whether prefixes need to be used for this value
     @param[in] use_bjdata  whether write in BJData format, default is false
+    @param[in] bjdata_version  which BJData version to use, default is draft2
     */
     void write_ubjson(const BasicJsonType& j, const bool use_count,
                       const bool use_type, const bool add_prefix = true,
-                      const bool use_bjdata = false)
+                      const bool use_bjdata = false, const bjdata_version_t bjdata_version = bjdata_version_t::draft2)
     {
+        const bool bjdata_draft3 = bjdata_version == bjdata_version_t::draft3;
+
         switch (j.type())
         {
             case value_t::null:
@@ -16447,7 +16475,7 @@ class binary_writer
 
                 for (const auto& el : *j.m_data.m_value.array)
                 {
-                    write_ubjson(el, use_count, use_type, prefix_required, use_bjdata);
+                    write_ubjson(el, use_count, use_type, prefix_required, use_bjdata, bjdata_version);
                 }
 
                 if (!use_count)
@@ -16465,11 +16493,11 @@ class binary_writer
                     oa->write_character(to_char_type('['));
                 }
 
-                if (use_type && !j.m_data.m_value.binary->empty())
+                if (use_type && ((use_bjdata && bjdata_draft3) || !j.m_data.m_value.binary->empty()))
                 {
                     JSON_ASSERT(use_count);
                     oa->write_character(to_char_type('$'));
-                    oa->write_character('U');
+                    oa->write_character(use_bjdata && bjdata_draft3 ? 'B' : 'U');
                 }
 
                 if (use_count)
@@ -16488,7 +16516,7 @@ class binary_writer
                 {
                     for (size_t i = 0; i < j.m_data.m_value.binary->size(); ++i)
                     {
-                        oa->write_character(to_char_type('U'));
+                        oa->write_character(to_char_type((use_bjdata && bjdata_draft3) ? 'B' : 'U'));
                         oa->write_character(j.m_data.m_value.binary->data()[i]);
                     }
                 }
@@ -16505,7 +16533,7 @@ class binary_writer
             {
                 if (use_bjdata && j.m_data.m_value.object->size() == 3 && j.m_data.m_value.object->find("_ArrayType_") != j.m_data.m_value.object->end() && j.m_data.m_value.object->find("_ArraySize_") != j.m_data.m_value.object->end() && j.m_data.m_value.object->find("_ArrayData_") != j.m_data.m_value.object->end())
                 {
-                    if (!write_bjdata_ndarray(*j.m_data.m_value.object, use_count, use_type))  // decode bjdata ndarray in the JData format (https://github.com/NeuroJSON/jdata)
+                    if (!write_bjdata_ndarray(*j.m_data.m_value.object, use_count, use_type, bjdata_version))  // decode bjdata ndarray in the JData format (https://github.com/NeuroJSON/jdata)
                     {
                         break;
                     }
@@ -16549,7 +16577,7 @@ class binary_writer
                     oa->write_characters(
                         reinterpret_cast<const CharType*>(el.first.c_str()),
                         el.first.size());
-                    write_ubjson(el.second, use_count, use_type, prefix_required, use_bjdata);
+                    write_ubjson(el.second, use_count, use_type, prefix_required, use_bjdata, bjdata_version);
                 }
 
                 if (!use_count)
@@ -17233,10 +17261,11 @@ class binary_writer
     /*!
     @return false if the object is successfully converted to a bjdata ndarray, true if the type or size is invalid
     */
-    bool write_bjdata_ndarray(const typename BasicJsonType::object_t& value, const bool use_count, const bool use_type)
+    bool write_bjdata_ndarray(const typename BasicJsonType::object_t& value, const bool use_count, const bool use_type, const bjdata_version_t bjdata_version)
     {
         std::map<string_t, CharType> bjdtype = {{"uint8", 'U'},  {"int8", 'i'},  {"uint16", 'u'}, {"int16", 'I'},
-            {"uint32", 'm'}, {"int32", 'l'}, {"uint64", 'M'}, {"int64", 'L'}, {"single", 'd'}, {"double", 'D'}, {"char", 'C'}
+            {"uint32", 'm'}, {"int32", 'l'}, {"uint64", 'M'}, {"int64", 'L'}, {"single", 'd'}, {"double", 'D'},
+            {"char", 'C'}, {"byte", 'B'}
         };
 
         string_t key = "_ArrayType_";
@@ -17266,10 +17295,10 @@ class binary_writer
         oa->write_character('#');
 
         key = "_ArraySize_";
-        write_ubjson(value.at(key), use_count, use_type, true,  true);
+        write_ubjson(value.at(key), use_count, use_type, true,  true, bjdata_version);
 
         key = "_ArrayData_";
-        if (dtype == 'U' || dtype == 'C')
+        if (dtype == 'U' || dtype == 'C' || dtype == 'B')
         {
             for (const auto& el : value.at(key))
             {
@@ -20051,6 +20080,8 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     using error_handler_t = detail::error_handler_t;
     /// how to treat CBOR tags
     using cbor_tag_handler_t = detail::cbor_tag_handler_t;
+    /// how to encode BJData
+    using bjdata_version_t = detail::bjdata_version_t;
     /// helper type for initializer lists of basic_json values
     using initializer_list_t = std::initializer_list<detail::json_ref<basic_json>>;
 
@@ -24232,27 +24263,30 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     /// @sa https://json.nlohmann.me/api/basic_json/to_bjdata/
     static std::vector<std::uint8_t> to_bjdata(const basic_json& j,
             const bool use_size = false,
-            const bool use_type = false)
+            const bool use_type = false,
+            const bjdata_version_t version = bjdata_version_t::draft2)
     {
         std::vector<std::uint8_t> result;
-        to_bjdata(j, result, use_size, use_type);
+        to_bjdata(j, result, use_size, use_type, version);
         return result;
     }
 
     /// @brief create a BJData serialization of a given JSON value
     /// @sa https://json.nlohmann.me/api/basic_json/to_bjdata/
     static void to_bjdata(const basic_json& j, detail::output_adapter<std::uint8_t> o,
-                          const bool use_size = false, const bool use_type = false)
+                          const bool use_size = false, const bool use_type = false,
+                          const bjdata_version_t version = bjdata_version_t::draft2)
     {
-        binary_writer<std::uint8_t>(o).write_ubjson(j, use_size, use_type, true, true);
+        binary_writer<std::uint8_t>(o).write_ubjson(j, use_size, use_type, true, true, version);
     }
 
     /// @brief create a BJData serialization of a given JSON value
     /// @sa https://json.nlohmann.me/api/basic_json/to_bjdata/
     static void to_bjdata(const basic_json& j, detail::output_adapter<char> o,
-                          const bool use_size = false, const bool use_type = false)
+                          const bool use_size = false, const bool use_type = false,
+                          const bjdata_version_t version = bjdata_version_t::draft2)
     {
-        binary_writer<char>(o).write_ubjson(j, use_size, use_type, true, true);
+        binary_writer<char>(o).write_ubjson(j, use_size, use_type, true, true, version);
     }
 
     /// @brief create a BSON serialization of a given JSON value
