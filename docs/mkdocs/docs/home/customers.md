@@ -72,6 +72,7 @@ the result of an internet search. If you know further customers of the library, 
 - [**Meta Yoga**](https://github.com/facebook/yoga), a layout engine that facilitates flexible and efficient user interface design across multiple platforms
 - [**NVIDIA Nsight Compute**](https://docs.nvidia.com/nsight-compute/2022.2/pdf/CopyrightAndLicenses.pdf), a performance analysis tool for CUDA applications that provides detailed insights into GPU performance metrics
 - [**Notepad++**](https://github.com/notepad-plus-plus/notepad-plus-plus), a free source code editor that supports various programming languages
+- [**OpenRGB**](https://gitlab.com/CalcProgrammer1/OpenRGB), an open source RGB lighting control that doesn't depend on manufacturer software
 - [**OpenTelemetry C++**](https://github.com/open-telemetry/opentelemetry-cpp): a library for collecting and exporting observability data in C++, enabling developers to implement distributed tracing and metrics in their application
 - [**Qt Creator**](https://doc.qt.io/qtcreator/qtcreator-attribution-json-nlohmann.html), an IDE for developing applications using the Qt application framework
 - [**Scanbot SDK**](https://docs.scanbot.io/barcode-scanner-sdk/web/third-party-libraries/): a software development kit (SDK) that provides tools for integrating advanced document scanning and barcode scanning capabilities into applications

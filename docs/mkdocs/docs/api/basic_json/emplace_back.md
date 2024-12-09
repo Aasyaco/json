@@ -15,8 +15,8 @@ Creates a JSON value from the passed parameters `args` to the end of the JSON va
 
 ## Iterator invalidation
 
-By adding an element to an array, a reallocation can happen, in which case all iterators (including
-the [`end()`](end.md) iterator) and all references to the elements are invalidated. Otherwise, only the
+By adding an element to an array to the end of the array, a reallocation can happen, in which case all iterators
+(including the [`end()`](end.md) iterator) and all references to the elements are invalidated. Otherwise, only the
 [`end()`](end.md) iterator is invalidated.
 
 ## Parameters

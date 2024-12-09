@@ -107,9 +107,10 @@ behavior and yields a runtime assertion.
 
 ### Reading from a null `FILE` or `char` pointer
 
-Reading from a null `#!cpp FILE` or `#!cpp char` pointer is undefined behavior.
-Until version 3.11.4, a runtime assertion was triggered.
-Since version 3.11.4, a [`parse_error.101`](../home/exceptions.md#jsonexceptionparse_error101) is thrown instead.
+Reading from a null `#!cpp FILE` or `#!cpp char` pointer in C++ is undefined behavior.  Until version 3.11.4, this
+library asserted that the pointer was not `nullptr` using a runtime assertion. If assertions were disabled, this would
+result in undefined behavior. Since version 3.11.4, this library checks for `nullptr` and throws a
+[`parse_error.101`](../home/exceptions.md#jsonexceptionparse_error101) to prevent the undefined behavior.
 
 ??? example "Example 4: Reading from null pointer"
 
