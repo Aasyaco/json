@@ -9,10 +9,10 @@
 #pragma once
 
 #include <limits> // numeric_limits
+#include <string> // char_traits
+#include <tuple> // tuple
 #include <type_traits> // false_type, is_constructible, is_integral, is_same, true_type
 #include <utility> // declval
-#include <tuple> // tuple
-#include <string> // char_traits
 
 #include <nlohmann/detail/iterators/iterator_traits.hpp>
 #include <nlohmann/detail/macro_scope.hpp>
@@ -211,7 +211,7 @@ struct char_traits<unsigned char> : std::char_traits<char>
 
     static constexpr int_type eof() noexcept
     {
-        return static_cast<int_type>(EOF);
+        return static_cast<int_type>(std::char_traits<char>::eof());
     }
 };
 
@@ -235,7 +235,7 @@ struct char_traits<signed char> : std::char_traits<char>
 
     static constexpr int_type eof() noexcept
     {
-        return static_cast<int_type>(EOF);
+        return static_cast<int_type>(std::char_traits<char>::eof());
     }
 };
 
