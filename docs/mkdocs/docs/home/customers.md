@@ -3,7 +3,7 @@
 The library is used in multiple projects, applications, operating systems, etc. The list below is not exhaustive, but
 the result of an internet search. If you know further customers of the library, [please let me know](mailto:mail@nlohmann.me).
 
-![](../images/customers.png)
+[![](../images/customers.png)](../images/customers.png)
 
 ## Space Exploration
 
@@ -70,6 +70,7 @@ the result of an internet search. If you know further customers of the library, 
 - [**ImHex**](https://github.com/WerWolv/ImHex), a hex editor designed for reverse engineering, providing advanced features for data analysis and manipulation
 - [**Intel GPA Framework**](https://intel.github.io/gpasdk-doc/src/licenses.html), a suite of cross-platform tools for capturing, analyzing, and optimizing graphics applications across different APIs
 - [**Meta Yoga**](https://github.com/facebook/yoga), a layout engine that facilitates flexible and efficient user interface design across multiple platforms
+- [**MKVToolNix**](https://mkvtoolnix.download/doc/README.md), a set of tools for creating, editing, and inspecting MKV (Matroska) multimedia container files
 - [**NVIDIA Nsight Compute**](https://docs.nvidia.com/nsight-compute/2022.2/pdf/CopyrightAndLicenses.pdf), a performance analysis tool for CUDA applications that provides detailed insights into GPU performance metrics
 - [**Notepad++**](https://github.com/notepad-plus-plus/notepad-plus-plus), a free source code editor that supports various programming languages
 - [**OpenRGB**](https://gitlab.com/CalcProgrammer1/OpenRGB), an open source RGB lighting control that doesn't depend on manufacturer software
@@ -129,6 +130,7 @@ the result of an internet search. If you know further customers of the library, 
 
 - [**Arcturus HoloSuite**](https://www.datocms-assets.com/104353/1698904597-holosuite-third-party-software-credits-and-attributions-2.pdf), a software toolset for capturing, editing, and streaming volumetric video, featuring advanced compression technologies for high-quality 3D content creation
 - [**azul**](https://pure.tudelft.nl/ws/files/85338589/tgis.12673.pdf), a fast and efficient 3D city model viewer designed for visualizing urban environments and spatial data
+- [**Blender**](https://projects.blender.org/blender/blender/search?q=nlohmann), a free and open-source 3D creation suite for modeling, animation, rendering, and more
 - [**cpplot**](https://cpplot.readthedocs.io/en/latest/library_api/function_eigen_8h_1ac080eac0541014c5892a55e41bf785e6.html), a library for creating interactive graphs and charts in C++, which can be viewed in web browsers
 - [**NVIDIA Omniverse**](https://docs.omniverse.nvidia.com/composer/latest/common/product-licenses/usd-explorer/usd-explorer-2023.2.0-licenses-manifest.html), a platform for 3D content creation and collaboration that enables real-time simulations and interactive experiences across various industries
 - [**Pixar Renderman**](https://rmanwiki-26.pixar.com/space/REN26/19662083/Legal+Notice), a photorealistic 3D rendering software developed by Pixar, widely used in the film industry for creating high-quality visual effects and animations
