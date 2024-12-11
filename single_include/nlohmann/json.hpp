@@ -41,7 +41,6 @@
 // SPDX-License-Identifier: MIT
 
 
-
 #include <utility>
 
 // #include <nlohmann/detail/abi_macros.hpp>
@@ -52,7 +51,6 @@
 //
 // SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
 // SPDX-License-Identifier: MIT
-
 
 
 // This file contains all macro definitions affecting or depending on the ABI
@@ -156,7 +154,6 @@
 // SPDX-License-Identifier: MIT
 
 
-
 #include <algorithm> // transform
 #include <array> // array
 #include <forward_list> // forward_list
@@ -183,7 +180,6 @@
 // SPDX-License-Identifier: MIT
 
 
-
 #include <cstddef> // nullptr_t
 #include <exception> // exception
 #if JSON_DIAGNOSTICS
@@ -203,7 +199,6 @@
 // SPDX-License-Identifier: MIT
 
 
-
 #include <array> // array
 #include <cstddef> // size_t
 #include <cstdint> // uint8_t
@@ -219,7 +214,6 @@
 // SPDX-License-Identifier: MIT
 
 
-
 #include <utility> // declval, pair
 // #include <nlohmann/detail/meta/detected.hpp>
 //     __ _____ _____ _____
@@ -229,7 +223,6 @@
 //
 // SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
 // SPDX-License-Identifier: MIT
-
 
 
 #include <type_traits>
@@ -242,7 +235,6 @@
 //
 // SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
 // SPDX-License-Identifier: MIT
-
 
 
 // #include <nlohmann/detail/abi_macros.hpp>
@@ -2980,7 +2972,6 @@ NLOHMANN_JSON_NAMESPACE_END
 // SPDX-License-Identifier: MIT
 
 
-
 // #include <nlohmann/detail/abi_macros.hpp>
 
 
@@ -3055,7 +3046,6 @@ NLOHMANN_JSON_NAMESPACE_END
 // SPDX-License-Identifier: MIT
 
 
-
 #include <cstddef> // size_t
 
 // #include <nlohmann/detail/abi_macros.hpp>
@@ -3096,7 +3086,6 @@ NLOHMANN_JSON_NAMESPACE_END
 // SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
 // SPDX-FileCopyrightText: 2018 The Abseil Authors
 // SPDX-License-Identifier: MIT
-
 
 
 #include <array> // array
@@ -3271,7 +3260,6 @@ NLOHMANN_JSON_NAMESPACE_END
 // SPDX-License-Identifier: MIT
 
 
-
 #include <limits> // numeric_limits
 #include <string> // char_traits
 #include <tuple> // tuple
@@ -3286,7 +3274,6 @@ NLOHMANN_JSON_NAMESPACE_END
 //
 // SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
 // SPDX-License-Identifier: MIT
-
 
 
 #include <iterator> // random_access_iterator_tag
@@ -3356,7 +3343,6 @@ NLOHMANN_JSON_NAMESPACE_END
 // SPDX-License-Identifier: MIT
 
 
-
 // #include <nlohmann/detail/macro_scope.hpp>
 
 
@@ -3374,7 +3360,6 @@ NLOHMANN_JSON_NAMESPACE_END
 //
 // SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
 // SPDX-License-Identifier: MIT
-
 
 
 // #include <nlohmann/detail/macro_scope.hpp>
@@ -4251,7 +4236,6 @@ NLOHMANN_JSON_NAMESPACE_END
 // SPDX-License-Identifier: MIT
 
 
-
 #include <cstring> // strlen
 #include <string> // string
 #include <utility> // forward
@@ -4653,7 +4637,6 @@ NLOHMANN_JSON_NAMESPACE_END
 // SPDX-License-Identifier: MIT
 
 
-
 // #include <nlohmann/detail/abi_macros.hpp>
 
 
@@ -4675,7 +4658,6 @@ NLOHMANN_JSON_NAMESPACE_END
 //
 // SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
 // SPDX-License-Identifier: MIT
-
 
 
 // #include <nlohmann/detail/macro_scope.hpp>
@@ -5249,7 +5231,6 @@ NLOHMANN_JSON_NAMESPACE_END
 // SPDX-License-Identifier: MIT
 
 
-
 #include <algorithm> // copy
 #include <iterator> // begin, end
 #ifdef JSON_HAS_CPP_17
@@ -5270,7 +5251,6 @@ NLOHMANN_JSON_NAMESPACE_END
 //
 // SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
 // SPDX-License-Identifier: MIT
-
 
 
 #include <cstddef> // size_t
@@ -6010,7 +5990,6 @@ NLOHMANN_JSON_NAMESPACE_END
 // SPDX-License-Identifier: MIT
 
 
-
 #include <cstdint> // uint8_t, uint64_t
 #include <tuple> // tie
 #include <utility> // move
@@ -6120,7 +6099,6 @@ NLOHMANN_JSON_NAMESPACE_END
 //
 // SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
 // SPDX-License-Identifier: MIT
-
 
 
 #include <cstdint> // uint8_t
@@ -6255,7 +6233,6 @@ NLOHMANN_JSON_NAMESPACE_END
 // SPDX-License-Identifier: MIT
 
 
-
 #include <algorithm> // generate_n
 #include <array> // array
 #include <cmath> // ldexp
@@ -6282,7 +6259,6 @@ NLOHMANN_JSON_NAMESPACE_END
 //
 // SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
 // SPDX-License-Identifier: MIT
-
 
 
 #include <array> // array
@@ -6834,7 +6810,6 @@ NLOHMANN_JSON_NAMESPACE_END
 //
 // SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
 // SPDX-License-Identifier: MIT
-
 
 
 #include <cstddef>
@@ -7566,7 +7541,6 @@ NLOHMANN_JSON_NAMESPACE_END
 //
 // SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
 // SPDX-License-Identifier: MIT
-
 
 
 #include <array> // array
@@ -9217,7 +9191,6 @@ NLOHMANN_JSON_NAMESPACE_END
 //
 // SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
 // SPDX-License-Identifier: MIT
-
 
 
 #include <cstdint> // size_t
@@ -12403,7 +12376,6 @@ NLOHMANN_JSON_NAMESPACE_END
 // SPDX-License-Identifier: MIT
 
 
-
 #include <cmath> // isfinite
 #include <cstdint> // uint8_t
 #include <functional> // function
@@ -12932,7 +12904,6 @@ NLOHMANN_JSON_NAMESPACE_END
 // SPDX-License-Identifier: MIT
 
 
-
 // #include <nlohmann/detail/abi_macros.hpp>
 
 // #include <nlohmann/detail/iterators/primitive_iterator.hpp>
@@ -12943,7 +12914,6 @@ NLOHMANN_JSON_NAMESPACE_END
 //
 // SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
 // SPDX-License-Identifier: MIT
-
 
 
 #include <cstddef> // ptrdiff_t
@@ -13102,7 +13072,6 @@ NLOHMANN_JSON_NAMESPACE_END
 //
 // SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
 // SPDX-License-Identifier: MIT
-
 
 
 #include <iterator> // iterator, random_access_iterator_tag, bidirectional_iterator_tag, advance, next
@@ -13875,7 +13844,6 @@ NLOHMANN_JSON_NAMESPACE_END
 // SPDX-License-Identifier: MIT
 
 
-
 #include <cstddef> // ptrdiff_t
 #include <iterator> // reverse_iterator
 #include <utility> // declval
@@ -14052,7 +14020,6 @@ NLOHMANN_JSON_NAMESPACE_END
 // SPDX-License-Identifier: MIT
 
 
-
 #include <algorithm> // all_of
 #include <cctype> // isdigit
 #include <cerrno> // errno, ERANGE
@@ -14121,7 +14088,7 @@ class json_pointer
                                string_t{},
                                [](const string_t& a, const string_t& b)
         {
-            return detail::concat(a, '/', detail::escape(b));
+            return detail::concat<string_t>(a, '/', detail::escape(b));
         });
     }
 
@@ -15047,7 +15014,6 @@ NLOHMANN_JSON_NAMESPACE_END
 // SPDX-License-Identifier: MIT
 
 
-
 #include <initializer_list>
 #include <utility>
 
@@ -15139,7 +15105,6 @@ NLOHMANN_JSON_NAMESPACE_END
 // SPDX-License-Identifier: MIT
 
 
-
 #include <algorithm> // reverse
 #include <array> // array
 #include <map> // map
@@ -15163,7 +15128,6 @@ NLOHMANN_JSON_NAMESPACE_END
 //
 // SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
 // SPDX-License-Identifier: MIT
-
 
 
 #include <algorithm> // copy
@@ -17134,7 +17098,6 @@ NLOHMANN_JSON_NAMESPACE_END
 // SPDX-License-Identifier: MIT
 
 
-
 #include <algorithm> // reverse, remove, fill, find, none_of
 #include <array> // array
 #include <clocale> // localeconv, lconv
@@ -17157,7 +17120,6 @@ NLOHMANN_JSON_NAMESPACE_END
 // SPDX-FileCopyrightText: 2009 Florian Loitsch <https://florian.loitsch.com/>
 // SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
 // SPDX-License-Identifier: MIT
-
 
 
 #include <array> // array
@@ -19252,7 +19214,6 @@ NLOHMANN_JSON_NAMESPACE_END
 //
 // SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
 // SPDX-License-Identifier: MIT
-
 
 
 #include <functional> // equal_to, less
@@ -24249,7 +24210,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
         // the valid JSON Patch operations
         enum class patch_operations {add, remove, replace, move, copy, test, invalid};
 
-        const auto get_op = [](const std::string & op)
+        const auto get_op = [](const StringType & op)
         {
             if (op == "add")
             {
@@ -24386,8 +24347,8 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
         for (const auto& val : json_patch)
         {
             // wrapper to get a value for an operation
-            const auto get_value = [&val](const std::string & op,
-                                          const std::string & member,
+            const auto get_value = [&val](const StringType & op,
+                                          const StringType & member,
                                           bool string_type) -> basic_json &
             {
                 // find value
@@ -24421,8 +24382,8 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
             }
 
             // collect mandatory members
-            const auto op = get_value("op", "op", true).template get<std::string>();
-            const auto path = get_value(op, "path", true).template get<std::string>();
+            const auto op = get_value("op", "op", true).template get<StringType>();
+            const auto path = get_value(op, "path", true).template get<StringType>();
             json_pointer ptr(path);
 
             switch (get_op(op))
@@ -24448,7 +24409,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
 
                 case patch_operations::move:
                 {
-                    const auto from_path = get_value("move", "from", true).template get<std::string>();
+                    const auto from_path = get_value("move", "from", true).template get<StringType>();
                     json_pointer from_ptr(from_path);
 
                     // the "from" location must exist - use at()
@@ -24465,7 +24426,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
 
                 case patch_operations::copy:
                 {
-                    const auto from_path = get_value("copy", "from", true).template get<std::string>();
+                    const auto from_path = get_value("copy", "from", true).template get<StringType>();
                     const json_pointer from_ptr(from_path);
 
                     // the "from" location must exist - use at()
@@ -24525,7 +24486,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     /// @sa https://json.nlohmann.me/api/basic_json/diff/
     JSON_HEDLEY_WARN_UNUSED_RESULT
     static basic_json diff(const basic_json& source, const basic_json& target,
-                           const std::string& path = "")
+                           const StringType& path = "")
     {
         // the patch
         basic_json result(value_t::array);
@@ -24554,8 +24515,14 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
                 std::size_t i = 0;
                 while (i < source.size() && i < target.size())
                 {
+                    StringType array_index_str;
+                    {
+                        using namespace detail;
+                        int_to_string(array_index_str, i);
+                    }
+
                     // recursive call to compare array values at index i
-                    auto temp_diff = diff(source[i], target[i], detail::concat(path, '/', std::to_string(i)));
+                    auto temp_diff = diff(source[i], target[i], detail::concat<StringType>(path, '/', array_index_str));
                     result.insert(result.end(), temp_diff.begin(), temp_diff.end());
                     ++i;
                 }
@@ -24569,10 +24536,17 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
                 {
                     // add operations in reverse order to avoid invalid
                     // indices
+
+                    StringType array_index_str;
+                    {
+                        using namespace detail;
+                        int_to_string(array_index_str, i);
+                    }
+
                     result.insert(result.begin() + end_index, object(
                     {
                         {"op", "remove"},
-                        {"path", detail::concat(path, '/', std::to_string(i))}
+                        {"path", detail::concat<StringType>(path, '/', array_index_str)}
                     }));
                     ++i;
                 }
@@ -24583,7 +24557,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
                     result.push_back(
                     {
                         {"op", "add"},
-                        {"path", detail::concat(path, "/-")},
+                        {"path", detail::concat<StringType>(path, "/-")},
                         {"value", target[i]}
                     });
                     ++i;
@@ -24598,7 +24572,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
                 for (auto it = source.cbegin(); it != source.cend(); ++it)
                 {
                     // escape the key name to be used in a JSON patch
-                    const auto path_key = detail::concat(path, '/', detail::escape(it.key()));
+                    const auto path_key = detail::concat<StringType>(path, '/', detail::escape(it.key()));
 
                     if (target.find(it.key()) != target.end())
                     {
@@ -24622,7 +24596,7 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
                     if (source.find(it.key()) == source.end())
                     {
                         // found a key that is not in this -> add it
-                        const auto path_key = detail::concat(path, '/', detail::escape(it.key()));
+                        const auto path_key = detail::concat<StringType>(path, '/', detail::escape(it.key()));
                         result.push_back(
                         {
                             {"op", "add"}, {"path", path_key},
@@ -24810,7 +24784,6 @@ inline void swap(nlohmann::NLOHMANN_BASIC_JSON_TPL& j1, nlohmann::NLOHMANN_BASIC
 // SPDX-License-Identifier: MIT
 
 
-
 // restore clang diagnostic settings
 #if defined(__clang__)
     #pragma clang diagnostic pop
@@ -24853,7 +24826,6 @@ inline void swap(nlohmann::NLOHMANN_BASIC_JSON_TPL& j1, nlohmann::NLOHMANN_BASIC
 //
 // SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
 // SPDX-License-Identifier: MIT
-
 
 
 #undef JSON_HEDLEY_ALWAYS_INLINE
@@ -25004,7 +24976,6 @@ inline void swap(nlohmann::NLOHMANN_BASIC_JSON_TPL& j1, nlohmann::NLOHMANN_BASIC
 #undef JSON_HEDLEY_WARN_UNUSED_RESULT
 #undef JSON_HEDLEY_WARN_UNUSED_RESULT_MSG
 #undef JSON_HEDLEY_FALL_THROUGH
-
 
 
 #endif  // INCLUDE_NLOHMANN_JSON_HPP_
