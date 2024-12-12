@@ -10,7 +10,6 @@
 
 #include <cstddef> // size_t
 #include <iterator> // forward_iterator_tag
-#include <string> // string, to_string
 #include <tuple> // tuple_size, get, tuple_element
 #include <utility> // move
 
@@ -20,19 +19,13 @@
 
 #include <nlohmann/detail/abi_macros.hpp>
 #include <nlohmann/detail/meta/type_traits.hpp>
+#include <nlohmann/detail/string_utils.hpp>
 #include <nlohmann/detail/value_t.hpp>
 
 NLOHMANN_JSON_NAMESPACE_BEGIN
 namespace detail
 {
 
-template<typename string_type>
-void int_to_string( string_type& target, std::size_t value )
-{
-    // For ADL
-    using std::to_string;
-    target = to_string(value);
-}
 template<typename IteratorType> class iteration_proxy_value
 {
   public:
