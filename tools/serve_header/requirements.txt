@@ -1,2 +1,2 @@
 PyYAML==6.0.2
-watchdog==2.1.7
+watchdog==6.0.0
