@@ -21,11 +21,6 @@ jobs:
     runs-on: ubuntu-latest
     container: silkeh/clang:dev
     steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-        with:
-          egress-policy: audit
-
       - name: Install git and unzip
         run: apt-get update ; apt-get install -y git unzip
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -40,11 +35,6 @@ jobs:
     runs-on: ubuntu-latest
     container: gcc:latest
     steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-        with:
-          egress-policy: audit
-
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Get latest CMake and ninja
         uses: lukka/get-cmake@71b7adfe2603f48bb9ed50d2b01a72499ae94885 # v3.31.0
@@ -66,11 +56,6 @@ jobs:
           ci_single_binaries    # needs iwyu
         ]
     steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-        with:
-          egress-policy: audit
-
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Run CMake
         run: cmake -S . -B build -DJSON_CI=On
@@ -81,11 +66,6 @@ jobs:
     runs-on: ubuntu-latest
     container: gcc:latest
     steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-        with:
-          egress-policy: audit
-
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Get latest CMake and ninja
         uses: lukka/get-cmake@71b7adfe2603f48bb9ed50d2b01a72499ae94885 # v3.31.0
@@ -120,11 +100,6 @@ jobs:
       matrix:
         target: [ci_clang_tidy, ci_test_clang_sanitizer, ci_clang_analyze]
     steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-        with:
-          egress-policy: audit
-
       - name: Install git, clang-tools, and unzip
         run: apt-get update ; apt-get install -y git clang-tools unzip
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -137,7 +112,6 @@ jobs:
 
   ci_cmake_options:
     runs-on: ubuntu-latest
-    container: ubuntu:focal
     strategy:
       matrix:
         target: [ci_cmake_flags, ci_test_diagnostics, ci_test_noexceptions, ci_test_noimplicitconversions, ci_test_legacycomparison, ci_test_noglobaludls]
@@ -198,11 +172,6 @@ jobs:
         compiler: ['4.8', '4.9', '5', '6']
     container: ghcr.io/nlohmann/json-ci:v2.4.0
     steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-        with:
-          egress-policy: audit
-
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Run CMake
         run: CXX=g++-${{ matrix.compiler }} cmake -S . -B build -DJSON_CI=On
@@ -217,11 +186,6 @@ jobs:
         compiler: ['7', '8', '9', '10', '11', '12', '13', '14', 'latest']
     container: gcc:${{ matrix.compiler }}
     steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-        with:
-          egress-policy: audit
-
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Get latest CMake and ninja
         uses: lukka/get-cmake@71b7adfe2603f48bb9ed50d2b01a72499ae94885 # v3.31.0
@@ -237,11 +201,6 @@ jobs:
         compiler: ['3.5', '3.6', '3.7', '3.8', '3.9', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15-bullseye', '16', '17', '18', '19', 'latest']
     container: silkeh/clang:${{ matrix.compiler }}
     steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-        with:
-          egress-policy: audit
-
       - name: Install unzip and git
         run: apt-get update ; apt-get install -y unzip git
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -262,11 +221,6 @@ jobs:
       matrix:
         standard: [11, 14, 17, 20, 23]
     steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-        with:
-          egress-policy: audit
-
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Get latest CMake and ninja
         uses: lukka/get-cmake@71b7adfe2603f48bb9ed50d2b01a72499ae94885 # v3.31.0
@@ -283,11 +237,6 @@ jobs:
         standard: [11, 14, 17, 20, 23]
         stdlib: [libcxx, libstdcxx]
     steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-        with:
-          egress-policy: audit
-
       - name: Install git and unzip
         run: apt-get update ; apt-get install -y git unzip
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -306,11 +255,6 @@ jobs:
     runs-on: ubuntu-latest
     container: ghcr.io/nlohmann/json-ci:v2.4.0
     steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-        with:
-          egress-policy: audit
-
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Run CMake
         run: cmake -S . -B build -DJSON_CI=On
@@ -321,11 +265,6 @@ jobs:
     runs-on: ubuntu-latest
     container: ghcr.io/nlohmann/json-ci:v2.2.0
     steps:
-      - name: Harden Runner
-        uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
-        with:
-          egress-policy: audit
-
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Run CMake
         run: cmake -S . -B build -DJSON_CI=On
@@ -347,7 +286,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install REUSE tool
-        run:  python -m pip install reuse
+        run:  python -m pip install reuse==5.0.2
       - name: Run REUSE lint
         run: reuse lint
 
