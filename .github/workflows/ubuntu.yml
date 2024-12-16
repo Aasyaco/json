@@ -282,7 +282,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Install REUSE tool
-        run:  python -m pip install reuse==5.0.2
+        run:  python -m pip install -r .reuse/requirements.txt
       - name: Run REUSE lint
         run: reuse lint
 
