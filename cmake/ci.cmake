@@ -1023,16 +1023,10 @@ add_custom_target(ci_test_examples
     COMMENT "Check that all examples compile and create the desired output"
 )
 
-add_custom_target(ci_test_api_documentation
-    COMMAND ${Python3_EXECUTABLE} ../scripts/check_structure.py
-    WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/docs/mkdocs/docs
-    COMMENT "Lint the API documentation"
-)
-
 add_custom_target(ci_test_build_documentation
     COMMAND ${Python3_EXECUTABLE} -mvenv venv
     COMMAND venv/bin/pip3 install -r requirements.txt
-    COMMAND venv/bin/mkdocs build
+    COMMAND make build
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/docs/mkdocs
     COMMENT "Build the documentation"
 )
