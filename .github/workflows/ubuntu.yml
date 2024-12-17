@@ -46,7 +46,6 @@ jobs:
     strategy:
       matrix:
         target: [
-          ci_cppcheck,          # needs cppcheck
           ci_test_valgrind,     # needs Valgrind
           ci_test_amalgamation, # needs AStyle
           ci_infer,             # needs Infer
@@ -75,7 +74,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        target: [ci_cpplint, ci_reproducible_tests, ci_non_git_tests, ci_offline_testdata]
+        target: [ci_cppcheck, ci_cpplint, ci_reproducible_tests, ci_non_git_tests, ci_offline_testdata]
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@0080882f6c36860b6ba35c610c98ce87d4e2f26f # v2.10.2
@@ -278,10 +277,8 @@ jobs:
       - uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
         with:
           python-version: '3.11'
-      - name: Install REUSE tool
-        run:  python -m pip install -r .reuse/requirements.txt
       - name: Run REUSE lint
-        run: reuse lint
+        run: cmake --build build --target ci_reuse_compliance
 
   ci_test_documentation:
     runs-on: ubuntu-latest

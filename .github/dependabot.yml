@@ -16,6 +16,6 @@ updates:
       interval: daily
 
   - package-ecosystem: pip
-    directory: /.reuse
+    directory: /cmake/requirements
     schedule:
       interval: daily

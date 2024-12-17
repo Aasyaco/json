@@ -502,7 +502,7 @@ contiguous_bytes_input_adapter input_adapter(CharT b)
     }
     auto length = std::strlen(reinterpret_cast<const char*>(b));
     const auto* ptr = reinterpret_cast<const char*>(b);
-    return input_adapter(ptr, ptr + length);
+    return input_adapter(ptr, ptr + length); // cppcheck-suppress[nullPointerArithmeticRedundantCheck]
 }
 
 template<typename T, std::size_t N>

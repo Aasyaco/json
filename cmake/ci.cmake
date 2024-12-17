@@ -25,11 +25,6 @@ message(STATUS "🔖 Clang-Tidy ${CLANG_TIDY_TOOL_VERSION} (${CLANG_TIDY_TOOL})"
 
 message(STATUS "🔖 CMake ${CMAKE_VERSION} (${CMAKE_COMMAND})")
 
-find_program(CPPCHECK_TOOL NAMES cppcheck)
-execute_process(COMMAND ${CPPCHECK_TOOL} --version OUTPUT_VARIABLE CPPCHECK_TOOL_VERSION ERROR_VARIABLE CPPCHECK_TOOL_VERSION)
-string(REGEX MATCH "[0-9]+(\\.[0-9]+)+" CPPCHECK_TOOL_VERSION "${CPPCHECK_TOOL_VERSION}")
-message(STATUS "🔖 Cppcheck ${CPPCHECK_TOOL_VERSION} (${CPPCHECK_TOOL})")
-
 find_program(GCC_TOOL NAMES g++-latest g++-HEAD g++ g++-15 g++-14 g++-13 g++-12 g++-11 g++-10)
 execute_process(COMMAND ${GCC_TOOL} --version OUTPUT_VARIABLE GCC_TOOL_VERSION ERROR_VARIABLE GCC_TOOL_VERSION)
 string(REGEX MATCH "[0-9]+(\\.[0-9]+)+" GCC_TOOL_VERSION "${GCC_TOOL_VERSION}")
@@ -716,7 +711,14 @@ add_custom_target(ci_clang_analyze
 ###############################################################################
 
 add_custom_target(ci_cppcheck
-    COMMAND ${CPPCHECK_TOOL} --enable=warning --suppress=missingReturn --inline-suppr --inconclusive --force --std=c++11 ${PROJECT_SOURCE_DIR}/single_include/nlohmann/json.hpp --error-exitcode=1
+    COMMAND ${Python3_EXECUTABLE} -mvenv venv_cppcheck
+    COMMAND clang -dM -E -x c++ -std=c++11 ${CMAKE_SOURCE_DIR}/include/nlohmann/thirdparty/hedley/hedley.hpp > default_defines.hpp 2> /dev/null
+    COMMAND venv_cppcheck/bin/pip3 --quiet install -r ${CMAKE_SOURCE_DIR}/cmake/requirements/requirements-cppcheck.txt
+    COMMAND venv_cppcheck/bin/cppcheck --enable=warning --check-level=exhaustive --inline-suppr --inconclusive --force
+            --std=c++11 ${PROJECT_SOURCE_DIR}/include/nlohmann/json.hpp -I ${CMAKE_SOURCE_DIR}/include
+            --error-exitcode=1 --relative-paths=${PROJECT_SOURCE_DIR} -j 10 --include=default_defines.hpp
+            -UJSON_CATCH_USER -UJSON_TRY_USER -UJSON_ASSERT -UJSON_INTERNAL_CATCH -UJSON_THROW
+            -DJSON_HAS_CPP_11 -UJSON_HAS_CPP_14 -UJSON_HAS_CPP_17 -UJSON_HAS_CPP_20 -UJSON_HAS_THREE_WAY_COMPARISON
     COMMENT "Check code with Cppcheck"
 )
 
@@ -726,7 +728,7 @@ add_custom_target(ci_cppcheck
 
 add_custom_target(ci_cpplint
     COMMAND ${Python3_EXECUTABLE} -mvenv venv_cpplint
-    COMMAND venv_cpplint/bin/pip3 --quiet install cpplint
+    COMMAND venv_cpplint/bin/pip3 --quiet install -r ${CMAKE_SOURCE_DIR}/cmake/requirements/requirements-cpplint.txt
     COMMAND venv_cpplint/bin/cpplint --filter=-whitespace,-legal,-runtime/references,-runtime/explicit,-runtime/indentation_namespace,-readability/casting,-readability/nolint --quiet --recursive ${SRC_FILES}
     COMMENT "Check code with cpplint"
     WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
@@ -1014,6 +1016,17 @@ add_custom_target(ci_icpc
 )
 
 ###############################################################################
+# REUSE
+###############################################################################
+
+add_custom_target(ci_reuse_compliance
+    COMMAND ${Python3_EXECUTABLE} -mvenv venv_reuse
+    COMMAND venv_reuse/bin/pip3 --quiet install -r ${PROJECT_SOURCE_DIR}/cmake/requirements/requirements-reuse.txt
+    COMMAND venv_reuse/bin/reuse --root ${PROJECT_SOURCE_DIR} lint
+    COMMENT "Check REUSE specification compliance"
+)
+
+###############################################################################
 # test documentation
 ###############################################################################
 
@@ -1025,7 +1038,7 @@ add_custom_target(ci_test_examples
 
 add_custom_target(ci_test_build_documentation
     COMMAND ${Python3_EXECUTABLE} -mvenv venv
-    COMMAND venv/bin/pip3 install -r requirements.txt
+    COMMAND venv/bin/pip3 --quiet install -r requirements.txt
     COMMAND make build
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}/docs/mkdocs
     COMMENT "Build the documentation"
