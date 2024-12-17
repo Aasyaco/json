@@ -3,8 +3,6 @@ name: "Check amalgamation"
 on:
   pull_request:
 
-permissions: read-all
-
 jobs:
   save:
     runs-on: ubuntu-latest
