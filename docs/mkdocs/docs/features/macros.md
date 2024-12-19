@@ -102,8 +102,10 @@ See [full documentation of `JSON_USE_IMPLICIT_CONVERSIONS`](../api/macros/json_u
 
 ## `NLOHMANN_DEFINE_DERIVED_TYPE_INTRUSIVE(type, base_type, member...)`
 ## `NLOHMANN_DEFINE_DERIVED_TYPE_INTRUSIVE_WITH_DEFAULT(type, base_type, member...)`
+## `NLOHMANN_DEFINE_DERIVED_TYPE_INTRUSIVE_ONLY_SERIALIZE(type, base_type, member...)`
 ## `NLOHMANN_DEFINE_DERIVED_TYPE_NON_INTRUSIVE(type, base_type, member...)`
 ## `NLOHMANN_DEFINE_DERIVED_TYPE_NON_INTRUSIVE_WITH_DEFAULT(type, base_type, member...)`
+## `NLOHMANN_DEFINE_DERIVED_TYPE_NON_INTRUSIVE_ONLY_SERIALIZE(type, base_type, member...)`
 
 ## `NLOHMANN_DEFINE_TYPE_INTRUSIVE(type, member...)`
 
