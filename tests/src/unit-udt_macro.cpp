@@ -443,12 +443,12 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_ONLY_SERIALIZE(person_without_default_constru
 class derived_person_only_serialize_public : public person_without_default_constructor_1
 {
   public:
-	std::string hair_color;
+    std::string hair_color;
 
-	derived_person_only_serialize_public(std::string name_, int age_, std::string hair_color_)
-		: person_without_default_constructor_1(std::move(name_), age_)
-		, hair_color(std::move(hair_color_))
-	{}
+    derived_person_only_serialize_public(std::string name_, int age_, std::string hair_color_)
+        : person_without_default_constructor_1(std::move(name_), age_)
+        , hair_color(std::move(hair_color_))
+    {}
 };
 
 NLOHMANN_DEFINE_DERIVED_TYPE_NON_INTRUSIVE_ONLY_SERIALIZE(derived_person_only_serialize_public, person_without_default_constructor_1, hair_color);
@@ -456,14 +456,14 @@ NLOHMANN_DEFINE_DERIVED_TYPE_NON_INTRUSIVE_ONLY_SERIALIZE(derived_person_only_se
 class derived_person_only_serialize_private : person_without_default_constructor_1
 {
   private:
-	std::string hair_color;
+    std::string hair_color;
   public:
-	derived_person_only_serialize_private(std::string name_, int age_, std::string hair_color_)
-		: person_without_default_constructor_1(std::move(name_), age_)
-		, hair_color(std::move(hair_color_))
-	{}
+    derived_person_only_serialize_private(std::string name_, int age_, std::string hair_color_)
+        : person_without_default_constructor_1(std::move(name_), age_)
+        , hair_color(std::move(hair_color_))
+    {}
 
-	NLOHMANN_DEFINE_DERIVED_TYPE_INTRUSIVE_ONLY_SERIALIZE(derived_person_only_serialize_private, person_without_default_constructor_1, hair_color); 
+    NLOHMANN_DEFINE_DERIVED_TYPE_INTRUSIVE_ONLY_SERIALIZE(derived_person_only_serialize_private, person_without_default_constructor_1, hair_color);
 };
 
 } // namespace persons
