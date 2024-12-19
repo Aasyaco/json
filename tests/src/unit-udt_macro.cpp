@@ -440,6 +440,32 @@ class person_without_default_constructor_2
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_ONLY_SERIALIZE(person_without_default_constructor_2, name, age)
 
+class derived_person_only_serialize_public : public person_without_default_constructor_1
+{
+  public:
+	std::string hair_color;
+
+	derived_person_only_serialize_public(std::string name_, int age_, std::string hair_color_)
+		: person_without_default_constructor_1(std::move(name_), age_)
+		, hair_color(std::move(hair_color_))
+	{}
+};
+
+NLOHMANN_DEFINE_DERIVED_TYPE_NON_INTRUSIVE_ONLY_SERIALIZE(derived_person_only_serialize_public, person_without_default_constructor_1, hair_color);
+
+class derived_person_only_serialize_private : person_without_default_constructor_1
+{
+  private:
+	std::string hair_color;
+  public:
+	derived_person_only_serialize_private(std::string name_, int age_, std::string hair_color_)
+		: person_without_default_constructor_1(std::move(name_), age_)
+		, hair_color(std::move(hair_color_))
+	{}
+
+	NLOHMANN_DEFINE_DERIVED_TYPE_INTRUSIVE_ONLY_SERIALIZE(derived_person_only_serialize_private, person_without_default_constructor_1, hair_color); 
+};
+
 } // namespace persons
 
 TEST_CASE_TEMPLATE("Serialization/deserialization via NLOHMANN_DEFINE_TYPE_INTRUSIVE and NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE", T, // NOLINT(readability-math-missing-parentheses)
@@ -654,6 +680,28 @@ TEST_CASE_TEMPLATE("Serialization of non-default-constructible classes via NLOHM
                 {"Kyle", 2}
             };
             CHECK(json(two_persons).dump() == "[{\"age\":1,\"name\":\"Erik\"},{\"age\":2,\"name\":\"Kyle\"}]");
+        }
+    }
+}
+
+TEST_CASE_TEMPLATE("Serialization of non-default-constructible classes via NLOHMANN_DEFINE_DERIVED_TYPE_INTRUSIVE_ONLY_SERIALIZE and NLOHMANN_DEFINE_DERIVED_TYPE_NON_INTRUSIVE_ONLY_SERIALIZE", T, // NOLINT(readability-math-missing-parentheses)
+                   persons::derived_person_only_serialize_public,
+                   persons::derived_person_only_serialize_private)
+{
+    SECTION("derived person only serialize")
+    {
+        {
+            // serialization of a single object
+            T person{"Erik", 1, "brown"};
+            CHECK(json(person).dump() == "{\"age\":1,\"hair_color\":\"brown\",\"name\":\"Erik\"}");
+
+            // serialization of a container with objects
+            std::vector<T> const two_persons
+            {
+                {"Erik", 1, "brown"},
+                {"Kyle", 2, "black"}
+            };
+            CHECK(json(two_persons).dump() == "[{\"age\":1,\"hair_color\":\"brown\",\"name\":\"Erik\"},{\"age\":2,\"hair_color\":\"black\",\"name\":\"Kyle\"}]");
         }
     }
 }
