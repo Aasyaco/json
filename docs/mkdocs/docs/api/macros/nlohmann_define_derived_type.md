@@ -17,7 +17,7 @@ object as serialization and want to use the member variable names as object keys
 
 - Macros 1, 2 and 3 are to be defined **inside** the class/struct to create code for.
 Like [`NLOHMANN_DEFINE_TYPE_INTRUSIVE`](nlohmann_define_type_intrusive.md), they can access private members.
-- Macros 3, 4 and 5 are to be defined **outside** the class/struct to create code for, but **inside** its namespace.
+- Macros 4, 5 and 6 are to be defined **outside** the class/struct to create code for, but **inside** its namespace.
 Like [`NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE`](nlohmann_define_type_non_intrusive.md),
 they **cannot** access private members.
 
