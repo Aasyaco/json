@@ -451,7 +451,7 @@ class derived_person_only_serialize_public : public person_without_default_const
     {}
 };
 
-NLOHMANN_DEFINE_DERIVED_TYPE_NON_INTRUSIVE_ONLY_SERIALIZE(derived_person_only_serialize_public, person_without_default_constructor_1, hair_color);
+NLOHMANN_DEFINE_DERIVED_TYPE_NON_INTRUSIVE_ONLY_SERIALIZE(derived_person_only_serialize_public, person_without_default_constructor_1, hair_color)
 
 class derived_person_only_serialize_private : person_without_default_constructor_1
 {
@@ -463,7 +463,7 @@ class derived_person_only_serialize_private : person_without_default_constructor
         , hair_color(std::move(hair_color_))
     {}
 
-    NLOHMANN_DEFINE_DERIVED_TYPE_INTRUSIVE_ONLY_SERIALIZE(derived_person_only_serialize_private, person_without_default_constructor_1, hair_color);
+    NLOHMANN_DEFINE_DERIVED_TYPE_INTRUSIVE_ONLY_SERIALIZE(derived_person_only_serialize_private, person_without_default_constructor_1, hair_color)
 };
 
 } // namespace persons
