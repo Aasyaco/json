@@ -1,1 +1,1 @@
-cppcheck==1.4.6
+cppcheck==1.4.7
