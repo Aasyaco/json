@@ -642,7 +642,6 @@ file(GLOB_RECURSE INDENT_FILES
 
 set(include_dir ${PROJECT_SOURCE_DIR}/single_include/nlohmann)
 set(tool_dir ${PROJECT_SOURCE_DIR}/tools/amalgamate)
-set(astylerc_file ${PROJECT_SOURCE_DIR}/tools/astyle/.astylerc)
 add_custom_target(ci_test_amalgamation
     COMMAND rm -fr ${include_dir}/json.hpp~ ${include_dir}/json_fwd.hpp~
     COMMAND cp ${include_dir}/json.hpp ${include_dir}/json.hpp~
@@ -650,12 +649,16 @@ add_custom_target(ci_test_amalgamation
 
     COMMAND ${Python3_EXECUTABLE} ${tool_dir}/amalgamate.py -c ${tool_dir}/config_json.json -s .
     COMMAND ${Python3_EXECUTABLE} ${tool_dir}/amalgamate.py -c ${tool_dir}/config_json_fwd.json -s .
-    COMMAND ${ASTYLE_TOOL} --project=${astylerc_file} --suffix=none ${include_dir}/json.hpp ${include_dir}/json_fwd.hpp
+    COMMAND ls
+    COMMAND ls tools
+    COMMAND ls tools/astyle
+    COMMAND cat tools/astyle/.astylerc
+    COMMAND ${ASTYLE_TOOL} --project=tools/astyle/.astylerc --suffix=none ${include_dir}/json.hpp ${include_dir}/json_fwd.hpp
 
     COMMAND diff ${include_dir}/json.hpp~ ${include_dir}/json.hpp
     COMMAND diff ${include_dir}/json_fwd.hpp~ ${include_dir}/json_fwd.hpp
 
-    COMMAND ${ASTYLE_TOOL} --project=${astylerc_file} --suffix=orig ${INDENT_FILES}
+    COMMAND ${ASTYLE_TOOL} --project=tools/astyle/.astylerc --suffix=orig ${INDENT_FILES}
     COMMAND for FILE in `find . -name '*.orig'`\; do false \; done
 
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
