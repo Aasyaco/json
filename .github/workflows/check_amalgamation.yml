@@ -31,11 +31,6 @@ jobs:
       MAIN_DIR: ${{ github.workspace }}/main
       INCLUDE_DIR: ${{ github.workspace }}/main/single_include/nlohmann
       TOOL_DIR: ${{ github.workspace }}/tools/tools/amalgamate
-      ASTYLE_FLAGS: >
-        --style=allman --indent=spaces=4 --indent-modifiers --indent-switches --indent-preproc-block
-        --indent-preproc-define --indent-col1-comments --pad-oper --pad-header --align-pointer=type
-        --align-reference=type --add-brackets --convert-tabs --close-templates --lineend=linux --preserve-date
-        --formatted
 
     steps:
       - name: Harden Runner
@@ -71,11 +66,11 @@ jobs:
           python3 $TOOL_DIR/amalgamate.py -c $TOOL_DIR/config_json.json -s .
           python3 $TOOL_DIR/amalgamate.py -c $TOOL_DIR/config_json_fwd.json -s .
           echo "Format (1)"
-          astyle $ASTYLE_FLAGS --suffix=none --quiet $INCLUDE_DIR/json.hpp $INCLUDE_DIR/json_fwd.hpp
+          astyle --project=tools/astyle/.astylerc --suffix=none --quiet $INCLUDE_DIR/json.hpp $INCLUDE_DIR/json_fwd.hpp
 
           diff $INCLUDE_DIR/json.hpp~ $INCLUDE_DIR/json.hpp
           diff $INCLUDE_DIR/json_fwd.hpp~ $INCLUDE_DIR/json_fwd.hpp
 
-          astyle $ASTYLE_FLAGS $(find docs/examples include tests -type f \( -name '*.hpp' -o -name '*.cpp' -o -name '*.cu' \) -not -path 'tests/thirdparty/*' -not -path 'tests/abi/include/nlohmann/*' | sort)
+          astyle --project=tools/astyle/.astylerc --suffix=orig $(find docs/examples include tests -type f \( -name '*.hpp' -o -name '*.cpp' -o -name '*.cu' \) -not -path 'tests/thirdparty/*' -not -path 'tests/abi/include/nlohmann/*' | sort)
           echo Check
           find $MAIN_DIR -name '*.orig' -exec false {} \+
