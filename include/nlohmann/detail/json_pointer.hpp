@@ -70,9 +70,9 @@ class json_pointer
         return std::accumulate(reference_tokens.begin(), reference_tokens.end(),
                                string_t{},
                                [](const string_t& a, const string_t& b)
-        {
-            return detail::concat(a, '/', detail::escape(b));
-        });
+                               {
+                                   return detail::concat(a, '/', detail::escape(b));
+                               });
     }
 
     /// @brief return a string representation of the JSON pointer
@@ -362,9 +362,9 @@ class json_pointer
                 const bool nums =
                     std::all_of(reference_token.begin(), reference_token.end(),
                                 [](const unsigned char x)
-                {
-                    return std::isdigit(x);
-                });
+                                {
+                                    return std::isdigit(x);
+                                });
 
                 // change value to array for numbers or "-" or to object otherwise
                 *ptr = (nums || reference_token == "-")

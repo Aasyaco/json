@@ -306,18 +306,18 @@ TEST_CASE("regression tests 1")
             ++rit;
             json b = {0, 0, 0};
             std::transform(rit, a.rend(), b.rbegin(), [](json el)
-            {
-                return el;
-            });
+                           {
+                               return el;
+                           });
             CHECK(b == json({0, 1, 2}));
         }
         {
             json a = {1, 2, 3};
             json b = {0, 0, 0};
             std::transform(++a.rbegin(), a.rend(), b.rbegin(), [](json el)
-            {
-                return el;
-            });
+                           {
+                               return el;
+                           });
             CHECK(b == json({0, 1, 2}));
         }
     }
@@ -1461,10 +1461,10 @@ TEST_CASE("regression tests 1")
 
         // define parser callback
         json::parser_callback_t const cb = [](int /*depth*/, json::parse_event_t event, json & parsed)
-        {
-            // skip object elements with key "Thumbnail"
-            return !(event == json::parse_event_t::key && parsed == json("Thumbnail"));
-        };
+                                           {
+                                               // skip object elements with key "Thumbnail"
+                                               return !(event == json::parse_event_t::key && parsed == json("Thumbnail"));
+                                           };
 
         // parse (with callback) and serialize JSON
         json j_filtered = json::parse(text, cb);

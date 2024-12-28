@@ -19,7 +19,6 @@ using nlohmann::json;
 #include <sstream>
 #include <valarray>
 
-
 namespace
 {
 struct SaxEventLogger : public nlohmann::json_sax<json>

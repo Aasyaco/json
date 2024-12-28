@@ -32,7 +32,6 @@ using nlohmann::json;
 #include <unordered_set>
 #include <valarray>
 
-
 // NLOHMANN_JSON_SERIALIZE_ENUM uses a static std::pair
 DOCTEST_CLANG_SUPPRESS_WARNING_PUSH
 DOCTEST_CLANG_SUPPRESS_WARNING("-Wexit-time-destructors")
@@ -1657,7 +1656,6 @@ TEST_CASE("JSON to enum mapping")
         CHECK(TS_INVALID == json("what?").get<TaskState>());
     }
 }
-
 
 #ifdef JSON_HAS_CPP_17
 #ifndef JSON_USE_IMPLICIT_CONVERSIONS

@@ -284,52 +284,52 @@ TEST_CASE("JSON Visit Node")
     json.visit(
         [&](const json_with_visitor_t::json_pointer & p,
             const json_with_visitor_t& j)
-    {
-        std::stringstream str;
-        str << p.to_string() << " - " ;
-        using value_t = nlohmann::detail::value_t;
-        switch (j.type())
         {
+            std::stringstream str;
+            str << p.to_string() << " - " ;
+            using value_t = nlohmann::detail::value_t;
+            switch (j.type())
+            {
             case value_t::object:
-                str << "object";
-                break;
-            case value_t::array:
-                str << "array";
-                break;
-            case value_t::discarded:
-                str << "discarded";
-                break;
-            case value_t::null:
-                str << "null";
-                break;
-            case value_t::string:
-                str << "string";
-                break;
-            case value_t::boolean:
-                str << "boolean";
-                break;
-            case value_t::number_integer:
-                str << "number_integer";
-                break;
-            case value_t::number_unsigned:
-                str << "number_unsigned";
-                break;
-            case value_t::number_float:
-                str << "number_float";
-                break;
-            case value_t::binary:
-                str << "binary";
-                break;
-            default:
-                str << "error";
-                break;
-        }
-        str << " - "  << j.dump();
-        CHECK(json.at(p) == j);
-        INFO(str.str());
-        CHECK(expected.count(str.str()) == 1);
-        expected.erase(str.str());
-    }
-    );
+                    str << "object";
+                    break;
+                case value_t::array:
+                        str << "array";
+                        break;
+                    case value_t::discarded:
+                            str << "discarded";
+                            break;
+                        case value_t::null:
+                                str << "null";
+                                break;
+                            case value_t::string:
+                                    str << "string";
+                                    break;
+                                case value_t::boolean:
+                                        str << "boolean";
+                                        break;
+                                    case value_t::number_integer:
+                                            str << "number_integer";
+                                            break;
+                                        case value_t::number_unsigned:
+                                                str << "number_unsigned";
+                                                break;
+                                            case value_t::number_float:
+                                                    str << "number_float";
+                                                    break;
+                                                case value_t::binary:
+                                                        str << "binary";
+                                                        break;
+                                                    default:
+                                                            str << "error";
+                                                            break;
+                                                        }
+                                                        str << " - "  << j.dump();
+                                                        CHECK(json.at(p) == j);
+                                                        INFO(str.str());
+                                                        CHECK(expected.count(str.str()) == 1);
+                                                        expected.erase(str.str());
+                                                    }
+                                                );
     CHECK(expected.empty());
 }

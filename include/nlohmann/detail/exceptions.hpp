@@ -128,9 +128,9 @@ class exception : public std::exception
 
         auto str = std::accumulate(tokens.rbegin(), tokens.rend(), std::string{},
                                    [](const std::string & a, const std::string & b)
-        {
-            return concat(a, '/', detail::escape(b));
-        });
+                                   {
+                                       return concat(a, '/', detail::escape(b));
+                                   });
         return concat('(', str, ") ");
 #else
         static_cast<void>(leaf_element);

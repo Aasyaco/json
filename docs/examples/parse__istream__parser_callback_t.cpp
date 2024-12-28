@@ -35,20 +35,20 @@ int main()
 
     // define parser callback
     json::parser_callback_t cb = [](int depth, json::parse_event_t event, json & parsed)
+                                 {
+                                     // skip object elements with key "Thumbnail"
+                                     if (event == json::parse_event_t::key and parsed == json("Thumbnail"))
+                                     {
+                                         return false;
+                                     }
+                                     else
     {
-        // skip object elements with key "Thumbnail"
-        if (event == json::parse_event_t::key and parsed == json("Thumbnail"))
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    };
+        return true;
+    }
+                             };
 
-    // fill a stream with JSON text
-    ss.clear();
+// fill a stream with JSON text
+ss.clear();
     ss << text;
 
     // parse (with callback) and serialize JSON

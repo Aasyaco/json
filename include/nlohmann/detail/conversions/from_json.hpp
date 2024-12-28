@@ -23,7 +23,6 @@
 #include <utility> // pair, declval
 #include <valarray> // valarray
 
-
 #include <nlohmann/detail/exceptions.hpp>
 #include <nlohmann/detail/macro_scope.hpp>
 #include <nlohmann/detail/meta/cpp_future.hpp>
@@ -180,9 +179,9 @@ inline void from_json(const BasicJsonType& j, std::forward_list<T, Allocator>& l
     l.clear();
     std::transform(j.rbegin(), j.rend(),
                    std::front_inserter(l), [](const BasicJsonType & i)
-    {
-        return i.template get<T>();
-    });
+                   {
+                       return i.template get<T>();
+                   });
 }
 
 // valarray doesn't have an insert method
@@ -197,9 +196,9 @@ inline void from_json(const BasicJsonType& j, std::valarray<T>& l)
     l.resize(j.size());
     std::transform(j.begin(), j.end(), std::begin(l),
                    [](const BasicJsonType & elem)
-    {
-        return elem.template get<T>();
-    });
+                   {
+                       return elem.template get<T>();
+                   });
 }
 
 template<typename BasicJsonType, typename T, std::size_t N>
@@ -293,11 +292,11 @@ auto from_json_array_impl(const BasicJsonType& j, ConstructibleArrayType& arr, p
     ret.reserve(j.size());
     std::transform(j.begin(), j.end(),
                    std::inserter(ret, end(ret)), [](const BasicJsonType & i)
-    {
-        // get<BasicJsonType>() returns *this, this won't call a from_json
-        // method when value_type is BasicJsonType
-        return i.template get<typename ConstructibleArrayType::value_type>();
-    });
+                   {
+                       // get<BasicJsonType>() returns *this, this won't call a from_json
+                       // method when value_type is BasicJsonType
+                       return i.template get<typename ConstructibleArrayType::value_type>();
+                   });
     arr = std::move(ret);
 }
 
@@ -314,11 +313,11 @@ inline void from_json_array_impl(const BasicJsonType& j, ConstructibleArrayType&
     std::transform(
         j.begin(), j.end(), std::inserter(ret, end(ret)),
         [](const BasicJsonType & i)
-    {
-        // get<BasicJsonType>() returns *this, this won't call a from_json
-        // method when value_type is BasicJsonType
-        return i.template get<typename ConstructibleArrayType::value_type>();
-    });
+        {
+            // get<BasicJsonType>() returns *this, this won't call a from_json
+            // method when value_type is BasicJsonType
+            return i.template get<typename ConstructibleArrayType::value_type>();
+        });
     arr = std::move(ret);
 }
 
@@ -389,9 +388,9 @@ inline void from_json(const BasicJsonType& j, ConstructibleObjectType& obj)
         inner_object->begin(), inner_object->end(),
         std::inserter(ret, ret.begin()),
         [](typename BasicJsonType::object_t::value_type const & p)
-    {
-        return value_type(p.first, p.second.template get<typename ConstructibleObjectType::mapped_type>());
-    });
+        {
+            return value_type(p.first, p.second.template get<typename ConstructibleObjectType::mapped_type>());
+        });
     obj = std::move(ret);
 }
 

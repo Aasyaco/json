@@ -222,9 +222,9 @@
         static const std::pair<ENUM_TYPE, BasicJsonType> m[] = __VA_ARGS__;                     \
         auto it = std::find_if(std::begin(m), std::end(m),                                      \
                                [e](const std::pair<ENUM_TYPE, BasicJsonType>& ej_pair) -> bool  \
-        {                                                                                       \
-            return ej_pair.first == e;                                                          \
-        });                                                                                     \
+                               {                                                                                       \
+                                       return ej_pair.first == e;                                                          \
+                               });                                                                                     \
         j = ((it != std::end(m)) ? it : std::begin(m))->second;                                 \
     }                                                                                           \
     template<typename BasicJsonType>                                                            \
@@ -236,9 +236,9 @@
         static const std::pair<ENUM_TYPE, BasicJsonType> m[] = __VA_ARGS__;                     \
         auto it = std::find_if(std::begin(m), std::end(m),                                      \
                                [&j](const std::pair<ENUM_TYPE, BasicJsonType>& ej_pair) -> bool \
-        {                                                                                       \
-            return ej_pair.second == j;                                                         \
-        });                                                                                     \
+                               {                                                                                       \
+                                       return ej_pair.second == j;                                                         \
+                               });                                                                                     \
         e = ((it != std::end(m)) ? it : std::begin(m))->first;                                  \
     }
 

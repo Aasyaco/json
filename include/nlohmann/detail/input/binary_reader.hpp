@@ -863,16 +863,16 @@ class binary_reader
                     JSON_ASSERT(mant <= 1024);
                     switch (exp)
                     {
-                        case 0:
+                    case 0:
                             return std::ldexp(mant, -24);
                         case 31:
-                            return (mant == 0)
-                            ? std::numeric_limits<double>::infinity()
-                            : std::numeric_limits<double>::quiet_NaN();
-                        default:
-                            return std::ldexp(mant + 1024, exp - 25);
-                    }
-                }();
+                                return (mant == 0)
+                                ? std::numeric_limits<double>::infinity()
+                                : std::numeric_limits<double>::quiet_NaN();
+                            default:
+                                    return std::ldexp(mant + 1024, exp - 25);
+                                }
+                            }();
                 return sax->number_float((half & 0x8000u) != 0
                                          ? static_cast<number_float_t>(-val)
                                          : static_cast<number_float_t>(val), "");
@@ -2410,16 +2410,16 @@ class binary_reader
                     JSON_ASSERT(mant <= 1024);
                     switch (exp)
                     {
-                        case 0:
+                    case 0:
                             return std::ldexp(mant, -24);
                         case 31:
-                            return (mant == 0)
-                            ? std::numeric_limits<double>::infinity()
-                            : std::numeric_limits<double>::quiet_NaN();
-                        default:
-                            return std::ldexp(mant + 1024, exp - 25);
-                    }
-                }();
+                                return (mant == 0)
+                                ? std::numeric_limits<double>::infinity()
+                                : std::numeric_limits<double>::quiet_NaN();
+                            default:
+                                    return std::ldexp(mant + 1024, exp - 25);
+                                }
+                            }();
                 return sax->number_float((half & 0x8000u) != 0
                                          ? static_cast<number_float_t>(-val)
                                          : static_cast<number_float_t>(val), "");

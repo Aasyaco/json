@@ -343,14 +343,14 @@ TEST_CASE("alternative string type")
 
         CHECK_NOTHROW(doc1.patch(patch1));
         alt_json doc1_ans = alt_json::parse(R"(
-                {
-                    "a": {
-                        "foo": 1,
-                        "b": [ "foo", "bar" ]
-                    }
-                }
-            )");
-        CHECK(doc1.patch(patch1) == doc1_ans);
+                                            {
+                                                "a": {
+                                                    "foo": 1,
+                                                    "b": [ "foo", "bar" ]
+                                                }
+                                            }
+                                           )");
+                            CHECK(doc1.patch(patch1) == doc1_ans);
     }
 
     SECTION("diff")

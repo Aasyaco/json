@@ -255,9 +255,9 @@ bool accept_helper(const std::string& s)
 
     // 5. parse with simple callback
     json::parser_callback_t const cb = [](int /*unused*/, json::parse_event_t /*unused*/, json& /*unused*/) noexcept
-    {
-        return true;
-    };
+                                       {
+                                           return true;
+                                       };
     json const j_cb = json::parse(s, cb, false);
     const bool ok_noexcept_cb = !j_cb.is_discarded();
 
@@ -1409,9 +1409,9 @@ TEST_CASE("parser class")
         // test case to make sure the callback is properly evaluated after reading a key
         {
             json::parser_callback_t const cb = [](int /*unused*/, json::parse_event_t event, json& /*unused*/) noexcept
-            {
-                return event != json::parse_event_t::key;
-            };
+                                               {
+                                                   return event != json::parse_event_t::key;
+                                               };
 
             json x = json::parse("{\"key\": false}", cb);
             CHECK(x == json::object());
@@ -1448,16 +1448,16 @@ TEST_CASE("parser class")
         SECTION("filter nothing")
         {
             json j_object = json::parse(s_object, [](int /*unused*/, json::parse_event_t /*unused*/, const json& /*unused*/) noexcept
-            {
-                return true;
-            });
+                                        {
+                                            return true;
+                                        });
 
             CHECK (j_object == json({{"foo", 2}, {"bar", {{"baz", 1}}}}));
 
             json j_array = json::parse(s_array, [](int /*unused*/, json::parse_event_t /*unused*/, const json& /*unused*/) noexcept
-            {
-                return true;
-            });
+                                       {
+                                           return true;
+                                       });
 
             CHECK (j_array == json({1, 2, {3, 4, 5}, 4, 5}));
         }
@@ -1465,17 +1465,17 @@ TEST_CASE("parser class")
         SECTION("filter everything")
         {
             json const j_object = json::parse(s_object, [](int /*unused*/, json::parse_event_t /*unused*/, const json& /*unused*/) noexcept
-            {
-                return false;
-            });
+                                              {
+                                                  return false;
+                                              });
 
             // the top-level object will be discarded, leaving a null
             CHECK (j_object.is_null());
 
             json const j_array = json::parse(s_array, [](int /*unused*/, json::parse_event_t /*unused*/, const json& /*unused*/) noexcept
-            {
-                return false;
-            });
+                                             {
+                                                 return false;
+                                             });
 
             // the top-level array will be discarded, leaving a null
             CHECK (j_array.is_null());
@@ -1484,17 +1484,17 @@ TEST_CASE("parser class")
         SECTION("filter specific element")
         {
             json j_object = json::parse(s_object, [](int /*unused*/, json::parse_event_t event, const json & j) noexcept
-            {
-                // filter all number(2) elements
-                return event != json::parse_event_t::value || j != json(2);
-            });
+                                        {
+                                            // filter all number(2) elements
+                                            return event != json::parse_event_t::value || j != json(2);
+                                        });
 
             CHECK (j_object == json({{"bar", {{"baz", 1}}}}));
 
             json j_array = json::parse(s_array, [](int /*unused*/, json::parse_event_t event, const json & j) noexcept
-            {
-                return event != json::parse_event_t::value || j != json(2);
-            });
+                                       {
+                                           return event != json::parse_event_t::value || j != json(2);
+                                       });
 
             CHECK (j_array == json({1, {3, 4, 5}, 4, 5}));
         }
@@ -1502,18 +1502,18 @@ TEST_CASE("parser class")
         SECTION("filter object in array")
         {
             json j_filtered1 = json::parse(structured_array, [](int /*unused*/, json::parse_event_t e, const json & parsed)
-            {
-                return !(e == json::parse_event_t::object_end && parsed.contains("foo"));
-            });
+                                           {
+                                               return !(e == json::parse_event_t::object_end && parsed.contains("foo"));
+                                           });
 
             // the specified object will be discarded, and removed.
             CHECK (j_filtered1.size() == 2);
             CHECK (j_filtered1 == json({1, {{"qux", "baz"}}}));
 
             json j_filtered2 = json::parse(structured_array, [](int /*unused*/, json::parse_event_t e, const json& /*parsed*/) noexcept
-            {
-                return e != json::parse_event_t::object_end;
-            });
+                                           {
+                                               return e != json::parse_event_t::object_end;
+                                           });
 
             // removed all objects in array.
             CHECK (j_filtered2.size() == 1);
@@ -1526,16 +1526,16 @@ TEST_CASE("parser class")
             {
                 {
                     json j_object = json::parse(s_object, [](int /*unused*/, json::parse_event_t e, const json& /*unused*/) noexcept
-                    {
-                        static bool first = true;
-                        if (e == json::parse_event_t::object_end && first)
-                        {
-                            first = false;
-                            return false;
-                        }
+                                                {
+                                                    static bool first = true;
+                                                    if (e == json::parse_event_t::object_end && first)
+                                                    {
+                                                        first = false;
+                                                        return false;
+                                                    }
 
-                        return true;
-                    });
+                                                    return true;
+                                                });
 
                     // the first completed object will be discarded
                     CHECK (j_object == json({{"foo", 2}}));
@@ -1543,16 +1543,16 @@ TEST_CASE("parser class")
 
                 {
                     json j_array = json::parse(s_array, [](int /*unused*/, json::parse_event_t e, const json& /*unused*/) noexcept
-                    {
-                        static bool first = true;
-                        if (e == json::parse_event_t::array_end && first)
-                        {
-                            first = false;
-                            return false;
-                        }
+                                               {
+                                                   static bool first = true;
+                                                   if (e == json::parse_event_t::array_end && first)
+                                                   {
+                                                       first = false;
+                                                       return false;
+                                                   }
 
-                        return true;
-                    });
+                                                   return true;
+                                               });
 
                     // the first completed array will be discarded
                     CHECK (j_array == json({1, 2, 4, 5}));
@@ -1567,15 +1567,15 @@ TEST_CASE("parser class")
             // has been read
 
             json j_empty_object = json::parse("{}", [](int /*unused*/, json::parse_event_t e, const json& /*unused*/) noexcept
-            {
-                return e != json::parse_event_t::object_end;
-            });
+                                              {
+                                                  return e != json::parse_event_t::object_end;
+                                              });
             CHECK(j_empty_object == json());
 
             json j_empty_array = json::parse("[]", [](int /*unused*/, json::parse_event_t e, const json& /*unused*/) noexcept
-            {
-                return e != json::parse_event_t::array_end;
-            });
+                                             {
+                                                 return e != json::parse_event_t::array_end;
+                                             });
             CHECK(j_empty_array == json());
         }
     }
@@ -1641,9 +1641,9 @@ TEST_CASE("parser class")
         SECTION("parser with callback")
         {
             json::parser_callback_t const cb = [](int /*unused*/, json::parse_event_t /*unused*/, json& /*unused*/) noexcept
-            {
-                return true;
-            };
+                                               {
+                                                   return true;
+                                               };
 
             CHECK(json::parse("{\"foo\": true:", cb, false).is_discarded());
 
@@ -1743,17 +1743,17 @@ TEST_CASE("parser class")
         SECTION("filter nothing") \
         { \
             json::parser_callback_t const cb = [](int /*unused*/, json::parse_event_t /*unused*/, json& /*unused*/) noexcept \
-            { \
-                return true; \
-            }; \
+                                               { \
+                                                 return true; \
+                                               }; \
             validate_start_end_pos_for_nested_obj_helper(nested_type_json_str, root_type_json_str, expected, cb); \
         } \
         SECTION("filter element") \
         { \
             json::parser_callback_t const cb = [](int /*unused*/, json::parse_event_t event, json& j) noexcept \
-            { \
-                return (event != json::parse_event_t::key && event != json::parse_event_t::value) || j != json("a"); \
-            }; \
+                                               { \
+                                                 return (event != json::parse_event_t::key && event != json::parse_event_t::value) || j != json("a"); \
+                                               }; \
             validate_start_end_pos_for_nested_obj_helper(nested_type_json_str, root_type_json_str, filteredExpected, cb); \
         } \
     } \
@@ -1824,9 +1824,9 @@ TEST_CASE("parser class")
                 SECTION("with callback")
                 {
                     json::parser_callback_t const cb = [](int /*unused*/, json::parse_event_t /*unused*/, json& /*unused*/) noexcept
-                    {
-                        return true;
-                    };
+                                                       {
+                                                           return true;
+                                                       };
 
                     // 1. string type
                     std::string json_str =  R"("test")";

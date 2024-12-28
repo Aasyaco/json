@@ -807,9 +807,9 @@ class binary_writer
                     const CharType first_prefix = ubjson_prefix(j.front(), use_bjdata);
                     const bool same_prefix = std::all_of(j.begin() + 1, j.end(),
                                                          [this, first_prefix, use_bjdata](const BasicJsonType & v)
-                    {
-                        return ubjson_prefix(v, use_bjdata) == first_prefix;
-                    });
+                                                         {
+                                                             return ubjson_prefix(v, use_bjdata) == first_prefix;
+                                                         });
 
                     std::vector<CharType> bjdx = {'[', '{', 'S', 'H', 'T', 'F', 'N', 'Z'}; // excluded markers in bjdata optimized type
 
@@ -905,9 +905,9 @@ class binary_writer
                     const CharType first_prefix = ubjson_prefix(j.front(), use_bjdata);
                     const bool same_prefix = std::all_of(j.begin(), j.end(),
                                                          [this, first_prefix, use_bjdata](const BasicJsonType & v)
-                    {
-                        return ubjson_prefix(v, use_bjdata) == first_prefix;
-                    });
+                                                         {
+                                                             return ubjson_prefix(v, use_bjdata) == first_prefix;
+                                                         });
 
                     std::vector<CharType> bjdx = {'[', '{', 'S', 'H', 'T', 'F', 'N', 'Z'}; // excluded markers in bjdata optimized type
 
@@ -1109,9 +1109,9 @@ class binary_writer
         std::size_t array_index = 0ul;
 
         const std::size_t embedded_document_size = std::accumulate(std::begin(value), std::end(value), static_cast<std::size_t>(0), [&array_index](std::size_t result, const typename BasicJsonType::array_t::value_type & el)
-        {
-            return result + calc_bson_element_size(std::to_string(array_index++), el);
-        });
+                {
+                    return result + calc_bson_element_size(std::to_string(array_index++), el);
+                });
 
         return sizeof(std::int32_t) + embedded_document_size + 1ul;
     }
@@ -1260,9 +1260,9 @@ class binary_writer
     {
         const std::size_t document_size = std::accumulate(value.begin(), value.end(), static_cast<std::size_t>(0),
                                           [](size_t result, const typename BasicJsonType::object_t::value_type & el)
-        {
-            return result += calc_bson_element_size(el.first, el.second);
-        });
+                                          {
+                                              return result += calc_bson_element_size(el.first, el.second);
+                                          });
 
         return sizeof(std::int32_t) + document_size + 1ul;
     }

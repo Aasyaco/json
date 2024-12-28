@@ -8,11 +8,6 @@ set(N 10)
 include(FindPython3)
 find_package(Python3 COMPONENTS Interpreter)
 
-find_program(ASTYLE_TOOL NAMES astyle)
-execute_process(COMMAND ${ASTYLE_TOOL} --version OUTPUT_VARIABLE ASTYLE_TOOL_VERSION ERROR_VARIABLE ASTYLE_TOOL_VERSION)
-string(REGEX MATCH "[0-9]+(\\.[0-9]+)+" ASTYLE_TOOL_VERSION "${ASTYLE_TOOL_VERSION}")
-message(STATUS "🔖 Artistic Style ${ASTYLE_TOOL_VERSION} (${ASTYLE_TOOL})")
-
 find_program(CLANG_TOOL NAMES clang++-HEAD clang++ clang++-20 clang++-19 clang++-18 clang++-17 clang++-16 clang++-15 clang++-14 clang++-13 clang++-12 clang++-11 clang++)
 execute_process(COMMAND ${CLANG_TOOL} --version OUTPUT_VARIABLE CLANG_TOOL_VERSION ERROR_VARIABLE CLANG_TOOL_VERSION)
 string(REGEX MATCH "[0-9]+(\\.[0-9]+)+" CLANG_TOOL_VERSION "${CLANG_TOOL_VERSION}")
@@ -647,18 +642,18 @@ add_custom_target(ci_test_amalgamation
     COMMAND cp ${include_dir}/json.hpp ${include_dir}/json.hpp~
     COMMAND cp ${include_dir}/json_fwd.hpp ${include_dir}/json_fwd.hpp~
 
+    COMMAND ${Python3_EXECUTABLE} -mvenv venv_astyle
+    COMMAND venv_astyle/bin/pip3 --quiet install -r ${CMAKE_SOURCE_DIR}/tools/astyle/requirements.txt
+    COMMAND venv_astyle/bin/astyle --version
+
     COMMAND ${Python3_EXECUTABLE} ${tool_dir}/amalgamate.py -c ${tool_dir}/config_json.json -s .
     COMMAND ${Python3_EXECUTABLE} ${tool_dir}/amalgamate.py -c ${tool_dir}/config_json_fwd.json -s .
-    COMMAND ls
-    COMMAND ls tools
-    COMMAND ls tools/astyle
-    COMMAND cat tools/astyle/.astylerc
-    COMMAND ${ASTYLE_TOOL} --project=tools/astyle/.astylerc --suffix=none ${include_dir}/json.hpp ${include_dir}/json_fwd.hpp
+    COMMAND venv_astyle/bin/astyle --project=tools/astyle/.astylerc --suffix=none ${include_dir}/json.hpp ${include_dir}/json_fwd.hpp
 
     COMMAND diff ${include_dir}/json.hpp~ ${include_dir}/json.hpp
     COMMAND diff ${include_dir}/json_fwd.hpp~ ${include_dir}/json_fwd.hpp
 
-    COMMAND ${ASTYLE_TOOL} --project=tools/astyle/.astylerc --suffix=orig ${INDENT_FILES}
+    COMMAND venv_astyle/bin/astyle --project=tools/astyle/.astylerc --suffix=orig ${INDENT_FILES}
     COMMAND for FILE in `find . -name '*.orig'`\; do false \; done
 
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}

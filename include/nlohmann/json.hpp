@@ -692,9 +692,9 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
         {
             // cppcheck-suppress assertWithSideEffect
             JSON_ASSERT(!check_parents || !is_structured() || std::all_of(begin(), end(), [this](const basic_json & j)
-            {
-                return j.m_parent == this;
-            }));
+                        {
+                            return j.m_parent == this;
+                        }));
         }
         JSON_CATCH(...) {} // LCOV_EXCL_LINE
 #endif
@@ -913,12 +913,12 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
         // element is a string
         bool is_an_object = std::all_of(init.begin(), init.end(),
                                         [](const detail::json_ref<basic_json>& element_ref)
-        {
-            // The cast is to ensure op[size_type] is called, bearing in mind size_type may not be int;
-            // (many string types can be constructed from 0 via its null-pointer guise, so we get a
-            // broken call to op[key_type], the wrong semantics and a 4804 warning on Windows)
-            return element_ref->is_array() && element_ref->size() == 2 && (*element_ref)[static_cast<size_type>(0)].is_string();
-        });
+                                        {
+                                            // The cast is to ensure op[size_type] is called, bearing in mind size_type may not be int;
+                                            // (many string types can be constructed from 0 via its null-pointer guise, so we get a
+                                            // broken call to op[key_type], the wrong semantics and a 4804 warning on Windows)
+                                            return element_ref->is_array() && element_ref->size() == 2 && (*element_ref)[static_cast<size_type>(0)].is_string();
+                                        });
 
         // adjust type if type deduction is not wanted
         if (!type_deduction)

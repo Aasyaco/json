@@ -866,9 +866,9 @@ class serializer
         const bool value_is_int_like =
             std::none_of(number_buffer.begin(), number_buffer.begin() + len + 1,
                          [](char c)
-        {
-            return c == '.' || c == 'e';
-        });
+                         {
+                             return c == '.' || c == 'e';
+                         });
 
         if (value_is_int_like)
         {

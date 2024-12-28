@@ -142,9 +142,16 @@ pvs_studio:
 # Code format and source amalgamation
 ##########################################################################
 
+ASTYLE=tools/astyle/venv/bin/astyle
+
+install_astyle:
+	@test -d tools/astyle/venv || python3 -mvenv tools/astyle/venv ; tools/astyle/venv/bin/pip3 install --quiet --upgrade pip
+	@test -f $(ASTYLE) || tools/astyle/venv/bin/pip3 install --quiet -r tools/astyle/requirements.txt
+	@$(ASTYLE) --version
+
 # call the Artistic Style pretty printer on all source files
-pretty:
-	astyle --project=tools/astyle/.astylerc $(SRCS) $(TESTS_SRCS) $(AMALGAMATED_FILE) $(AMALGAMATED_FWD_FILE) docs/examples/*.cpp
+pretty: install_astyle
+	$(ASTYLE) --project=tools/astyle/.astylerc $(SRCS) $(TESTS_SRCS) $(AMALGAMATED_FILE) $(AMALGAMATED_FWD_FILE) docs/examples/*.cpp
 
 # call the Clang-Format on all source files
 pretty_format:

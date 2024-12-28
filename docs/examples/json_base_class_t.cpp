@@ -81,8 +81,8 @@ int main()
     j.visit(
         [&](const json::json_pointer & p,
             const json & j)
-    {
-        std::cout << (p.empty() ? std::string{"/"} : p.to_string())
-                  << " - metadata = " << j.metadata << " -> " << j.dump() << '\n';
-    });
+        {
+            std::cout << (p.empty() ? std::string{"/"} : p.to_string())
+            << " - metadata = " << j.metadata << " -> " << j.dump() << '\n';
+        });
 }

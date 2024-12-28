@@ -577,17 +577,17 @@ TEST_CASE("lexicographical comparison operators")
             )";
 
             json j_object = json::parse(s_object, [](int /*unused*/, json::parse_event_t /*unused*/, const json & j) noexcept
-            {
-                // filter all number(2) elements
-                return j != json(2);
-            });
+                                        {
+                                            // filter all number(2) elements
+                                            return j != json(2);
+                                        });
 
             CHECK (j_object == json({{"bar", {{"baz", 1}}}}));
 
             json j_array = json::parse(s_array, [](int /*unused*/, json::parse_event_t /*unused*/, const json & j) noexcept
-            {
-                return j != json(2);
-            });
+                                       {
+                                           return j != json(2);
+                                       });
 
             CHECK (j_array == json({1, {3, 4, 5}, 4, 5}));
         }

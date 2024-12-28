@@ -417,48 +417,48 @@ TEST_CASE("regression tests 2")
              })";
 
         const json::parser_callback_t cb = [&](int /*level*/, json::parse_event_t event, json & parsed) noexcept
+                                           {
+                                               // skip uninteresting events
+                                               if (event == json::parse_event_t::value && !parsed.is_primitive())
+                                               {
+                                                   return false;
+                                               }
+
+                                               switch (event)
         {
-            // skip uninteresting events
-            if (event == json::parse_event_t::value && !parsed.is_primitive())
+            case json::parse_event_t::key:
+            {
+                return true;
+            }
+            case json::parse_event_t::value:
+            {
+                return false;
+            }
+            case json::parse_event_t::object_start:
+            {
+                return true;
+            }
+            case json::parse_event_t::object_end:
+            {
+                return false;
+            }
+            case json::parse_event_t::array_start:
+            {
+                return true;
+            }
+            case json::parse_event_t::array_end:
             {
                 return false;
             }
 
-            switch (event)
+            default:
             {
-                case json::parse_event_t::key:
-                {
-                    return true;
-                }
-                case json::parse_event_t::value:
-                {
-                    return false;
-                }
-                case json::parse_event_t::object_start:
-                {
-                    return true;
-                }
-                case json::parse_event_t::object_end:
-                {
-                    return false;
-                }
-                case json::parse_event_t::array_start:
-                {
-                    return true;
-                }
-                case json::parse_event_t::array_end:
-                {
-                    return false;
-                }
-
-                default:
-                {
-                    return true;
-                }
+                return true;
             }
-        };
+        }
+                                       };
 
-        auto j = json::parse(geojsonExample, cb, true);
+    auto j = json::parse(geojsonExample, cb, true);
         CHECK(j == json());
     }
 
@@ -490,10 +490,10 @@ TEST_CASE("regression tests 2")
             p2.end(),
             std::inserter(diffs, diffs.end()),
             [&](const it_type & e1, const it_type & e2) -> bool
-        {
-            using comper_pair = std::pair<std::string, decltype(e1.value())>;              // Trying to avoid unneeded copy
-            return comper_pair(e1.key(), e1.value()) < comper_pair(e2.key(), e2.value());  // Using pair comper
-        });
+            {
+                using comper_pair = std::pair<std::string, decltype(e1.value())>;              // Trying to avoid unneeded copy
+                return comper_pair(e1.key(), e1.value()) < comper_pair(e2.key(), e2.value());  // Using pair comper
+            });
 
         CHECK(diffs.size() == 1);  // Note the change here, was 2
     }
@@ -918,9 +918,9 @@ TEST_CASE("regression tests 2")
         CHECK(j.dump() == "[1,2,4]");
 
         j.erase(std::remove_if(j.begin(), j.end(), [](const ordered_json & val)
-        {
-            return val == 2;
-        }), j.end());
+                               {
+                                   return val == 2;
+                               }), j.end());
 
         CHECK(j.dump() == "[1,4]");
     }

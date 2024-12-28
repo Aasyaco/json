@@ -52,8 +52,8 @@ jobs:
 
       - name: Install astyle
         run: |
-          sudo apt-get update
-          sudo apt-get install astyle
+          python3 -mvenv venv
+          venv/bin/pip3 install -r tools/astyle/requirements.txt
 
       - name: Check amalgamation
         run: |
@@ -66,11 +66,11 @@ jobs:
           python3 $TOOL_DIR/amalgamate.py -c $TOOL_DIR/config_json.json -s .
           python3 $TOOL_DIR/amalgamate.py -c $TOOL_DIR/config_json_fwd.json -s .
           echo "Format (1)"
-          astyle --project=tools/astyle/.astylerc --suffix=none --quiet $INCLUDE_DIR/json.hpp $INCLUDE_DIR/json_fwd.hpp
+          venv/bin/astyle --project=tools/astyle/.astylerc --suffix=none --quiet $INCLUDE_DIR/json.hpp $INCLUDE_DIR/json_fwd.hpp
 
           diff $INCLUDE_DIR/json.hpp~ $INCLUDE_DIR/json.hpp
           diff $INCLUDE_DIR/json_fwd.hpp~ $INCLUDE_DIR/json_fwd.hpp
 
-          astyle --project=tools/astyle/.astylerc --suffix=orig $(find docs/examples include tests -type f \( -name '*.hpp' -o -name '*.cpp' -o -name '*.cu' \) -not -path 'tests/thirdparty/*' -not -path 'tests/abi/include/nlohmann/*' | sort)
+          venv/bin/astyle --project=tools/astyle/.astylerc --suffix=orig $(find docs/examples include tests -type f \( -name '*.hpp' -o -name '*.cpp' -o -name '*.cu' \) -not -path 'tests/thirdparty/*' -not -path 'tests/abi/include/nlohmann/*' | sort)
           echo Check
           find $MAIN_DIR -name '*.orig' -exec false {} \+
