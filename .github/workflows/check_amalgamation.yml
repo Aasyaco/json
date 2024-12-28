@@ -53,7 +53,7 @@ jobs:
       - name: Install astyle
         run: |
           python3 -mvenv venv
-          venv/bin/pip3 install -r tools/astyle/requirements.txt
+          venv/bin/pip3 install -r $MAIN_DIR/tools/astyle/requirements.txt
 
       - name: Check amalgamation
         run: |
