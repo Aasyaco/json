@@ -632,8 +632,6 @@ add_custom_target(ci_test_clang_sanitizer
 # Check if header is amalgamated and sources are properly indented.
 ###############################################################################
 
-set(ASTYLE_FLAGS --style=allman --indent=spaces=4 --indent-modifiers --indent-switches --indent-preproc-block --indent-preproc-define --indent-col1-comments --pad-oper --pad-header --align-pointer=type --align-reference=type --add-brackets --convert-tabs --close-templates --lineend=linux --preserve-date --formatted)
-
 file(GLOB_RECURSE INDENT_FILES
     ${PROJECT_SOURCE_DIR}/include/nlohmann/*.hpp
         ${PROJECT_SOURCE_DIR}/tests/src/*.cpp
@@ -651,12 +649,12 @@ add_custom_target(ci_test_amalgamation
 
     COMMAND ${Python3_EXECUTABLE} ${tool_dir}/amalgamate.py -c ${tool_dir}/config_json.json -s .
     COMMAND ${Python3_EXECUTABLE} ${tool_dir}/amalgamate.py -c ${tool_dir}/config_json_fwd.json -s .
-    COMMAND ${ASTYLE_TOOL} ${ASTYLE_FLAGS} --suffix=none --quiet ${include_dir}/json.hpp ${include_dir}/json_fwd.hpp
+    COMMAND ${ASTYLE_TOOL} --project=tools/astyle/.astylerc --suffix=none --quiet ${include_dir}/json.hpp ${include_dir}/json_fwd.hpp
 
     COMMAND diff ${include_dir}/json.hpp~ ${include_dir}/json.hpp
     COMMAND diff ${include_dir}/json_fwd.hpp~ ${include_dir}/json_fwd.hpp
 
-    COMMAND ${ASTYLE_TOOL} ${ASTYLE_FLAGS} ${INDENT_FILES}
+    COMMAND ${ASTYLE_TOOL} --project=tools/astyle/.astylerc --suffix=orig ${INDENT_FILES}
     COMMAND for FILE in `find . -name '*.orig'`\; do false \; done
 
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
