@@ -649,12 +649,12 @@ add_custom_target(ci_test_amalgamation
 
     COMMAND ${Python3_EXECUTABLE} ${tool_dir}/amalgamate.py -c ${tool_dir}/config_json.json -s .
     COMMAND ${Python3_EXECUTABLE} ${tool_dir}/amalgamate.py -c ${tool_dir}/config_json_fwd.json -s .
-    COMMAND ${ASTYLE_TOOL} --project=${PROJECT_SOURCE_DIR}/tools/astyle/.astylerc --suffix=none --quiet ${include_dir}/json.hpp ${include_dir}/json_fwd.hpp
+    COMMAND ${ASTYLE_TOOL} --project=tools/astyle/.astylerc --suffix=none ${include_dir}/json.hpp ${include_dir}/json_fwd.hpp
 
     COMMAND diff ${include_dir}/json.hpp~ ${include_dir}/json.hpp
     COMMAND diff ${include_dir}/json_fwd.hpp~ ${include_dir}/json_fwd.hpp
 
-    COMMAND ${ASTYLE_TOOL} --project=${PROJECT_SOURCE_DIR}/tools/astyle/.astylerc --suffix=orig ${INDENT_FILES}
+    COMMAND ${ASTYLE_TOOL} --project=tools/astyle/.astylerc --suffix=orig ${INDENT_FILES}
     COMMAND for FILE in `find . -name '*.orig'`\; do false \; done
 
     WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
