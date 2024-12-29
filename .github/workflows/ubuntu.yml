@@ -43,21 +43,15 @@ jobs:
       - name: Build
         run: cmake --build build --target ci_test_gcc
 
-  ci_static_analysis:
+  ci_infer:
     runs-on: ubuntu-latest
     container: ghcr.io/nlohmann/json-ci:v2.4.0
-    strategy:
-      matrix:
-        target: [
-          ci_test_amalgamation, # needs AStyle
-          ci_infer              # needs Infer
-        ]
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
       - name: Run CMake
         run: cmake -S . -B build -DJSON_CI=On
       - name: Build
-        run: cmake --build build --target ${{ matrix.target }}
+        run: cmake --build build --target ci_infer
 
   ci_test_single_header:
     runs-on: ubuntu-latest
