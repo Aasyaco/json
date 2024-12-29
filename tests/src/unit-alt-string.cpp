@@ -350,7 +350,7 @@ TEST_CASE("alternative string type")
                                                 }
                                             }
                                            )");
-                            CHECK(doc1.patch(patch1) == doc1_ans);
+        CHECK(doc1.patch(patch1) == doc1_ans);
     }
 
     SECTION("diff")

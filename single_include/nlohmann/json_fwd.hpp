@@ -24,6 +24,8 @@
 // SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
 // SPDX-License-Identifier: MIT
 
+
+
 // This file contains all macro definitions affecting or depending on the ABI
 
 #ifndef JSON_SKIP_LIBRARY_VERSION_CHECK
@@ -125,6 +127,7 @@
     }  /* namespace (inline namespace) NOLINT(readability/namespace) */ \
     }  // namespace nlohmann
 #endif
+
 
 /*!
 @brief namespace for Niels Lohmann
