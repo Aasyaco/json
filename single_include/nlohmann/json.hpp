@@ -5267,11 +5267,14 @@ NLOHMANN_JSON_NAMESPACE_END
 
 
 
-#include <algorithm> // copy
-#include <iterator> // begin, end
+// #include <nlohmann/detail/macro_scope.hpp>
+// JSON_HAS_CPP_17
 #ifdef JSON_HAS_CPP_17
     #include <optional> // optional
 #endif
+
+#include <algorithm> // copy
+#include <iterator> // begin, end
 #include <string> // string
 #include <tuple> // tuple, get
 #include <type_traits> // is_same, is_constructible, is_floating_point, is_enum, underlying_type
@@ -5557,8 +5560,6 @@ class tuple_element<N, ::nlohmann::detail::iteration_proxy_value<IteratorType >>
     template <typename IteratorType>
     inline constexpr bool ::std::ranges::enable_borrowed_range<::nlohmann::detail::iteration_proxy<IteratorType>> = true;
 #endif
-
-// #include <nlohmann/detail/macro_scope.hpp>
 
 // #include <nlohmann/detail/meta/cpp_future.hpp>
 
