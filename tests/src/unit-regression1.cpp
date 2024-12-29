@@ -306,18 +306,18 @@ TEST_CASE("regression tests 1")
             ++rit;
             json b = {0, 0, 0};
             std::transform(rit, a.rend(), b.rbegin(), [](json el)
-                           {
-                               return el;
-                           });
+            {
+                return el;
+            });
             CHECK(b == json({0, 1, 2}));
         }
         {
             json a = {1, 2, 3};
             json b = {0, 0, 0};
             std::transform(++a.rbegin(), a.rend(), b.rbegin(), [](json el)
-                           {
-                               return el;
-                           });
+            {
+                return el;
+            });
             CHECK(b == json({0, 1, 2}));
         }
     }
@@ -1335,10 +1335,10 @@ TEST_CASE("regression tests 1")
         {
             std::ifstream is;
             is.exceptions(
-                is.exceptions()
-                | std::ios_base::failbit
-                | std::ios_base::badbit
-            ); // handle different exceptions as 'file not found', 'permission denied'
+                  is.exceptions()
+                  | std::ios_base::failbit
+                  | std::ios_base::badbit
+              ); // handle different exceptions as 'file not found', 'permission denied'
 
             is.open(TEST_DATA_DIRECTORY "/regression/working_file.json");
             json _;
@@ -1348,10 +1348,10 @@ TEST_CASE("regression tests 1")
         {
             std::ifstream is;
             is.exceptions(
-                is.exceptions()
-                | std::ios_base::failbit
-                | std::ios_base::badbit
-            ); // handle different exceptions as 'file not found', 'permission denied'
+                  is.exceptions()
+                  | std::ios_base::failbit
+                  | std::ios_base::badbit
+              ); // handle different exceptions as 'file not found', 'permission denied'
 
             is.open(TEST_DATA_DIRECTORY "/json_nlohmann_tests/all_unicode.json.cbor",
                     std::ios_base::in | std::ios_base::binary);
@@ -1461,10 +1461,10 @@ TEST_CASE("regression tests 1")
 
         // define parser callback
         json::parser_callback_t const cb = [](int /*depth*/, json::parse_event_t event, json & parsed)
-                                           {
-                                               // skip object elements with key "Thumbnail"
-                                               return !(event == json::parse_event_t::key && parsed == json("Thumbnail"));
-                                           };
+        {
+            // skip object elements with key "Thumbnail"
+            return !(event == json::parse_event_t::key && parsed == json("Thumbnail"));
+        };
 
         // parse (with callback) and serialize JSON
         json j_filtered = json::parse(text, cb);
