@@ -8677,6 +8677,11 @@ struct json_sax
 
 namespace detail
 {
+constexpr std::size_t unknown_size()
+{
+    return (std::numeric_limits<std::size_t>::max)();
+}
+
 /*!
 @brief SAX implementation to create a JSON value from SAX events
 
@@ -8774,7 +8779,7 @@ class json_sax_dom_parser
         }
 #endif
 
-        if (JSON_HEDLEY_UNLIKELY(len != static_cast<std::size_t>(-1) && len > ref_stack.back()->max_size()))
+        if (JSON_HEDLEY_UNLIKELY(len != detail::unknown_size() && len > ref_stack.back()->max_size()))
         {
             JSON_THROW(out_of_range::create(408, concat("excessive object size: ", std::to_string(len)), ref_stack.back()));
         }
@@ -8823,7 +8828,7 @@ class json_sax_dom_parser
         }
 #endif
 
-        if (JSON_HEDLEY_UNLIKELY(len != static_cast<std::size_t>(-1) && len > ref_stack.back()->max_size()))
+        if (JSON_HEDLEY_UNLIKELY(len != detail::unknown_size() && len > ref_stack.back()->max_size()))
         {
             JSON_THROW(out_of_range::create(408, concat("excessive array size: ", std::to_string(len)), ref_stack.back()));
         }
@@ -9091,7 +9096,7 @@ class json_sax_dom_callback_parser
 #endif
 
             // check object limit
-            if (JSON_HEDLEY_UNLIKELY(len != static_cast<std::size_t>(-1) && len > ref_stack.back()->max_size()))
+            if (JSON_HEDLEY_UNLIKELY(len != detail::unknown_size() && len > ref_stack.back()->max_size()))
             {
                 JSON_THROW(out_of_range::create(408, concat("excessive object size: ", std::to_string(len)), ref_stack.back()));
             }
@@ -9189,7 +9194,7 @@ class json_sax_dom_callback_parser
 #endif
 
             // check array limit
-            if (JSON_HEDLEY_UNLIKELY(len != static_cast<std::size_t>(-1) && len > ref_stack.back()->max_size()))
+            if (JSON_HEDLEY_UNLIKELY(len != detail::unknown_size() && len > ref_stack.back()->max_size()))
             {
                 JSON_THROW(out_of_range::create(408, concat("excessive array size: ", std::to_string(len)), ref_stack.back()));
             }
@@ -9478,7 +9483,7 @@ class json_sax_acceptor
         return true;
     }
 
-    bool start_object(std::size_t /*unused*/ = static_cast<std::size_t>(-1))
+    bool start_object(std::size_t /*unused*/ = detail::unknown_size())
     {
         return true;
     }
@@ -9493,7 +9498,7 @@ class json_sax_acceptor
         return true;
     }
 
-    bool start_array(std::size_t /*unused*/ = static_cast<std::size_t>(-1))
+    bool start_array(std::size_t /*unused*/ = detail::unknown_size())
     {
         return true;
     }
@@ -9825,7 +9830,7 @@ class binary_reader
         std::int32_t document_size{};
         get_number<std::int32_t, true>(input_format_t::bson, document_size);
 
-        if (JSON_HEDLEY_UNLIKELY(!sax->start_object(static_cast<std::size_t>(-1))))
+        if (JSON_HEDLEY_UNLIKELY(!sax->start_object(detail::unknown_size())))
         {
             return false;
         }
@@ -10047,7 +10052,7 @@ class binary_reader
         std::int32_t document_size{};
         get_number<std::int32_t, true>(input_format_t::bson, document_size);
 
-        if (JSON_HEDLEY_UNLIKELY(!sax->start_array(static_cast<std::size_t>(-1))))
+        if (JSON_HEDLEY_UNLIKELY(!sax->start_array(detail::unknown_size())))
         {
             return false;
         }
@@ -10307,7 +10312,7 @@ class binary_reader
             }
 
             case 0x9F: // array (indefinite length)
-                return get_cbor_array(static_cast<std::size_t>(-1), tag_handler);
+                return get_cbor_array(detail::unknown_size(), tag_handler);
 
             // map (0x00..0x17 pairs of data items follow)
             case 0xA0:
@@ -10361,7 +10366,7 @@ class binary_reader
             }
 
             case 0xBF: // map (indefinite length)
-                return get_cbor_object(static_cast<std::size_t>(-1), tag_handler);
+                return get_cbor_object(detail::unknown_size(), tag_handler);
 
             case 0xC6: // tagged item
             case 0xC7:
@@ -10749,7 +10754,7 @@ class binary_reader
     }
 
     /*!
-    @param[in] len  the length of the array or static_cast<std::size_t>(-1) for an
+    @param[in] len  the length of the array or detail::unknown_size() for an
                     array of indefinite size
     @param[in] tag_handler how CBOR tags should be treated
     @return whether array creation completed
@@ -10762,7 +10767,7 @@ class binary_reader
             return false;
         }
 
-        if (len != static_cast<std::size_t>(-1))
+        if (len != detail::unknown_size())
         {
             for (std::size_t i = 0; i < len; ++i)
             {
@@ -10787,7 +10792,7 @@ class binary_reader
     }
 
     /*!
-    @param[in] len  the length of the object or static_cast<std::size_t>(-1) for an
+    @param[in] len  the length of the object or detail::unknown_size() for an
                     object of indefinite size
     @param[in] tag_handler how CBOR tags should be treated
     @return whether object creation completed
@@ -10803,7 +10808,7 @@ class binary_reader
         if (len != 0)
         {
             string_t key;
-            if (len != static_cast<std::size_t>(-1))
+            if (len != detail::unknown_size())
             {
                 for (std::size_t i = 0; i < len; ++i)
                 {
@@ -12221,7 +12226,7 @@ class binary_reader
         }
         else
         {
-            if (JSON_HEDLEY_UNLIKELY(!sax->start_array(static_cast<std::size_t>(-1))))
+            if (JSON_HEDLEY_UNLIKELY(!sax->start_array(detail::unknown_size())))
             {
                 return false;
             }
@@ -12299,7 +12304,7 @@ class binary_reader
         }
         else
         {
-            if (JSON_HEDLEY_UNLIKELY(!sax->start_object(static_cast<std::size_t>(-1))))
+            if (JSON_HEDLEY_UNLIKELY(!sax->start_object(detail::unknown_size())))
             {
                 return false;
             }
@@ -12635,7 +12640,7 @@ class binary_reader
     }
 
   private:
-    static JSON_INLINE_VARIABLE constexpr std::size_t npos = static_cast<std::size_t>(-1);
+    static JSON_INLINE_VARIABLE constexpr std::size_t npos = detail::unknown_size();
 
     /// input adapter
     InputAdapterType ia;
@@ -12905,7 +12910,7 @@ class parser
                 {
                     case token_type::begin_object:
                     {
-                        if (JSON_HEDLEY_UNLIKELY(!sax->start_object(static_cast<std::size_t>(-1))))
+                        if (JSON_HEDLEY_UNLIKELY(!sax->start_object(detail::unknown_size())))
                         {
                             return false;
                         }
@@ -12950,7 +12955,7 @@ class parser
 
                     case token_type::begin_array:
                     {
-                        if (JSON_HEDLEY_UNLIKELY(!sax->start_array(static_cast<std::size_t>(-1))))
+                        if (JSON_HEDLEY_UNLIKELY(!sax->start_array(detail::unknown_size())))
                         {
                             return false;
                         }
@@ -20606,10 +20611,10 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
         return it;
     }
 
-    reference set_parent(reference j, std::size_t old_capacity = static_cast<std::size_t>(-1))
+    reference set_parent(reference j, std::size_t old_capacity = detail::unknown_size())
     {
 #if JSON_DIAGNOSTICS
-        if (old_capacity != static_cast<std::size_t>(-1))
+        if (old_capacity != detail::unknown_size())
         {
             // see https://github.com/nlohmann/json/issues/2838
             JSON_ASSERT(type() == value_t::array);

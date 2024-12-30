@@ -145,6 +145,11 @@ struct json_sax
 
 namespace detail
 {
+constexpr std::size_t unknown_size()
+{
+    return (std::numeric_limits<std::size_t>::max)();
+}
+
 /*!
 @brief SAX implementation to create a JSON value from SAX events
 
@@ -242,7 +247,7 @@ class json_sax_dom_parser
         }
 #endif
 
-        if (JSON_HEDLEY_UNLIKELY(len != static_cast<std::size_t>(-1) && len > ref_stack.back()->max_size()))
+        if (JSON_HEDLEY_UNLIKELY(len != detail::unknown_size() && len > ref_stack.back()->max_size()))
         {
             JSON_THROW(out_of_range::create(408, concat("excessive object size: ", std::to_string(len)), ref_stack.back()));
         }
@@ -291,7 +296,7 @@ class json_sax_dom_parser
         }
 #endif
 
-        if (JSON_HEDLEY_UNLIKELY(len != static_cast<std::size_t>(-1) && len > ref_stack.back()->max_size()))
+        if (JSON_HEDLEY_UNLIKELY(len != detail::unknown_size() && len > ref_stack.back()->max_size()))
         {
             JSON_THROW(out_of_range::create(408, concat("excessive array size: ", std::to_string(len)), ref_stack.back()));
         }
@@ -559,7 +564,7 @@ class json_sax_dom_callback_parser
 #endif
 
             // check object limit
-            if (JSON_HEDLEY_UNLIKELY(len != static_cast<std::size_t>(-1) && len > ref_stack.back()->max_size()))
+            if (JSON_HEDLEY_UNLIKELY(len != detail::unknown_size() && len > ref_stack.back()->max_size()))
             {
                 JSON_THROW(out_of_range::create(408, concat("excessive object size: ", std::to_string(len)), ref_stack.back()));
             }
@@ -657,7 +662,7 @@ class json_sax_dom_callback_parser
 #endif
 
             // check array limit
-            if (JSON_HEDLEY_UNLIKELY(len != static_cast<std::size_t>(-1) && len > ref_stack.back()->max_size()))
+            if (JSON_HEDLEY_UNLIKELY(len != detail::unknown_size() && len > ref_stack.back()->max_size()))
             {
                 JSON_THROW(out_of_range::create(408, concat("excessive array size: ", std::to_string(len)), ref_stack.back()));
             }
@@ -946,7 +951,7 @@ class json_sax_acceptor
         return true;
     }
 
-    bool start_object(std::size_t /*unused*/ = static_cast<std::size_t>(-1))
+    bool start_object(std::size_t /*unused*/ = detail::unknown_size())
     {
         return true;
     }
@@ -961,7 +966,7 @@ class json_sax_acceptor
         return true;
     }
 
-    bool start_array(std::size_t /*unused*/ = static_cast<std::size_t>(-1))
+    bool start_array(std::size_t /*unused*/ = detail::unknown_size())
     {
         return true;
     }
