@@ -76,7 +76,7 @@ struct SaxEventLogger : public nlohmann::json_sax<json>
 
     bool start_object(std::size_t elements) override
     {
-        if (elements == static_cast<std::size_t>(-1))
+        if (elements == (std::numeric_limits<std::size_t>::max)())
         {
             events.emplace_back("start_object()");
         }
@@ -101,7 +101,7 @@ struct SaxEventLogger : public nlohmann::json_sax<json>
 
     bool start_array(std::size_t elements) override
     {
-        if (elements == static_cast<std::size_t>(-1))
+        if (elements == (std::numeric_limits<std::size_t>::max)())
         {
             events.emplace_back("start_array()");
         }
@@ -131,7 +131,7 @@ struct SaxEventLoggerExitAfterStartObject : public SaxEventLogger
 {
     bool start_object(std::size_t elements) override
     {
-        if (elements == static_cast<std::size_t>(-1))
+        if (elements == (std::numeric_limits<std::size_t>::max)())
         {
             events.emplace_back("start_object()");
         }
@@ -156,7 +156,7 @@ struct SaxEventLoggerExitAfterStartArray : public SaxEventLogger
 {
     bool start_array(std::size_t elements) override
     {
-        if (elements == static_cast<std::size_t>(-1))
+        if (elements == (std::numeric_limits<std::size_t>::max)())
         {
             events.emplace_back("start_array()");
         }

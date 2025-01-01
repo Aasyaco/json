@@ -28,7 +28,7 @@ class alt_string
   public:
     using value_type = std::string::value_type;
 
-    static constexpr auto npos = static_cast<std::size_t>(-1);
+    static constexpr auto npos = (std::numeric_limits<std::size_t>::max)();
 
     alt_string(const char* str): str_impl(str) {}
     alt_string(const char* str, std::size_t count): str_impl(str, count) {}
