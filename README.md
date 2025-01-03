@@ -819,12 +819,19 @@ Some important things:
 
 If you just want to serialize/deserialize some structs, the `to_json`/`from_json` functions can be a lot of boilerplate.
 
-There are two macros to make your life easier as long as you (1) want to use a JSON object as serialization and (2) want to use the member variable names as object keys in that object:
+There are six macros to make your life easier as long as you (1) want to use a JSON object as serialization and (2) want to use the member variable names as object keys in that object:
 
-- `NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(name, member1, member2, ...)` is to be defined inside the namespace of the class/struct to create code for.
-- `NLOHMANN_DEFINE_TYPE_INTRUSIVE(name, member1, member2, ...)` is to be defined inside the class/struct to create code for. This macro can also access private members.
+- [`NLOHMANN_DEFINE_TYPE_INTRUSIVE...`](https://json.nlohmann.me/api/macros/nlohmann_define_type_intrusive/)
+  1. `NLOHMANN_DEFINE_TYPE_INTRUSIVE(name, member1, member2, ...)` is to be defined inside the class/struct to create code for. This macro can also access private members.
+  2. `NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(name, member1, member2, ...)` is to be defined inside the class/struct to create code for. This macro can also access private members. Falls back to the default value for the respective type of the member variable if a key in the JSON object is missing.
+  3. `NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(name, member1, member2, ...)` is to be defined inside the class/struct to create code for. This macro can also access private members. Only defines the serialization.
 
-In both macros, the first parameter is the name of the class/struct, and all remaining parameters name the members.
+- [`NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE...`](https://json.nlohmann.me/api/macros/nlohmann_define_type_non_intrusive/)
+  1. `NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(name, member1, member2, ...)` is to be defined inside the namespace of the class/struct to create code for.
+  2. `NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(name, member1, member2, ...)` is to be defined inside the namespace of the class/struct to create code for. Falls back to the default value for the respective type of the member variable if a key in the JSON object is missing.
+  3. `NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_ONLY_SERIALIZE(name, member1, member2, ...)` is to be defined inside the namespace of the class/struct to create code for. Only defines the serialization.
+
+In all macros, the first parameter is the name of the class/struct, and all remaining parameters name the members.
 
 ##### Examples
 
