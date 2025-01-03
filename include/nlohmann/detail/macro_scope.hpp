@@ -409,6 +409,7 @@
 /*!
 @brief macro
 @def NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT
+@since version 3.11.0
 */
 #define NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(Type, ...)  \
     friend void to_json(nlohmann::json& nlohmann_json_j, const Type& nlohmann_json_t) { NLOHMANN_JSON_EXPAND(NLOHMANN_JSON_PASTE(NLOHMANN_JSON_TO, __VA_ARGS__)) } \
@@ -417,6 +418,7 @@
 /*!
 @brief macro
 @def NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE
+@since version 3.11.x
 */
 #define NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(Type, ...)  \
     friend void to_json(nlohmann::json& nlohmann_json_j, const Type& nlohmann_json_t) { NLOHMANN_JSON_EXPAND(NLOHMANN_JSON_PASTE(NLOHMANN_JSON_TO, __VA_ARGS__)) }
@@ -433,6 +435,7 @@
 /*!
 @brief macro
 @def NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT
+@since version 3.11.0
 */
 #define NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Type, ...)  \
     inline void to_json(nlohmann::json& nlohmann_json_j, const Type& nlohmann_json_t) { NLOHMANN_JSON_EXPAND(NLOHMANN_JSON_PASTE(NLOHMANN_JSON_TO, __VA_ARGS__)) } \
@@ -441,6 +444,7 @@
 /*!
 @brief macro
 @def NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_ONLY_SERIALIZE
+@since version 3.11.x
 */
 #define NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_ONLY_SERIALIZE(Type, ...)  \
     inline void to_json(nlohmann::json& nlohmann_json_j, const Type& nlohmann_json_t) { NLOHMANN_JSON_EXPAND(NLOHMANN_JSON_PASTE(NLOHMANN_JSON_TO, __VA_ARGS__)) }
