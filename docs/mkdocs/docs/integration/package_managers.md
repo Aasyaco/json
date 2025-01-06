@@ -155,7 +155,7 @@ repository can be referenced within a `MODULE.bazel` by rules such as `archive_o
         ```
 
         ```ini title="WORKSPACE"
-        --8<-- "integration/bazel/MODULE"
+        --8<-- "integration/bazel/MODULE.bazel"
         ```
 
         ```cpp title="example.cpp"
