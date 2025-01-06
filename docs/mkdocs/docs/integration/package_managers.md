@@ -139,12 +139,12 @@ using the subproject directly.
 
     use `bazel_dep`, `git_override`, or `local_path_override`
 
-    - :octicons-tag-24: Any version, that is availibe via [Bazel Central Registry](https://registry.bazel.build/modules/nlohmann_json)
+    - :octicons-tag-24: Any version, that is available via [Bazel Central Registry](https://registry.bazel.build/modules/nlohmann_json)
     - :octicons-file-24: File issues at the [library issue tracker](https://github.com/nlohmann/json/issues)
     - :octicons-question-24: [Bazel website](https://bazel.build)
 
 This repository provides a [Bazel](https://bazel.build/) `MODULE.bazel` and a corresponding `BUILD.bazel` file. Therefore, this
-repository can be referenced within a `MODULE.bazel` by rules such as `archive_override`, `git_override`, or `local_path_override`. To use the library you only need to depend on the target `@nlohmann_json//:json` (e.g., via `deps` attribute).
+repository can be referenced within a `MODULE.bazel` by rules such as `archive_override`, `git_override`, or `local_path_override`. To use the library you need to depend on the target `@nlohmann_json//:json` (i.e., via `deps` attribute).
 
 ??? example
 
