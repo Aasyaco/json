@@ -23,7 +23,7 @@ The library uses the following mapping from JSON values types to BSON types:
 | number_integer  | 2147483648..9223372036854775807           | int64     | 0x12   |
 | number_unsigned | 0..2147483647                             | int32     | 0x10   |
 | number_unsigned | 2147483648..9223372036854775807           | int64     | 0x12   |
-| number_unsigned | 9223372036854775808..18446744073709551615 | --        | --     |
+| number_unsigned | 9223372036854775808..18446744073709551615 | uint64    | 0x11   |
 | number_float    | *any value*                               | double    | 0x01   |
 | string          | *any value*                               | string    | 0x02   |
 | array           | *any value*                               | document  | 0x04   |
@@ -73,7 +73,7 @@ The library maps BSON record types to JSON value types as follows:
 | Symbol                | 0x0E             | *unsupported*   |
 | JavaScript Code       | 0x0F             | *unsupported*   |
 | int32                 | 0x10             | number_integer  |
-| Timestamp             | 0x11             | *unsupported*   |
+| Timestamp             | 0x11             | number_unsigned |
 | 128-bit decimal float | 0x13             | *unsupported*   |
 | Max Key               | 0x7F             | *unsupported*   |
 | Min Key               | 0xFF             | *unsupported*   |
