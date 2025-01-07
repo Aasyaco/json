@@ -4534,16 +4534,30 @@ class exception : public std::exception
         {
             return concat(a, '/', detail::escape(b));
         });
-        return concat('(', str, ") ");
+
+        return concat('(', str, ") ") + get_byte_positions(leaf_element);
 #else
-        static_cast<void>(leaf_element);
-        return "";
+        return get_byte_positions(leaf_element);
 #endif
     }
 
   private:
     /// an exception object as storage for error messages
     std::runtime_error m;
+    template<typename BasicJsonType>
+    static std::string get_byte_positions(const BasicJsonType* leaf_element)
+    {
+#if JSON_DIAGNOSTIC_POSITIONS
+        if ((leaf_element->start_pos() != std::string::npos) && (leaf_element->end_pos() != std::string::npos))
+        {
+            return concat('(', "bytes ", std::to_string(leaf_element->start_pos()), "-", std::to_string(leaf_element->end_pos()), ") ");
+        }
+        return "";
+#else
+        static_cast<void>(leaf_element);
+        return "";
+#endif
+    }
 };
 
 /// @brief exception indicating a parse error
