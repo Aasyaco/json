@@ -1184,7 +1184,7 @@ TEST_CASE("BSON numerical data")
                     std::vector<std::uint8_t> const expected_bson =
                     {
                         0x14u, 0x00u, 0x00u, 0x00u, // size (little endian)
-                        0x12u, /// entry: int64
+                        11u, /// entry: uint64
                         'e', 'n', 't', 'r', 'y', '\x00',
                         static_cast<std::uint8_t>((iu >> (8u * 0u)) & 0xffu),
                         static_cast<std::uint8_t>((iu >> (8u * 1u)) & 0xffu),
@@ -1197,12 +1197,15 @@ TEST_CASE("BSON numerical data")
                         0x00u // end marker
                     };
 
-                    CHECK_THROWS_AS(json::to_bson(j), json::out_of_range&);
-#if JSON_DIAGNOSTICS
-                    CHECK_THROWS_WITH_STD_STR(json::to_bson(j), "[json.exception.out_of_range.407] (/entry) integer number " + std::to_string(i) + " cannot be represented by BSON as it does not fit int64");
-#else
-                    CHECK_THROWS_WITH_STD_STR(json::to_bson(j), "[json.exception.out_of_range.407] integer number " + std::to_string(i) + " cannot be represented by BSON as it does not fit int64");
-#endif
+                    const auto bson = json::to_bson(j);
+                    CHECK(bson == expected_bson);
+
+                    auto j_roundtrip = json::from_bson(bson);
+
+                    CHECK(j.at("entry").is_number_unsigned());
+                    CHECK(j_roundtrip.at("entry").is_number_unsigned());
+                    CHECK(j_roundtrip == j);
+                    CHECK(json::from_bson(bson, true, false) == j);
                 }
             }
 
