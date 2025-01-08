@@ -22,6 +22,7 @@ int main()
     try
     {
         int housenumber = j["address"]["housenumber"];
+        std::cout << housenumber;
     }
     catch (const json::exception& e)
     {

@@ -1,0 +1,33 @@
+//     __ _____ _____ _____
+//  __|  |   __|     |   | |  JSON for Modern C++ (supporting code)
+// |  |  |__   |  |  | | | |  version 3.11.3
+// |_____|_____|_____|_|___|  https://github.com/nlohmann/json
+//
+// SPDX-FileCopyrightText: 2013 - 2024 Niels Lohmann <https://nlohmann.me>
+// SPDX-License-Identifier: MIT
+
+#include "doctest_compatibility.h"
+
+#define JSON_DIAGNOSTICS 1
+#define JSON_DIAGNOSTIC_POSITIONS 1
+#include <nlohmann/json.hpp>
+
+using json = nlohmann::json;
+
+TEST_CASE("Better diagnostics with positions")
+{
+    SECTION("invalid type")
+    {
+        std::string json_invalid_string = R"(
+        {
+            "address": {
+                "street": "Fake Street",
+                "housenumber": "1"
+            }
+        }
+        )";
+        json j = json::parse(json_invalid_string);
+        int housenumber;
+        CHECK_THROWS_WITH_AS(housenumber = j["address"]["housenumber"], "[json.exception.type_error.302] (/address/housenumber) (bytes 108-111) type must be number, but is string", json::type_error);
+    }
+}
