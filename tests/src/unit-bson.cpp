@@ -331,7 +331,6 @@ TEST_CASE("BSON")
 
         SECTION("non-empty object with unsigned integer (64-bit) member")
         {
-            // directly encoding uint64 is not supported in bson (only for timestamp values)
             json const j =
             {
                 { "entry", std::uint64_t{0x1234567804030201} }
@@ -531,7 +530,6 @@ TEST_CASE("BSON")
 
         SECTION("Some more complex document")
         {
-            // directly encoding uint64 is not supported in bson (only for timestamp values)
             json const j =
             {
                 {"double", 42.5},
