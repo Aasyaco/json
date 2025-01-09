@@ -26,8 +26,8 @@ TEST_CASE("Better diagnostics with positions")
             }
         }
         )";
-        json j = json::parse(json_invalid_string);
-        int housenumber = 0;
-        CHECK_THROWS_WITH_AS(housenumber = static_cast<int>(j["address"]["housenumber"]), "[json.exception.type_error.302] (/address/housenumber) (bytes 108-111) type must be number, but is string", json::type_error);
+        json j = json::parse(json_invalid_string);        
+        CHECK_THROWS_WITH_AS(static_cast<int>(j["address"]["housenumber"]), 
+                                "[json.exception.type_error.302] (/address/housenumber) (bytes 108-111) type must be number, but is string", json::type_error);
     }
 }
