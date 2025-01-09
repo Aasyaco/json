@@ -10,7 +10,7 @@ using json = nlohmann::json;
 int main()
 {
     //Invalid json string - housenumber type must be int instead of string
-    std::string json_invalid_string = R"(
+    const std::string json_invalid_string = R"(
     {
         "address": {
             "street": "Fake Street",

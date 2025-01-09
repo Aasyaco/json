@@ -18,7 +18,7 @@ TEST_CASE("Better diagnostics with positions")
 {
     SECTION("invalid type")
     {
-        std::string json_invalid_string = R"(
+        const std::string json_invalid_string = R"(
         {
             "address": {
                 "street": "Fake Street",
