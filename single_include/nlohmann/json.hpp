@@ -17886,10 +17886,11 @@ notation. Otherwise it will be printed in exponential notation.
 JSON_HEDLEY_NON_NULL(1)
 JSON_HEDLEY_RETURNS_NON_NULL
 inline char* format_buffer(char* buf, int len, int decimal_exponent,
-                           int min_exp, int max_exp)
+                           int min_exp, int max_exp, size_t precision)
 {
     JSON_ASSERT(min_exp < 0);
     JSON_ASSERT(max_exp > 0);
+    precision = std::min<size_t>(precision, 1000);
 
     const int k = len;
     const int n = len + decimal_exponent;
@@ -17919,7 +17920,7 @@ inline char* format_buffer(char* buf, int len, int decimal_exponent,
 
         std::memmove(buf + (static_cast<size_t>(n) + 1), buf + n, static_cast<size_t>(k) - static_cast<size_t>(n));
         buf[n] = '.';
-        return buf + (static_cast<size_t>(k) + 1U);
+        return buf + (std::min(n + precision, static_cast<size_t>(k)) + 1U);
     }
 
     if (min_exp < n && n <= 0)
@@ -17931,7 +17932,7 @@ inline char* format_buffer(char* buf, int len, int decimal_exponent,
         buf[0] = '0';
         buf[1] = '.';
         std::memset(buf + 2, '0', static_cast<size_t>(-n));
-        return buf + (2U + static_cast<size_t>(-n) + static_cast<size_t>(k));
+        return buf + std::min(precision + 2, (2U + static_cast<size_t>(-n) + static_cast<size_t>(k)));
     }
 
     if (k == 1)
@@ -17948,7 +17949,7 @@ inline char* format_buffer(char* buf, int len, int decimal_exponent,
 
         std::memmove(buf + 2, buf + 1, static_cast<size_t>(k) - 1);
         buf[1] = '.';
-        buf += 1 + static_cast<size_t>(k);
+        buf += 1 + std::min(precision, static_cast<size_t>(k));
     }
 
     *buf++ = 'e';
@@ -17970,7 +17971,7 @@ format. Returns an iterator pointing past-the-end of the decimal representation.
 template<typename FloatType>
 JSON_HEDLEY_NON_NULL(1, 2)
 JSON_HEDLEY_RETURNS_NON_NULL
-char* to_chars(char* first, const char* last, FloatType value)
+char* to_chars(char* first, const char* last, FloatType value, size_t precision = std::numeric_limits<FloatType>::max_digits10)
 {
     static_cast<void>(last); // maybe unused - fix warning
     JSON_ASSERT(std::isfinite(value));
@@ -18019,7 +18020,7 @@ char* to_chars(char* first, const char* last, FloatType value)
     JSON_ASSERT(last - first >= 2 + (-kMinExp - 1) + std::numeric_limits<FloatType>::max_digits10);
     JSON_ASSERT(last - first >= std::numeric_limits<FloatType>::max_digits10 + 6);
 
-    return dtoa_impl::format_buffer(first, len, decimal_exponent, kMinExp, kMaxExp);
+    return dtoa_impl::format_buffer(first, len, decimal_exponent, kMinExp, kMaxExp, precision);
 }
 
 }  // namespace detail
@@ -18073,13 +18074,14 @@ class serializer
     @param[in] ichar  indentation character to use
     @param[in] error_handler_  how to react on decoding errors
     */
-    serializer(output_adapter_t<char> s, const char ichar,
+    serializer(output_adapter_t<char> s, const char ichar, size_t precision = 1000,
                error_handler_t error_handler_ = error_handler_t::strict)
         : o(std::move(s))
         , loc(std::localeconv())
         , thousands_sep(loc->thousands_sep == nullptr ? '\0' : std::char_traits<char>::to_char_type(* (loc->thousands_sep)))
         , decimal_point(loc->decimal_point == nullptr ? '\0' : std::char_traits<char>::to_char_type(* (loc->decimal_point)))
         , indent_char(ichar)
+        , precision(precision)
         , indent_string(512, indent_char)
         , error_handler(error_handler_)
     {}
@@ -18829,7 +18831,7 @@ class serializer
     void dump_float(number_float_t x, std::true_type /*is_ieee_single_or_double*/)
     {
         auto* begin = number_buffer.data();
-        auto* end = ::nlohmann::detail::to_chars(begin, begin + number_buffer.size(), x);
+        auto* end = ::nlohmann::detail::to_chars(begin, begin + number_buffer.size(), x, precision);
 
         o->write_characters(begin, static_cast<size_t>(end - begin));
     }
@@ -18841,6 +18843,8 @@ class serializer
 
         // the actual conversion
         // NOLINTNEXTLINE(cppcoreguidelines-pro-type-vararg,hicpp-vararg)
+        char format[100];
+        snprintf(format, 100, "%%.%dg", precision);
         std::ptrdiff_t len = (std::snprintf)(number_buffer.data(), number_buffer.size(), "%.*g", d, x);
 
         // negative value indicates an error
@@ -18986,6 +18990,8 @@ class serializer
 
     /// the indentation character
     const char indent_char;
+    /// precision for floating point output
+    size_t precision;
     /// the indentation string
     string_t indent_string;
 
@@ -20575,10 +20581,11 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     string_t dump(const int indent = -1,
                   const char indent_char = ' ',
                   const bool ensure_ascii = false,
-                  const error_handler_t error_handler = error_handler_t::strict) const
+                  const error_handler_t error_handler = error_handler_t::strict,
+                  const size_t precision = std::numeric_limits<size_t>::max()) const
     {
         string_t result;
-        serializer s(detail::output_adapter<char, string_t>(result), indent_char, error_handler);
+        serializer s(detail::output_adapter<char, string_t>(result), indent_char, precision, error_handler);
 
         if (indent >= 0)
         {
@@ -23278,15 +23285,17 @@ class basic_json // NOLINT(cppcoreguidelines-special-member-functions,hicpp-spec
     friend std::ostream& operator<<(std::ostream& o, const basic_json& j)
     {
         // read width member and use it as indentation parameter if nonzero
-        const bool pretty_print = o.width() > 0;
-        const auto indentation = pretty_print ? o.width() : 0;
+        const auto width = o.width();
+        const bool pretty_print = width > 0;
+        const auto indentation = pretty_print ? width : 0;
 
         // reset width to 0 for subsequent calls to this stream
         o.width(0);
 
         // do the actual serialization
-        serializer s(detail::output_adapter<char>(o), o.fill());
+        serializer s(detail::output_adapter<char>(o), o.fill(), o.precision());
         s.dump(j, pretty_print, false, static_cast<unsigned int>(indentation));
+
         return o;
     }
 

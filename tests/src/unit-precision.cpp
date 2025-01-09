@@ -42,7 +42,7 @@ TEST_CASE("precision<nlohmann::json>")
 {
     json j;
     j = M_PI;
-    auto to_string = [](const nlohmann::json& j, size_t precision)
+    auto to_string = [](const nlohmann::json & j, size_t precision)
     {
         std::stringstream ss;
         ss << std::setprecision(precision) << j;
