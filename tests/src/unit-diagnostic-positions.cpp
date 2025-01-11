@@ -33,7 +33,7 @@ TEST_CASE("Better diagnostics with positions")
 
     SECTION("invalid type without positions")
     {
-        json j = "foo";
+        const json j = "foo";
         CHECK_THROWS_WITH_AS(j.get<int>(),
                              "[json.exception.type_error.302] type must be number, but is string", json::type_error);
     }
