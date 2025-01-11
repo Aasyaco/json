@@ -30,4 +30,11 @@ TEST_CASE("Better diagnostics with positions")
         CHECK_THROWS_WITH_AS(j.at("address").at("housenumber").get<int>(),
                              "[json.exception.type_error.302] (/address/housenumber) (bytes 108-111) type must be number, but is string", json::type_error);
     }
+
+    SECTION("invalid type without positions")
+    {
+        json j = "foo";
+        CHECK_THROWS_WITH_AS(j.get<int>(),
+                             "[json.exception.type_error.302] type must be number, but is string", json::type_error);
+    }
 }

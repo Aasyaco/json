@@ -153,8 +153,9 @@ class exception : public std::exception
     }
 #else
     template<typename BasicJsonType>
-    static std::string get_byte_positions(const BasicJsonType*)
+    static std::string get_byte_positions(const BasicJsonType* leaf_element)
     {
+        static_cast<void>(leaf_element);
         return "";
     }
 #endif
