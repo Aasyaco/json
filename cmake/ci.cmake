@@ -25,7 +25,7 @@ execute_process(COMMAND ${GCC_TOOL} --version OUTPUT_VARIABLE GCC_TOOL_VERSION E
 string(REGEX MATCH "[0-9]+(\\.[0-9]+)+" GCC_TOOL_VERSION "${GCC_TOOL_VERSION}")
 message(STATUS "🔖 GCC ${GCC_TOOL_VERSION} (${GCC_TOOL})")
 
-find_program(GCOV_TOOL NAMES gcov-HEAD gcov gcov-15 gcov-14 gcov-13 gcov-12 gcov-11 gcov-10)
+find_program(GCOV_TOOL NAMES gcov-HEAD gcov-15 gcov-14 gcov-13 gcov-12 gcov-11 gcov-10 gcov)
 execute_process(COMMAND ${GCOV_TOOL} --version OUTPUT_VARIABLE GCOV_TOOL_VERSION ERROR_VARIABLE GCOV_TOOL_VERSION)
 string(REGEX MATCH "[0-9]+(\\.[0-9]+)+" GCOV_TOOL_VERSION "${GCOV_TOOL_VERSION}")
 message(STATUS "🔖 GCOV ${GCOV_TOOL_VERSION} (${GCOV_TOOL})")
