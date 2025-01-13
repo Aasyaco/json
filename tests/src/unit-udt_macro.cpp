@@ -666,23 +666,21 @@ TEST_CASE_TEMPLATE("Serialization of non-default-constructible classes via NLOHM
 
     SECTION("person")
     {
-        {
-            // serialization of a single object
-            T person{"Erik", 1};
-            CHECK(Json(person).dump() == (is_ordered ?
-                                          R"({"name":"Erik","age":1})" :
-                                          R"({"age":1,"name":"Erik"})"));
+        // serialization of a single object
+        T person{"Erik", 1};
+        CHECK(Json(person).dump() == (is_ordered ?
+                                      R"({"name":"Erik","age":1})" :
+                                      R"({"age":1,"name":"Erik"})"));
 
-            // serialization of a container with objects
-            std::vector<T> const two_persons
-            {
-                {"Erik", 1},
-                {"Kyle", 2}
-            };
-            CHECK(Json(two_persons).dump() == (is_ordered ?
-                                               R"([{"name":"Erik","age":1},{"name":"Kyle","age":2}])" :
-                                               R"([{"age":1,"name":"Erik"},{"age":2,"name":"Kyle"}])"));
-        }
+        // serialization of a container with objects
+        std::vector<T> const two_persons
+        {
+            {"Erik", 1},
+            {"Kyle", 2}
+        };
+        CHECK(Json(two_persons).dump() == (is_ordered ?
+                                           R"([{"name":"Erik","age":1},{"name":"Kyle","age":2}])" :
+                                           R"([{"age":1,"name":"Erik"},{"age":2,"name":"Kyle"}])"));
     }
 }
 
@@ -698,22 +696,20 @@ TEST_CASE_TEMPLATE("Serialization of non-default-constructible classes via NLOHM
 
     SECTION("derived person only serialize")
     {
-        {
-            // serialization of a single object
-            T person{"Erik", 1, "brown"};
-            CHECK(Json(person).dump() == (is_ordered ?
-                                          R"({"name":"Erik","age":1,"hair_color":"brown"})" :
-                                          R"({"age":1,"hair_color":"brown","name":"Erik"})"));
+        // serialization of a single object
+        T person{"Erik", 1, "brown"};
+        CHECK(Json(person).dump() == (is_ordered ?
+                                      R"({"name":"Erik","age":1,"hair_color":"brown"})" :
+                                      R"({"age":1,"hair_color":"brown","name":"Erik"})"));
 
-            // serialization of a container with objects
-            std::vector<T> const two_persons
-            {
-                {"Erik", 1, "brown"},
-                {"Kyle", 2, "black"}
-            };
-            CHECK(Json(two_persons).dump() == (is_ordered ?
-                                               R"([{"name":"Erik","age":1,"hair_color":"brown"},{"name":"Kyle","age":2,"hair_color":"black"}])" :
-                                               R"([{"age":1,"hair_color":"brown","name":"Erik"},{"age":2,"hair_color":"black","name":"Kyle"}])"));
-        }
+        // serialization of a container with objects
+        std::vector<T> const two_persons
+        {
+            {"Erik", 1, "brown"},
+            {"Kyle", 2, "black"}
+        };
+        CHECK(Json(two_persons).dump() == (is_ordered ?
+                                           R"([{"name":"Erik","age":1,"hair_color":"brown"},{"name":"Kyle","age":2,"hair_color":"black"}])" :
+                                           R"([{"age":1,"hair_color":"brown","name":"Erik"},{"age":2,"hair_color":"black","name":"Kyle"}])"));
     }
 }
