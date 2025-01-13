@@ -120,8 +120,6 @@ For _derived_ classes and structs, use the following macros
 
     - The current macro implementations are limited to at most 64 member variables. If you want to serialize/deserialize
       types with more than 64 member variables, you need to define the `to_json`/`from_json` functions manually.
-    - The macros only work for the [`nlohmann::json`](../api/json.md) type; other specializations such as
-      [`nlohmann::ordered_json`](../api/ordered_json.md) are currently unsupported.
 
 ??? example
 
