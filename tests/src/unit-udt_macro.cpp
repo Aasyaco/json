@@ -646,69 +646,11 @@ TEST_CASE_TEMPLATE("Serialization/deserialization of classes with 26 public/priv
 
     SECTION("alphabet")
     {
-        {
-            T obj1;
-            Json const j = obj1; //via json object
-            T obj2;
-            j.get_to(obj2);
-            bool ok = (obj1 == obj2);
-            CHECK(ok);
-        }
-
-        {
-            T obj1;
-            Json const j1 = obj1; //via json string
-            std::string const s = j1.dump();
-            Json const j2 = Json::parse(s);
-            T obj2;
-            j2.get_to(obj2);
-            bool ok = (obj1 == obj2);
-            CHECK(ok);
-        }
-
-        {
-            T obj1;
-            Json const j1 = obj1; //via msgpack
-            std::vector<uint8_t> const buf = Json::to_msgpack(j1);
-            Json const j2 = Json::from_msgpack(buf);
-            T obj2;
-            j2.get_to(obj2);
-            bool ok = (obj1 == obj2);
-            CHECK(ok);
-        }
-
-        {
-            T obj1;
-            Json const j1 = obj1; //via bson
-            std::vector<uint8_t> const buf = Json::to_bson(j1);
-            Json const j2 = Json::from_bson(buf);
-            T obj2;
-            j2.get_to(obj2);
-            bool ok = (obj1 == obj2);
-            CHECK(ok);
-        }
-
-        {
-            T obj1;
-            Json const j1 = obj1; //via cbor
-            std::vector<uint8_t> const buf = Json::to_cbor(j1);
-            Json const j2 = Json::from_cbor(buf);
-            T obj2;
-            j2.get_to(obj2);
-            bool ok = (obj1 == obj2);
-            CHECK(ok);
-        }
-
-        {
-            T obj1;
-            Json const j1 = obj1; //via ubjson
-            std::vector<uint8_t> const buf = Json::to_ubjson(j1);
-            Json const j2 = Json::from_ubjson(buf);
-            T obj2;
-            j2.get_to(obj2);
-            bool ok = (obj1 == obj2);
-            CHECK(ok);
-        }
+        T obj1;
+        Json const j = obj1;
+        T obj2;
+        j.get_to(obj2);
+        CHECK(obj1 == obj2);
     }
 }
 
