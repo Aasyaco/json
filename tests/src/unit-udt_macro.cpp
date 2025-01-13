@@ -326,19 +326,6 @@ class person_with_private_alphabet
     NLOHMANN_DEFINE_TYPE_INTRUSIVE(person_with_private_alphabet, a, b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z)
 };
 
-class derived_person_with_private_alphabet : public person_with_private_alphabet
-{
-  public:
-    bool operator==(const derived_person_with_private_alphabet& other) const
-    {
-        return person_with_private_alphabet::operator==(other) && schwa == other.schwa;
-    }
-
-  private:
-    int schwa = 0;
-    NLOHMANN_DEFINE_DERIVED_TYPE_INTRUSIVE(derived_person_with_private_alphabet, person_with_private_alphabet, schwa)
-};
-
 class person_with_public_alphabet
 {
   public:
