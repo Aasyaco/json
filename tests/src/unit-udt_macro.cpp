@@ -538,7 +538,7 @@ TEST_CASE_TEMPLATE("Serialization/deserialization via NLOHMANN_DEFINE_TYPE_INTRU
     SECTION("person with default values")
     {
         // serialization of default constructed object
-        T p0;
+        const T p0;
         CHECK(Json(p0).dump() == (is_ordered ?
                                   R"({"age":0,"name":"","metadata":null})" :
                                   R"({"age":0,"metadata":null,"name":""})"));
@@ -562,14 +562,14 @@ TEST_CASE_TEMPLATE("Serialization/deserialization via NLOHMANN_DEFINE_TYPE_INTRU
         j.erase("name");
         j.erase("age");
         j.erase("metadata");
-        T p3 = j.template get<T>();
+        const T p3 = j.template get<T>();
         CHECK(p3.getName() == "");
         CHECK(p3.getAge() == 0);
         CHECK(p3.getMetadata() == nullptr);
 
         // check default value in case of empty json
         const Json j4;
-        T p4 = j4.template get<T>();
+        const T p4 = j4.template get<T>();
         CHECK(p4.getName() == "");
         CHECK(p4.getAge() == 0);
         CHECK(p4.getMetadata() == nullptr);
@@ -589,7 +589,7 @@ TEST_CASE_TEMPLATE("Serialization/deserialization via NLOHMANN_DEFINE_DERIVED_TY
     SECTION("derived person with default values")
     {
         // serialization of default constructed object
-        T p0;
+        const T p0;
         CHECK(Json(p0).dump() == (is_ordered ?
                                   R"({"age":0,"name":"","metadata":null,"hair_color":"blue"})" :
                                   R"({"age":0,"hair_color":"blue","metadata":null,"name":""})"));
@@ -614,7 +614,7 @@ TEST_CASE_TEMPLATE("Serialization/deserialization via NLOHMANN_DEFINE_DERIVED_TY
         j.erase("age");
         j.erase("metadata");
         j.erase("hair_color");
-        T p3 = j.template get<T>();
+        const T p3 = j.template get<T>();
         CHECK(p3.getName() == "");
         CHECK(p3.getAge() == 0);
         CHECK(p3.getMetadata() == nullptr);
@@ -654,7 +654,7 @@ TEST_CASE_TEMPLATE("Serialization of non-default-constructible classes via NLOHM
     SECTION("person")
     {
         // serialization of a single object
-        T person{"Erik", 1};
+        const T person{"Erik", 1};
         CHECK(Json(person).dump() == (is_ordered ?
                                       R"({"name":"Erik","age":1})" :
                                       R"({"age":1,"name":"Erik"})"));
@@ -684,7 +684,7 @@ TEST_CASE_TEMPLATE("Serialization of non-default-constructible classes via NLOHM
     SECTION("derived person only serialize")
     {
         // serialization of a single object
-        T person{"Erik", 1, "brown"};
+        const T person{"Erik", 1, "brown"};
         CHECK(Json(person).dump() == (is_ordered ?
                                       R"({"name":"Erik","age":1,"hair_color":"brown"})" :
                                       R"({"age":1,"hair_color":"brown","name":"Erik"})"));
