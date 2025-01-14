@@ -538,7 +538,7 @@ TEST_CASE_TEMPLATE("Serialization/deserialization via NLOHMANN_DEFINE_TYPE_INTRU
     SECTION("person with default values")
     {
         // serialization of default constructed object
-        const T p0;
+        const T p0{};
         CHECK(Json(p0).dump() == (is_ordered ?
                                   R"({"age":0,"name":"","metadata":null})" :
                                   R"({"age":0,"metadata":null,"name":""})"));
@@ -589,7 +589,7 @@ TEST_CASE_TEMPLATE("Serialization/deserialization via NLOHMANN_DEFINE_DERIVED_TY
     SECTION("derived person with default values")
     {
         // serialization of default constructed object
-        const T p0;
+        const T p0{};
         CHECK(Json(p0).dump() == (is_ordered ?
                                   R"({"age":0,"name":"","metadata":null,"hair_color":"blue"})" :
                                   R"({"age":0,"hair_color":"blue","metadata":null,"name":""})"));
