@@ -10000,17 +10000,18 @@ class binary_reader
                 return get_number<std::int32_t, true>(input_format_t::bson, value) && sax->number_integer(value);
             }
 
+            case 0x11: // uint64
+            {
+                std::uint64_t value{};
+                return get_number<std::uint64_t, true>(input_format_t::bson, value) && sax->number_unsigned(value);
+            }
+
             case 0x12: // int64
             {
                 std::int64_t value{};
                 return get_number<std::int64_t, true>(input_format_t::bson, value) && sax->number_integer(value);
             }
 
-            case 0x11: // uint64
-            {
-                std::uint64_t value{};
-                return get_number<std::uint64_t, true>(input_format_t::bson, value) && sax->number_unsigned(value);
-            }
 
             default: // anything else not supported (yet)
             {
@@ -16718,7 +16719,7 @@ class binary_writer
     {
         return (value <= static_cast<std::uint64_t>((std::numeric_limits<std::int32_t>::max)()))
                ? sizeof(std::int32_t)
-               : sizeof(std::int64_t);
+               : sizeof(std::uint64_t);
     }
 
     /*!
@@ -16731,11 +16732,6 @@ class binary_writer
         {
             write_bson_entry_header(name, 0x10 /* int32 */);
             write_number<std::int32_t>(static_cast<std::int32_t>(j.m_data.m_value.number_unsigned), true);
-        }
-        else if (j.m_data.m_value.number_unsigned <= static_cast<std::uint64_t>((std::numeric_limits<std::int64_t>::max)()))
-        {
-            write_bson_entry_header(name, 0x12 /* int64 */);
-            write_number<std::int64_t>(static_cast<std::int64_t>(j.m_data.m_value.number_unsigned), true);
         }
         else
         {

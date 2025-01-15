@@ -339,7 +339,7 @@ TEST_CASE("BSON")
             std::vector<std::uint8_t> const expected =
             {
                 0x14, 0x00, 0x00, 0x00, // size (little endian)
-                0x12, /// entry: int64
+                0x11, /// entry: uint64
                 'e', 'n', 't', 'r', 'y', '\x00',
                 0x01, 0x02, 0x03, 0x04, 0x78, 0x56, 0x34, 0x12,
                 0x00 // end marker
@@ -1132,7 +1132,7 @@ TEST_CASE("BSON numerical data")
                     std::vector<std::uint8_t> const expected_bson =
                     {
                         0x14u, 0x00u, 0x00u, 0x00u, // size (little endian)
-                        0x12u, /// entry: int64
+                        0x11u, /// entry: uint64
                         'e', 'n', 't', 'r', 'y', '\x00',
                         static_cast<std::uint8_t>((iu >> (8u * 0u)) & 0xffu),
                         static_cast<std::uint8_t>((iu >> (8u * 1u)) & 0xffu),
