@@ -55,7 +55,7 @@ When the macro is not defined, the library will define it to its default value.
 
 !!! note "Availability"
 
-    Diagnostic positons are only available if the value was created by the [`parse`](../basic_json/parse.md) function.
+    Diagnostic positions are only available if the value was created by the [`parse`](../basic_json/parse.md) function.
     The [`sax_parse`](../basic_json/sax_parse.md) function or all other means to create a JSON value **do not** set the
     diagnostic positions and [`start_pos()`](../basic_json/start_pos.md) and [`end_pos()`](../basic_json/end_pos.md)
     will only return `std::string::npos` for these values.
