@@ -92,6 +92,12 @@ You can sponsor this library at [GitHub Sponsors](https://github.com/sponsors/nl
 - [Steve Wagner](https://github.com/ciroque)
 - [Lion Yang](https://github.com/LionNatsu)
 
+### Further support
+
+The development of the library is further supported by JetBrains by providing free access to their IDE tools.
+
+[![JetBrains logo.](https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains.svg)](https://jb.gg/OpenSourceSupport)
+
 Thanks everyone!
 
 

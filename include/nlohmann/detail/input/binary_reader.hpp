@@ -328,6 +328,12 @@ class binary_reader
                 return get_number<std::int64_t, true>(input_format_t::bson, value) && sax->number_integer(value);
             }
 
+            case 0x11: // uint64
+            {
+                std::uint64_t value{};
+                return get_number<std::uint64_t, true>(input_format_t::bson, value) && sax->number_unsigned(value);
+            }
+
             default: // anything else not supported (yet)
             {
                 std::array<char, 3> cr{{}};
@@ -2313,6 +2319,16 @@ class binary_reader
             case 'Z':  // null
                 return sax->null();
 
+            case 'B':  // byte
+            {
+                if (input_format != input_format_t::bjdata)
+                {
+                    break;
+                }
+                std::uint8_t number{};
+                return get_number(input_format, number) && sax->number_unsigned(number);
+            }
+
             case 'U':
             {
                 std::uint8_t number{};
@@ -2513,7 +2529,7 @@ class binary_reader
                 return false;
             }
 
-            if (size_and_type.second == 'C')
+            if (size_and_type.second == 'C' || size_and_type.second == 'B')
             {
                 size_and_type.second = 'U';
             }
@@ -2533,6 +2549,13 @@ class binary_reader
             }
 
             return (sax->end_array() && sax->end_object());
+        }
+
+        // If BJData type marker is 'B' decode as binary
+        if (input_format == input_format_t::bjdata && size_and_type.first != npos && size_and_type.second == 'B')
+        {
+            binary_t result;
+            return get_binary(input_format, size_and_type.first, result) && sax->binary(result);
         }
 
         if (size_and_type.first != npos)
@@ -3008,6 +3031,7 @@ class binary_reader
 
 #define JSON_BINARY_READER_MAKE_BJD_TYPES_MAP_ \
     make_array<bjd_type>(                      \
+    bjd_type{'B', "byte"},                     \
     bjd_type{'C', "char"},                     \
     bjd_type{'D', "double"},                   \
     bjd_type{'I', "int16"},                    \

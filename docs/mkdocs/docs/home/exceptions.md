@@ -839,7 +839,7 @@ A parsed number could not be stored as without changing it to NaN or INF.
 
 ### json.exception.out_of_range.407
 
-UBJSON and BSON only support integer numbers up to 9223372036854775807.
+UBJSON only support integer numbers up to 9223372036854775807.
 
 !!! failure "Example message"
 

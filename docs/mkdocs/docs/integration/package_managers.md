@@ -137,16 +137,14 @@ using the subproject directly.
 
 !!! abstract "Summary"
 
-    use `http_archive`, `git_repository`, or `local_repository`
+    use `bazel_dep`, `git_override`, or `local_path_override`
 
-    - :octicons-tag-24: Any version, as version is specified in `WORKSPACE` file
+    - :octicons-tag-24: Any version, that is available via [Bazel Central Registry](https://registry.bazel.build/modules/nlohmann_json)
     - :octicons-file-24: File issues at the [library issue tracker](https://github.com/nlohmann/json/issues)
     - :octicons-question-24: [Bazel website](https://bazel.build)
 
-This repository provides a [Bazel](https://bazel.build/) `WORKSPACE.bazel` and a corresponding `BUILD.bazel` file. Therefore, this
-repository can be referenced by workspace rules such as `http_archive`, `git_repository`, or `local_repository` from
-other Bazel workspaces. To use the library you only need to depend on the target `@nlohmann_json//:json` (e.g., via
-`deps` attribute).
+This repository provides a [Bazel](https://bazel.build/) `MODULE.bazel` and a corresponding `BUILD.bazel` file. Therefore, this
+repository can be referenced within a `MODULE.bazel` by rules such as `archive_override`, `git_override`, or `local_path_override`. To use the library you need to depend on the target `@nlohmann_json//:json` (i.e., via `deps` attribute).
 
 ??? example
 
@@ -157,7 +155,7 @@ other Bazel workspaces. To use the library you only need to depend on the target
         ```
 
         ```ini title="WORKSPACE"
-        --8<-- "integration/bazel/WORKSPACE"
+        --8<-- "integration/bazel/MODULE.bazel"
         ```
 
         ```cpp title="example.cpp"
