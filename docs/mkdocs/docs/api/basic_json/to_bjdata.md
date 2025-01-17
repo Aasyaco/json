@@ -40,7 +40,7 @@ The exact mapping and its limitations is described on a [dedicated page](../../f
 `#!cpp false` by default.
 
 `version` (in)
-:   which version of BJData to use (see [draft 3](../../features/binary_formats/bjdata.md#draft-3-binary-format));
+:   which version of BJData to use (see note on "Binary values" on [BJData](../../features/binary_formats/bjdata.md));
 optional, `#!cpp bjdata_version_t::draft2` by default.
 
 ## Return value

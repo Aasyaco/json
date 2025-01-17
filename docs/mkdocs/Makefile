@@ -13,9 +13,13 @@ build: style_check
 style_check:
 	@cd docs ; ../venv/bin/python3 ../scripts/check_structure.py
 
-# check the links in the documentation
+# check the links in the documentation files in docs/mkdocs
 link_check:
 	ENABLED_HTMLPROOFER=true venv/bin/mkdocs build
+
+# check the links in all other Markdown files
+link_check_markdowns:
+	npx markdown-link-check --progress --alive 200,429 ../../README.md ../../FILES.md ../../.github/*.md
 
 # publish site to GitHub pages (not working in GitHub Actions; need special action)
 publish:
