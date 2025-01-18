@@ -136,7 +136,8 @@ Enable CI build targets. The exact targets are used during the several CI steps 
 Enable [extended diagnostic messages](../home/exceptions.md#extended-diagnostic-messages) by defining macro [`JSON_DIAGNOSTICS`](../api/macros/json_diagnostics.md). This option is `OFF` by default.
 
 ### `JSON_Diagnostic_Positions`
-Enable position diagnostics by defining macro [`JSON_DIAGNOSTIC_POSITIONS`](../api/macros/json_diagnostic_positions.md). This option is off by default.
+
+Enable position diagnostics by defining macro [`JSON_DIAGNOSTIC_POSITIONS`](../api/macros/json_diagnostic_positions.md). This option is `OFF` by default.
 
 ### `JSON_DisableEnumSerialization`
 
@@ -159,6 +160,10 @@ Enable implicit conversions by defining macro [`JSON_USE_IMPLICIT_CONVERSIONS`](
 ### `JSON_Install`
 
 Install CMake targets during install step. This option is `ON` by default if the library's CMake project is the top project.
+
+### `JSON_LegacyDiscardedValueComparison`
+
+Enable the (incorrect) legacy comparison behavior of discarded JSON values by defining macro [`JSON_USE_LEGACY_DISCARDED_VALUE_COMPARISON`](../api/macros/json_use_legacy_discarded_value_comparison.md). This option is `OFF` by default.
 
 ### `JSON_MultipleHeaders`
 

@@ -814,6 +814,15 @@ TEST_CASE("regression tests 2")
         }
     }
 
+    SECTION("issue #4530 - Serialization of empty tuple")
+    {
+        const auto source_tuple = std::tuple<>();
+        const nlohmann::json j = source_tuple;
+
+        CHECK(j.get<decltype(source_tuple)>() == source_tuple);
+        CHECK("[]" == j.dump());
+    }
+
     SECTION("issue #2865 - ASAN detects memory leaks")
     {
         // the code below is expected to not leak memory

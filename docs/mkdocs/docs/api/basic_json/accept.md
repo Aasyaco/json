@@ -20,7 +20,7 @@ Checks whether the input is valid JSON.
     The value_type of the iterator must be an integral type with size of 1, 2 or 4 bytes, which will be interpreted
     respectively as UTF-8, UTF-16 and UTF-32.
     
-Unlike the [`parse`](parse.md) function, this function neither throws an exception in case of invalid JSON input
+Unlike the [`parse()`](parse.md) function, this function neither throws an exception in case of invalid JSON input
 (i.e., a parse error) nor creates diagnostic information.
 
 ## Template parameters
@@ -29,7 +29,7 @@ Unlike the [`parse`](parse.md) function, this function neither throws an excepti
 :   A compatible input, for instance:
     
     - an `std::istream` object
-    - a `FILE` pointer (throws if null)
+    - a `#!c FILE` pointer (throws if null)
     - a C-style array of characters
     - a pointer to a null-terminated string of single byte characters (throws if null)
     - a `std::string`
@@ -66,7 +66,7 @@ Strong guarantee: if an exception is thrown, there are no changes in the JSON va
 
 ## Exceptions
 
-Throws [`parse_error.101`](../../home/exceptions.md#jsonexceptionparse_error101) in case of an empty input like a null `FILE*` or `char*` pointer.
+Throws [`parse_error.101`](../../home/exceptions.md#jsonexceptionparse_error101) in case of an empty input like a null `#!c FILE*` or `#!c char*` pointer.
 
 ## Complexity
 

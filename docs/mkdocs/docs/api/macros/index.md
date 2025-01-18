@@ -11,6 +11,7 @@ header. See also the [macro overview page](../../features/macros.md).
 
 - [**JSON_CATCH_USER(exception)**<br>**JSON_THROW_USER(exception)**<br>**JSON_TRY_USER**](json_throw_user.md) - control exceptions
 - [**JSON_DIAGNOSTICS**](json_diagnostics.md) - control extended diagnostics
+- [**JSON_DIAGNOSTIC_POSITIONS**](json_diagnostic_positions.md) - access positions of elements
 - [**JSON_NOEXCEPTION**](json_noexception.md) - switch off exceptions
 
 ## Language support
@@ -49,27 +50,34 @@ header. See also the [macro overview page](../../features/macros.md).
 
 ## Serialization/deserialization macros
 
-- Enum: [**NLOHMANN_JSON_SERIALIZE_ENUM**](nlohmann_json_serialize_enum.md)
-- Class/struct:
-    - Do you need to serialize private variables?
-        - Yes? Do you only need serialization?
-            - Yes? `NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE`
-            - No? Allow deserialization of JSON values with missing values?
-                - Yes? `NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT`
-                - No? `NLOHMANN_DEFINE_TYPE_INTRUSIVE`
-        - No? Do you only need serialization?
-            - Yes? `NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_ONLY_SERIALIZE`
-            - No? Allow deserialization of JSON values with missing values?
-                - Yes? `NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT`
-                - No? `NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE`
+### Enums
 
-- [**NLOHMANN_DEFINE_TYPE_INTRUSIVE(type, member...)**<br>**NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(type, member...)**
-<br>**NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(type, member...)**][DefInt]
-  \- serialization/deserialization of types _with_ access to private variables
-- [**NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(type, member...)**<br>**NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(type, member...)**
-<br>**NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_ONLY_SERIALIZE(type, member...)**][DefNonInt]
-  \- serialization/deserialization of types _without_ access to private variables
-- [**NLOHMANN_JSON_SERIALIZE_ENUM(type, ...)**](nlohmann_json_serialize_enum.md) - serialization/deserialization of enum types
+- [**NLOHMANN_JSON_SERIALIZE_ENUM**](nlohmann_json_serialize_enum.md) - serialize/deserialize an enum
 
-[DefInt]: nlohmann_define_type_intrusive.md
-[DefNonInt]: nlohmann_define_type_non_intrusive.md
+### Classes and structs
+
+- [**NLOHMANN_DEFINE_TYPE_INTRUSIVE**](nlohmann_define_type_intrusive.md) - serialize/deserialize a non-derived class
+  with private members
+- [**NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT**](nlohmann_define_type_intrusive.md) - serialize/deserialize a
+  non-derived class with private members; uses default values
+- [**NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE**](nlohmann_define_type_intrusive.md) - serialize a non-derived class
+  with private members
+- [**NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE**](nlohmann_define_type_non_intrusive.md) - serialize/deserialize a non-derived
+  class
+- [**NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT**](nlohmann_define_type_non_intrusive.md) - serialize/deserialize a
+  non-derived class; uses default values
+- [**NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_ONLY_SERIALIZE**](nlohmann_define_type_non_intrusive.md) - serialize a
+  non-derived class
+
+- [**NLOHMANN_DEFINE_DERIVED_TYPE_INTRUSIVE**](nlohmann_define_derived_type.md) - serialize/deserialize a derived class
+  with private members
+- [**NLOHMANN_DEFINE_DERIVED_TYPE_INTRUSIVE_WITH_DEFAULT**](nlohmann_define_derived_type.md) - serialize/deserialize a
+  derived class with private members; uses default values
+- [**NLOHMANN_DEFINE_DERIVED_TYPE_INTRUSIVE_ONLY_SERIALIZE**](nlohmann_define_derived_type.md) - serialize a derived
+  class with private members
+- [**NLOHMANN_DEFINE_DERIVED_TYPE_NON_INTRUSIVE**](nlohmann_define_derived_type.md) - serialize/deserialize a derived
+  class
+- [**NLOHMANN_DEFINE_DERIVED_TYPE_NON_INTRUSIVE_WITH_DEFAULT**](nlohmann_define_derived_type.md) - serialize/deserialize
+  a derived class; uses default values
+- [**NLOHMANN_DEFINE_DERIVED_TYPE_NON_INTRUSIVE_ONLY_SERIALIZE**](nlohmann_define_derived_type.md) - serialize a derived
+  class

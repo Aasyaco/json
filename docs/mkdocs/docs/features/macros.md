@@ -100,64 +100,10 @@ When defined to `0`, implicit conversions are switched off. By default, implicit
 
 See [full documentation of `JSON_USE_IMPLICIT_CONVERSIONS`](../api/macros/json_use_implicit_conversions.md).
 
-## `NLOHMANN_DEFINE_DERIVED_TYPE_INTRUSIVE(type, base_type, member...)`
-## `NLOHMANN_DEFINE_DERIVED_TYPE_INTRUSIVE_WITH_DEFAULT(type, base_type, member...)`
-## `NLOHMANN_DEFINE_DERIVED_TYPE_INTRUSIVE_ONLY_SERIALIZE(type, base_type, member...)`
-## `NLOHMANN_DEFINE_DERIVED_TYPE_NON_INTRUSIVE(type, base_type, member...)`
-## `NLOHMANN_DEFINE_DERIVED_TYPE_NON_INTRUSIVE_WITH_DEFAULT(type, base_type, member...)`
-## `NLOHMANN_DEFINE_DERIVED_TYPE_NON_INTRUSIVE_ONLY_SERIALIZE(type, base_type, member...)`
+## `NLOHMANN_DEFINE_TYPE_*(...)`, `NLOHMANN_DEFINE_DERIVED_TYPE_*(...)`
 
-## `NLOHMANN_DEFINE_TYPE_INTRUSIVE(type, member...)`
-
-This macro can be used to simplify the serialization/deserialization of types if (1) want to use a JSON object as
-serialization and (2) want to use the member variable names as object keys in that object.
-
-The macro is to be defined inside the class/struct to create code for. Unlike
-[`NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE`](#nlohmann_define_type_non_intrusivetype-member), it can access private members.
-The first parameter is the name of the class/struct, and all remaining parameters name the members.
-
-See [full documentation of `NLOHMANN_DEFINE_TYPE_INTRUSIVE`](../api/macros/nlohmann_define_type_intrusive.md).
-
-## `NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT(type, member...)`
-
-This macro is similar to `NLOHMANN_DEFINE_TYPE_INTRUSIVE`. It will not throw an exception in `from_json()` due to a
-missing value in the JSON object, but can throw due to a mismatched type. The `from_json()` function default constructs
-an object and uses its values as the defaults when calling the [`value`](../api/basic_json/value.md) function.
-
-See [full documentation of `NLOHMANN_DEFINE_TYPE_INTRUSIVE_WITH_DEFAULT`](../api/macros/nlohmann_define_type_intrusive.md).
-
-## `NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE(type, member...)`
-
-This macro is similar to `NLOHMANN_DEFINE_TYPE_INTRUSIVE` except that it defines only the serialization code. This is
-useful when the user type does not have a default constructor and only the serialization is required.
-
-See [full documentation of `NLOHMANN_DEFINE_TYPE_INTRUSIVE_ONLY_SERIALIZE`](../api/macros//nlohmann_define_type_intrusive.md).
-
-## `NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(type, member...)`
-
-This macro can be used to simplify the serialization/deserialization of types if (1) want to use a JSON object as
-serialization and (2) want to use the member variable names as object keys in that object.
-
-The macro is to be defined inside the namespace of the class/struct to create code for. Private members cannot be
-accessed. Use [`NLOHMANN_DEFINE_TYPE_INTRUSIVE`](#nlohmann_define_type_intrusivetype-member) in these scenarios. The
-first parameter is the name of the class/struct, and all remaining parameters name the members.
-
-See [full documentation of `NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE`](../api/macros/nlohmann_define_type_non_intrusive.md).
-
-## `NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(type, member...)`
-
-This macro is similar to `NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE`. It will not throw an exception in `from_json()` due to a
-missing value in the JSON object, but can throw due to a mismatched type. The `from_json()` function default constructs
-an object and uses its values as the defaults when calling the [`value`](../api/basic_json/value.md) function.
-
-See [full documentation of `NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT`](../api/macros/nlohmann_define_type_non_intrusive.md).
-
-## `NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_ONLY_SERIALIZE(type, member...)`
-
-This macro is similar to `NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE` except that it defines only the serialization code. This is
-useful when the user type does not have a default constructor and only the serialization is required.
-
-See [full documentation of `NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_ONLY_SERIALIZE`](../api/macros//nlohmann_define_type_non_intrusive.md).
+The library defines 12 macros to simplify the serialization/deserialization of types. See the page on
+[arbitrary type conversion](arbitrary_types.md#simplify-your-life-with-macros) for a detailed discussion.
 
 ## `NLOHMANN_JSON_SERIALIZE_ENUM(type, ...)`
 

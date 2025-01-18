@@ -32,11 +32,8 @@ The library uses the following mapping from JSON values types to BSON types:
 
 !!! warning "Incomplete mapping"
 
-    The mapping is **incomplete**, since only JSON-objects (and things
-    contained therein) can be serialized to BSON.
-    Also, integers larger than 9223372036854775807 cannot be serialized to BSON,
-    and the keys may not contain U+0000, since they are serialized a
-    zero-terminated c-strings.
+    The mapping is **incomplete**, since only JSON-objects (and things contained therein) can be serialized to BSON.
+    Also, keys may not contain U+0000, since they are serialized a zero-terminated c-strings.
 
 ??? example
 
@@ -82,6 +79,10 @@ The library maps BSON record types to JSON value types as follows:
 
     The mapping is **incomplete**. The unsupported mappings are indicated in the table above.
 
+!!! note "Handling of BSON type 0x11"
+
+    BSON type 0x11 is used to represent uint64 numbers. This library treats these values purely as uint64 numbers 
+    and does not parse them into date-related formats.
 
 ??? example
 
@@ -94,8 +95,3 @@ The library maps BSON record types to JSON value types as follows:
     ```json
     --8<-- "examples/from_bson.output"
     ```
-
-!!! note "Handling of BSON type 0x11"
-
-    BSON type 0x11 is used to represent uint64 numbers. This library treats these values purely as uint64 numbers 
-    and does not parse them into date-related formats.

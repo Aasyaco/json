@@ -98,7 +98,7 @@ if (JSON_Diagnostics)
 endif()
 
 if (JSON_Diagnostic_Positions)
-    message(STATUS "Diagnostic positions enabled")
+    message(STATUS "Diagnostic positions enabled (JSON_DIAGNOSTIC_POSITIONS=1)")
 endif()
 
 if (NOT JSON_GlobalUDLs)
