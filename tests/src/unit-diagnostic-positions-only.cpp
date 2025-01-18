@@ -8,6 +8,11 @@
 
 #include "doctest_compatibility.h"
 
+#ifdef JSON_DIAGNOSTICS
+    #undef JSON_DIAGNOSTICS
+#endif
+
+#define JSON_DIAGNOSTICS 0
 #define JSON_DIAGNOSTIC_POSITIONS 1
 #include <nlohmann/json.hpp>
 
