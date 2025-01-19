@@ -203,11 +203,15 @@ TEST_CASE("JSON pointers")
             // escaped access
             CHECK(j[json::json_pointer("/a~1b")] == j["a/b"]);
             CHECK(j[json::json_pointer("/m~0n")] == j["m~n"]);
-
+#if JSON_DIAGNOSTIC_POSITIONS
+            // unescaped access
+            CHECK_THROWS_WITH_AS(j.at(json::json_pointer("/a/b")),
+                                 "[json.exception.out_of_range.403] (bytes 13-297) key 'a' not found", json::out_of_range&);
+#else
             // unescaped access
             CHECK_THROWS_WITH_AS(j.at(json::json_pointer("/a/b")),
                                  "[json.exception.out_of_range.403] key 'a' not found", json::out_of_range&);
-
+#endif
             // unresolved access
             const json j_primitive = 1;
             CHECK_THROWS_WITH_AS(j_primitive["/foo"_json_pointer],

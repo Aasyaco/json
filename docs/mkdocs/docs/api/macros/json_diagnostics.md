@@ -70,6 +70,19 @@ When the macro is not defined, the library will define it to its default value.
 
     Now the exception message contains a JSON Pointer `/address/housenumber` that indicates which value has the wrong type.
 
+??? example "Example 3: using only diagnostic positions in exceptions"
+
+    ```cpp
+    --8<-- "examples/diagnostic_positions_exception.cpp"
+    ```
+    
+    Output:
+
+    ```
+    --8<-- "examples/diagnostic_positions_exception.output"
+    ```    
+        The output shows the exception with start/end positions only.
+        
 ## Version history
 
 - Added in version 3.10.0.

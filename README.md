@@ -6,7 +6,7 @@
 [![Windows](https://github.com/nlohmann/json/workflows/Windows/badge.svg)](https://github.com/nlohmann/json/actions?query=workflow%3AWindows)
 [![Coverage Status](https://coveralls.io/repos/github/nlohmann/json/badge.svg?branch=develop)](https://coveralls.io/github/nlohmann/json?branch=develop)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/5550/badge.svg)](https://scan.coverity.com/projects/nlohmann-json)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/e0d1a9d5d6fd46fcb655c4cb930bb3e8)](https://www.codacy.com/gh/nlohmann/json/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=nlohmann/json&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/e0d1a9d5d6fd46fcb655c4cb930bb3e8)](https://app.codacy.com/gh/nlohmann/json/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![Cirrus CI](https://api.cirrus-ci.com/github/nlohmann/json.svg)](https://cirrus-ci.com/github/nlohmann/json)
 [![Fuzzing Status](https://oss-fuzz-build-logs.storage.googleapis.com/badges/json.svg)](https://bugs.chromium.org/p/oss-fuzz/issues/list?sort=-opened&can=1&q=proj:json)
 [![Try online](https://img.shields.io/badge/try-online-blue.svg)](https://wandbox.org/permlink/1mp10JbaANo6FUc7)
@@ -61,7 +61,7 @@ There are myriads of [JSON](https://json.org) libraries out there, and each may 
 
 - **Trivial integration**. Our whole code consists of a single header file [`json.hpp`](https://github.com/nlohmann/json/blob/develop/single_include/nlohmann/json.hpp). That's it. No library, no subproject, no dependencies, no complex build system. The class is written in vanilla C++11. All in all, everything should require no adjustment of your compiler flags or project settings. The library is also included in all popular [package managers](https://json.nlohmann.me/integration/package_managers/).
 
-- **Serious testing**. Our code is heavily [unit-tested](https://github.com/nlohmann/json/tree/develop/tests/src) and covers [100%](https://coveralls.io/r/nlohmann/json) of the code, including all exceptional behavior. Furthermore, we checked with [Valgrind](https://valgrind.org) and the [Clang Sanitizers](https://clang.llvm.org/docs/index.html) that there are no memory leaks. [Google OSS-Fuzz](https://github.com/google/oss-fuzz/tree/master/projects/json) additionally runs fuzz tests against all parsers 24/7, effectively executing billions of tests so far. To maintain high quality, the project is following the [Core Infrastructure Initiative (CII) best practices](https://bestpractices.coreinfrastructure.org/projects/289). See the [quality assurance](https://json.nlohmann.me/integration/community/quality_assurance) overview documentation.
+- **Serious testing**. Our code is heavily [unit-tested](https://github.com/nlohmann/json/tree/develop/tests/src) and covers [100%](https://coveralls.io/r/nlohmann/json) of the code, including all exceptional behavior. Furthermore, we checked with [Valgrind](https://valgrind.org) and the [Clang Sanitizers](https://clang.llvm.org/docs/index.html) that there are no memory leaks. [Google OSS-Fuzz](https://github.com/google/oss-fuzz/tree/master/projects/json) additionally runs fuzz tests against all parsers 24/7, effectively executing billions of tests so far. To maintain high quality, the project is following the [Core Infrastructure Initiative (CII) best practices](https://bestpractices.coreinfrastructure.org/projects/289). See the [quality assurance](https://json.nlohmann.me/community/quality_assurance) overview documentation.
 
 Other aspects were not so important to us:
 
@@ -101,7 +101,7 @@ Thanks everyone!
 
 :question: If you have a **question**, please check if it is already answered in the [**FAQ**](https://json.nlohmann.me/home/faq/) or the [**Q&A**](https://github.com/nlohmann/json/discussions/categories/q-a) section. If not, please [**ask a new question**](https://github.com/nlohmann/json/discussions/new) there.
 
-:books: If you want to **learn more** about how to use the library, check out the rest of the [**README**](#examples), have a look at [**code examples**](https://github.com/nlohmann/json/tree/develop/docs/examples), or browse through the [**help pages**](https://json.nlohmann.me).
+:books: If you want to **learn more** about how to use the library, check out the rest of the [**README**](#examples), have a look at [**code examples**](https://github.com/nlohmann/json/tree/develop/docs/mkdocs/docs/examples), or browse through the [**help pages**](https://json.nlohmann.me).
 
 :construction: If you want to understand the **API** better, check out the [**API Reference**](https://json.nlohmann.me/api/basic_json/) or have a look at the [quick reference](#quick-reference) below.
 
@@ -139,7 +139,7 @@ Here are some examples to give you an idea how to use the class.
 Beside the examples below, you may want to:
 
 → Check the [documentation](https://json.nlohmann.me/)\
-→ Browse the [standalone example files](https://github.com/nlohmann/json/tree/develop/docs/examples)\
+→ Browse the [standalone example files](https://github.com/nlohmann/json/tree/develop/docs/mkdocs/docs/examples)\
 → Read the full [API Documentation](https://json.nlohmann.me/api/basic_json/) with self-contained examples for every function
 
 ### Read JSON from a file
@@ -1289,20 +1289,20 @@ endif()
 
 Use your favorite [**package manager**](https://json.nlohmann.me/integration/package_managers/) to use the library.
 
-- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/cleanup/docs/mkdocs/docs/images/package_managers/homebrew.svg" height="20">&nbsp;[**Homebrew**](https://json.nlohmann.me/integration/package_managers/#homebrew) `nlohmann-json`
-- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/cleanup/docs/mkdocs/docs/images/package_managers/meson.svg" height="20">&nbsp;[**Meson**](https://json.nlohmann.me/integration/package_managers/#meson) `nlohmann_json`
-- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/cleanup/docs/mkdocs/docs/images/package_managers/bazel.svg" height="20">&nbsp;[**Bazel**](https://json.nlohmann.me/integration/package_managers/#bazel) `nlohmann_json`
-- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/cleanup/docs/mkdocs/docs/images/package_managers/conan.svg" height="20">&nbsp;[**Conan**](https://json.nlohmann.me/integration/package_managers/#conan) `nlohmann_json`
-- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/cleanup/docs/mkdocs/docs/images/package_managers/spack.svg" height="20">&nbsp;[**Spack**](https://json.nlohmann.me/integration/package_managers/#spack) `nlohmann-json`
+- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/develop/docs/mkdocs/docs/images/package_managers/homebrew.svg" height="20">&nbsp;[**Homebrew**](https://json.nlohmann.me/integration/package_managers/#homebrew) `nlohmann-json`
+- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/develop/docs/mkdocs/docs/images/package_managers/meson.svg" height="20">&nbsp;[**Meson**](https://json.nlohmann.me/integration/package_managers/#meson) `nlohmann_json`
+- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/develop/docs/mkdocs/docs/images/package_managers/bazel.svg" height="20">&nbsp;[**Bazel**](https://json.nlohmann.me/integration/package_managers/#bazel) `nlohmann_json`
+- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/develop/docs/mkdocs/docs/images/package_managers/conan.svg" height="20">&nbsp;[**Conan**](https://json.nlohmann.me/integration/package_managers/#conan) `nlohmann_json`
+- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/develop/docs/mkdocs/docs/images/package_managers/spack.svg" height="20">&nbsp;[**Spack**](https://json.nlohmann.me/integration/package_managers/#spack) `nlohmann-json`
 - [**Hunter**](https://json.nlohmann.me/integration/package_managers/#hunter) `nlohmann_json`
-- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/cleanup/docs/mkdocs/docs/images/package_managers/vcpkg.png" height="20">&nbsp;[**vcpkg**](https://json.nlohmann.me/integration/package_managers/#vcpkg) `nlohmann-json`
+- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/develop/docs/mkdocs/docs/images/package_managers/vcpkg.png" height="20">&nbsp;[**vcpkg**](https://json.nlohmann.me/integration/package_managers/#vcpkg) `nlohmann-json`
 - [**cget**](https://json.nlohmann.me/integration/package_managers/#cget) `nlohmann/json`
-- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/cleanup/docs/mkdocs/docs/images/package_managers/swift.svg" height="20">&nbsp;[**Swift Package Manager**](https://json.nlohmann.me/integration/package_managers/#swift-package-manager) `nlohmann/json`
-- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/cleanup/docs/mkdocs/docs/images/package_managers/nuget.svg" height="20">&nbsp;[**Nuget**](https://json.nlohmann.me/integration/package_managers/#nuget) `nlohmann.json`
-- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/cleanup/docs/mkdocs/docs/images/package_managers/conda.svg" height="20">&nbsp;[**Conda**](https://json.nlohmann.me/integration/package_managers/#conda) `nlohmann_json`
-- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/cleanup/docs/mkdocs/docs/images/package_managers/macports.svg" height="20">&nbsp;[**MacPorts**](https://json.nlohmann.me/integration/package_managers/#macports) `nlohmann-json`
-- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/cleanup/docs/mkdocs/docs/images/package_managers/CPM.png" height="20">&nbsp;[**cpm.cmake**](https://json.nlohmann.me/integration/package_managers/#cpmcmake) `gh:nlohmann/json`
-- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/cleanup/docs/mkdocs/docs/images/package_managers/xmake.svg" height="20">&nbsp;[**xmake**](https://json.nlohmann.me/integration/package_managers/#xmake) `nlohmann_json`
+- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/develop/docs/mkdocs/docs/images/package_managers/swift.svg" height="20">&nbsp;[**Swift Package Manager**](https://json.nlohmann.me/integration/package_managers/#swift-package-manager) `nlohmann/json`
+- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/develop/docs/mkdocs/docs/images/package_managers/nuget.svg" height="20">&nbsp;[**Nuget**](https://json.nlohmann.me/integration/package_managers/#nuget) `nlohmann.json`
+- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/develop/docs/mkdocs/docs/images/package_managers/conda.svg" height="20">&nbsp;[**Conda**](https://json.nlohmann.me/integration/package_managers/#conda) `nlohmann_json`
+- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/develop/docs/mkdocs/docs/images/package_managers/macports.svg" height="20">&nbsp;[**MacPorts**](https://json.nlohmann.me/integration/package_managers/#macports) `nlohmann-json`
+- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/develop/docs/mkdocs/docs/images/package_managers/CPM.png" height="20">&nbsp;[**cpm.cmake**](https://json.nlohmann.me/integration/package_managers/#cpmcmake) `gh:nlohmann/json`
+- <img src="https://raw.githubusercontent.com/nlohmann/json/refs/heads/develop/docs/mkdocs/docs/images/package_managers/xmake.svg" height="20">&nbsp;[**xmake**](https://json.nlohmann.me/integration/package_managers/#xmake) `nlohmann_json`
 
 The library is part of many package managers. See the [**documentation**](https://json.nlohmann.me/integration/package_managers/) for detailed descriptions and examples.
 
@@ -1477,7 +1477,7 @@ I deeply appreciate the help of the following people.
 115. [Matthias Möller](https://github.com/TinyTinni) removed the dependency from `std::stringstream`.
 116. [agrianius](https://github.com/agrianius) added code to use alternative string implementations.
 117. [Daniel599](https://github.com/Daniel599) allowed to use more algorithms with the `items()` function.
-118. [Julius Rakow](https://github.com/jrakow) fixed the Meson include directory and fixed the links to [cppreference.com](cppreference.com).
+118. [Julius Rakow](https://github.com/jrakow) fixed the Meson include directory and fixed the links to [cppreference.com](https://cppreference.com).
 119. [Sonu Lohani](https://github.com/sonulohani) fixed the compilation with MSVC 2015 in debug mode.
 120. [grembo](https://github.com/grembo) fixed the test suite and re-enabled several test cases.
 121. [Hyeon Kim](https://github.com/simnalamburt) introduced the macro `JSON_INTERNAL_CATCH` to control the exception handling inside the library.
@@ -1719,7 +1719,7 @@ The library itself consists of a single header file licensed under the MIT licen
 - [**Artistic Style**](http://astyle.sourceforge.net) for automatic source code indentation
 - [**Clang**](https://clang.llvm.org) for compilation with code sanitizers
 - [**CMake**](https://cmake.org) for build automation
-- [**Codacy**](https://www.codacy.com) for further [code analysis](https://www.codacy.com/app/nlohmann/json)
+- [**Codacy**](https://www.codacy.com) for further [code analysis](https://app.codacy.com/gh/nlohmann/json/dashboard)
 - [**Coveralls**](https://coveralls.io) to measure [code coverage](https://coveralls.io/github/nlohmann/json)
 - [**Coverity Scan**](https://scan.coverity.com) for [static analysis](https://scan.coverity.com/projects/nlohmann-json)
 - [**cppcheck**](http://cppcheck.sourceforge.net) for static analysis
@@ -1727,7 +1727,7 @@ The library itself consists of a single header file licensed under the MIT licen
 - [**GitHub Changelog Generator**](https://github.com/skywinder/github-changelog-generator) to generate the [ChangeLog](https://github.com/nlohmann/json/blob/develop/ChangeLog.md)
 - [**Google Benchmark**](https://github.com/google/benchmark) to implement the benchmarks
 - [**Hedley**](https://nemequ.github.io/hedley/) to avoid re-inventing several compiler-agnostic feature macros
-- [**lcov**](http://ltp.sourceforge.net/coverage/lcov.php) to process coverage information and create an HTML view
+- [**lcov**](https://github.com/linux-test-project/lcov) to process coverage information and create an HTML view
 - [**libFuzzer**](https://llvm.org/docs/LibFuzzer.html) to implement fuzz testing for OSS-Fuzz
 - [**Material for MkDocs**](https://squidfunk.github.io/mkdocs-material/) for the style of the documentation site
 - [**MkDocs**](https://www.mkdocs.org) for the documentation site
@@ -1825,4 +1825,4 @@ Some tests change the installed files and hence make the whole process not repro
 
 Note you need to call `cmake -LE "not_reproducible|git_required"` to exclude both labels. See [issue #2596](https://github.com/nlohmann/json/issues/2596) for more information.
 
-As Intel compilers use unsafe floating point optimization by default, the unit tests may fail. Use flag [`/fp:precise`](https://software.intel.com/content/www/us/en/develop/documentation/cpp-compiler-developer-guide-and-reference/top/compiler-reference/compiler-options/compiler-option-details/floating-point-options/fp-model-fp.html) then.
+As Intel compilers use unsafe floating point optimization by default, the unit tests may fail. Use flag [`/fp:precise`](https://www.intel.com/content/www/us/en/docs/cpp-compiler/developer-guide-reference/2021-8/fp-model-fp.html) then.

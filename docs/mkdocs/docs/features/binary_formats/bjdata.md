@@ -164,30 +164,30 @@ The library uses the following mapping from JSON values types to BJData types ac
 
 The library maps BJData types to JSON value types as follows:
 
-| BJData type | JSON value type                         | marker |
-|-------------|-----------------------------------------|--------|
-| no-op       | *no value, next value is read*          | `N`    |
-| null        | `null`                                  | `Z`    |
-| false       | `false`                                 | `F`    |
-| true        | `true`                                  | `T`    |
-| float16     | number_float                            | `h`    |
-| float32     | number_float                            | `d`    |
-| float64     | number_float                            | `D`    |
-| uint8       | number_unsigned                         | `U`    |
-| int8        | number_integer                          | `i`    |
-| uint16      | number_unsigned                         | `u`    |
-| int16       | number_integer                          | `I`    |
-| uint32      | number_unsigned                         | `m`    |
-| int32       | number_integer                          | `l`    |
-| uint64      | number_unsigned                         | `M`    |
-| int64       | number_integer                          | `L`    |
-| byte        | number_unsigned                         | `B`    |
-| string      | string                                  | `S`    |
-| char        | string                                  | `C`    |
-| array       | array (optimized values are supported)  | `[`    |
-| ND-array    | object (in JData annotated array format)|`[$.#[.`|
-| object      | object (optimized values are supported) | `{`    |
-| binary      | binary (strongly-typed byte array)      | `[$B`  |
+| BJData type | JSON value type                          | marker   |
+|-------------|------------------------------------------|----------|
+| no-op       | *no value, next value is read*           | `N`      |
+| null        | `null`                                   | `Z`      |
+| false       | `false`                                  | `F`      |
+| true        | `true`                                   | `T`      |
+| float16     | number_float                             | `h`      |
+| float32     | number_float                             | `d`      |
+| float64     | number_float                             | `D`      |
+| uint8       | number_unsigned                          | `U`      |
+| int8        | number_integer                           | `i`      |
+| uint16      | number_unsigned                          | `u`      |
+| int16       | number_integer                           | `I`      |
+| uint32      | number_unsigned                          | `m`      |
+| int32       | number_integer                           | `l`      |
+| uint64      | number_unsigned                          | `M`      |
+| int64       | number_integer                           | `L`      |
+| byte        | number_unsigned                          | `B`      |
+| string      | string                                   | `S`      |
+| char        | string                                   | `C`      |
+| array       | array (optimized values are supported)   | `[`      |
+| ND-array    | object (in JData annotated array format) | `[$.#[.` |
+| object      | object (optimized values are supported)  | `{`      |
+| binary      | binary (strongly-typed byte array)       | `[$B`    |
 
 !!! success "Complete mapping"
 

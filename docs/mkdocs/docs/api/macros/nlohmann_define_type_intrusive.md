@@ -40,8 +40,10 @@ Summary:
 The macros add two friend functions to the class which take care of the serialization and deserialization:
 
 ```cpp
-friend void to_json(nlohmann::json&, const type&);
-friend void from_json(const nlohmann::json&, type&); // except (3)
+template<typename BasicJsonType>
+friend void to_json(BasicJsonType&, const type&);
+template<typename BasicJsonType>
+friend void from_json(const BasicJsonType&, type&); // except (3)
 ```
 
 See examples below for the concrete generated code.
@@ -60,8 +62,6 @@ See examples below for the concrete generated code.
 
     - The current implementation is limited to at most 64 member variables. If you want to serialize/deserialize types
       with more than 64 member variables, you need to define the `to_json`/`from_json` functions manually.
-    - The macros only work for the [`nlohmann::json`](../json.md) type; other specializations such as
-      [`nlohmann::ordered_json`](../ordered_json.md) are currently unsupported.
 
 ## Examples
 
@@ -90,7 +90,7 @@ See examples below for the concrete generated code.
 
     The macro is equivalent to:
 
-    ```cpp hl_lines="22 23 24 25 26 27 28 29 30 31 32 33 34"
+    ```cpp hl_lines="22 23 24 25 26 27 28 29 30 31 32 33 34 35 36"
     --8<-- "examples/nlohmann_define_type_intrusive_explicit.cpp"
     ```
 
@@ -118,7 +118,7 @@ See examples below for the concrete generated code.
 
     The macro is equivalent to:
 
-    ```cpp hl_lines="22 23 24 25 26 27 28 29 30 31 32 33 34 35"
+    ```cpp hl_lines="22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37"
     --8<-- "examples/nlohmann_define_type_intrusive_with_default_explicit.cpp"
     ```
 
@@ -147,7 +147,7 @@ See examples below for the concrete generated code.
 
     The macro is equivalent to:
 
-    ```cpp hl_lines="22 22 23 24 25 26 27"
+    ```cpp hl_lines="22 22 23 24 25 26 27 28"
     --8<-- "examples/nlohmann_define_type_intrusive_only_serialize_explicit.cpp"
     ```
 

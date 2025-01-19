@@ -13,7 +13,8 @@ struct person
     int age;
 };
 
-void to_json(nlohmann::json& nlohmann_json_j, const person& nlohmann_json_t)
+template<typename BasicJsonType>
+void to_json(BasicJsonType& nlohmann_json_j, const person& nlohmann_json_t)
 {
     nlohmann_json_j["name"] = nlohmann_json_t.name;
     nlohmann_json_j["address"] = nlohmann_json_t.address;

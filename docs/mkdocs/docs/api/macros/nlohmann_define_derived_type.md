@@ -64,21 +64,26 @@ Summary:
 Macros 1 and 2 add two friend functions to the class which take care of the serialization and deserialization:
 
 ```cpp
-friend void to_json(nlohmann::json&, const type&);
-friend void from_json(const nlohmann::json&, type&);
+template<typename BasicJsonType>
+friend void to_json(BasicJsonType&, const type&);
+template<typename BasicJsonType>
+friend void from_json(const BasicJsonType&, type&);
 ```
 
 Macros 4 and 5 add two functions to the namespace which take care of the serialization and deserialization:
 
 ```cpp
-void to_json(nlohmann::json&, const type&);
-void from_json(const nlohmann::json&, type&);
+template<typename BasicJsonType>
+void to_json(BasicJsonType&, const type&);
+template<typename BasicJsonType>
+void from_json(const BasicJsonType&, type&);
 ```
 
 Macros 3 and 6 add one function to the namespace which take care of the serialization only:
 
 ```cpp
-void to_json(nlohmann::json&, const type&);
+template<typename BasicJsonType>
+void to_json(BasicJsonType&, const type&);
 ```
 
 In first two cases, they call the `to_json`/`from_json` functions of the base type
@@ -88,12 +93,14 @@ before serializing/deserializing the members of the derived type:
 class A { /* ... */ };
 class B : public A { /* ... */ };
 
-void to_json(nlohmann::json& j, const B& b) {
+template<typename BasicJsonType>
+void to_json(BasicJsonType& j, const B& b) {
     nlohmann::to_json(j, static_cast<const A&>(b));
     // ...
 }
 
-void from_json(const nlohmann::json& j, B& b) {
+template<typename BasicJsonType>
+void from_json(const BasicJsonType& j, B& b) {
     nlohmann::from_json(j, static_cast<A&>(b));
     // ...
 }
@@ -105,7 +112,8 @@ In the third case, only `to_json` will be called:
 class A { /* ... */ };
 class B : public A { /* ... */ };
 
-void to_json(nlohmann::json& j, const B& b) {
+template<typename BasicJsonType>
+void to_json(BasicJsonType& j, const B& b) {
     nlohmann::to_json(j, static_cast<const A&>(b));
     // ...
 }

@@ -19,14 +19,16 @@ class person
         : name(std::move(name_)), address(std::move(address_)), age(age_)
     {}
 
-    friend void to_json(nlohmann::json& nlohmann_json_j, const person& nlohmann_json_t)
+    template<typename BasicJsonType>
+    friend void to_json(BasicJsonType& nlohmann_json_j, const person& nlohmann_json_t)
     {
         nlohmann_json_j["name"] = nlohmann_json_t.name;
         nlohmann_json_j["address"] = nlohmann_json_t.address;
         nlohmann_json_j["age"] = nlohmann_json_t.age;
     }
 
-    friend void from_json(const nlohmann::json& nlohmann_json_j, person& nlohmann_json_t)
+    template<typename BasicJsonType>
+    friend void from_json(const BasicJsonType& nlohmann_json_j, person& nlohmann_json_t)
     {
         nlohmann_json_t.name = nlohmann_json_j.at("name");
         nlohmann_json_t.address = nlohmann_json_j.at("address");
