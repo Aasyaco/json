@@ -377,6 +377,17 @@ inline for_3333::for_3333(const json& j)
     : for_3333(j.value("x", 0), j.value("y", 0))
 {}
 
+/////////////////////////////////////////////////////////////////////
+// for #3830
+/////////////////////////////////////////////////////////////////////
+
+struct Example_3830
+{
+    int bla;
+};
+
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(Example_3830, bla);
+
 TEST_CASE("regression tests 2")
 {
     SECTION("issue #1001 - Fix memory leak during parser callback")
@@ -1003,6 +1014,23 @@ TEST_CASE("regression tests 2")
 
         CHECK(p.x == 1);
         CHECK(p.y == 2);
+    }
+
+    SECTION("issue #3810 - ordered_json doesn't support construction from C array of custom type")
+    {
+        Example_3830 states[45];
+
+        // This works:
+        nlohmann::json j;
+        j["test"] = states;
+        CHECK(j["test"].dump() == "[{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0}]");
+
+        // This doesn't compile:
+        nlohmann::ordered_json oj;
+        oj["test"] = states;
+        CHECK(oj["test"].dump() == "[{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0},{\"bla\":0}]");
+
+        CHECK(j == oj);
     }
 }
 
