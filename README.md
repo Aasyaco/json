@@ -1767,7 +1767,7 @@ However, you can set set parameter `ignore_comments` to true in the `parse` func
 
 ### Trailing commas
 
-Trailing commas in arrays and objects are also not part of the [JSON specification](https://tools.ietf.org/html/rfc8259), and this library does not support it by default.
+The JSON specification does not allow trailing commas in arrays and objects, and hence this library is treating them as parsing errors by default.
 
 Like comments, you can set parameter `ignore_trailing_commas` to true in the `parse` function to ignore trailing commas in arrays and objects. Note that a single comma as the only content of the array or object (`[,]` or `{,}`) is not allowed, and multiple trailing commas (`[1,,]`) are not allowed either.
 

@@ -59,7 +59,7 @@ static basic_json parse(IteratorType first, IteratorType last,
     (`#!cpp false`); (optional, `#!cpp false` by default)
 
 `ignore_trailing_commas` (in)
-:   whether trailing commas in arrays or objects should be allowed (`#!cpp true`) or yield a parse error
+:   whether trailing commas in arrays or objects should be ignored and treated like whitespace (`#!cpp true`) or yield a parse error
     (`#!cpp false`); (optional, `#!cpp false` by default)
 
 `first` (in)

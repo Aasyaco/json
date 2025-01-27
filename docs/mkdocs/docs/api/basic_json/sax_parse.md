@@ -68,7 +68,7 @@ The SAX event lister must follow the interface of [`json_sax`](../json_sax/index
     (`#!cpp false`); (optional, `#!cpp false` by default)
 
 `ignore_trailing_commas` (in)
-:   whether trailing commas in arrays or objects should be allowed (`#!cpp true`) or yield a parse error
+:   whether trailing commas in arrays or objects should be ignored and treated like whitespace (`#!cpp true`) or yield a parse error
     (`#!cpp false`); (optional, `#!cpp false` by default)
 
 `first` (in)
