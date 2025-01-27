@@ -13,7 +13,7 @@ This library does not support comments *by default*. It does so for three reason
 
 However, you can set parameter `ignore_comments` to `#!cpp true` in the [`parse`](../api/basic_json/parse.md) function to ignore `//` or `/* */` comments. Comments will then be treated as whitespace.
 
-For more information, see [JWCC](https://nigeltao.github.io/blog/2021/json-with-commas-comments.html) (JSON With Commas and Comments).
+For more information, see [JSON With Commas and Comments (JWCC)](https://nigeltao.github.io/blog/2021/json-with-commas-comments.html).
 
 !!! example
 

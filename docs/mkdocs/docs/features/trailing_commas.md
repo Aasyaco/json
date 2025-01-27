@@ -6,7 +6,7 @@ You can set parameter `ignore_trailing_commas` to `#!cpp true` in the [`parse`](
 
 This library does not add trailing commas when serializing JSON data.
 
-For more information, see [JWCC](https://nigeltao.github.io/blog/2021/json-with-commas-comments.html) (JSON With Commas and Comments).
+For more information, see [JSON With Commas and Comments (JWCC)](https://nigeltao.github.io/blog/2021/json-with-commas-comments.html).
 
 !!! example
 
