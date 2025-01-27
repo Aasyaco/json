@@ -1,6 +1,6 @@
 # Trailing Commas
 
-Like comments, this library does not support trailing commas in arrays and objects *by default*.
+Like [comments](comments.md), this library does not support trailing commas in arrays and objects *by default*.
 
 You can set parameter `ignore_trailing_commas` to `#!cpp true` in the [`parse`](../api/basic_json/parse.md) function to allow trailing commas in arrays and objects. Note that a single comma as the only content of the array or object (`[,]` or `{,}`) is not allowed, and multiple trailing commas (`[1,,]`) are not allowed either.
 
