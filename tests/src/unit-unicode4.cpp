@@ -74,6 +74,7 @@ void check_utf8dump(bool success_expected, int byte1, int byte2 = -1, int byte3 
     static std::string s_replaced2;
     static std::string s_replaced_ascii;
     static std::string s_replaced2_ascii;
+    static std::string s_kept;
 
     // dumping with ignore/replace must not throw in any case
     s_ignored = j.dump(-1, ' ', false, json::error_handler_t::ignore);
@@ -84,6 +85,7 @@ void check_utf8dump(bool success_expected, int byte1, int byte2 = -1, int byte3 
     s_replaced2 = j2.dump(-1, ' ', false, json::error_handler_t::replace);
     s_replaced_ascii = j.dump(-1, ' ', true, json::error_handler_t::replace);
     s_replaced2_ascii = j2.dump(-1, ' ', true, json::error_handler_t::replace);
+    s_kept = j.dump(-1, ' ', false, json::error_handler_t::keep);
 
     if (success_expected)
     {
@@ -104,6 +106,9 @@ void check_utf8dump(bool success_expected, int byte1, int byte2 = -1, int byte3 
         // check that replace string contains a replacement character
         CHECK(s_replaced.find("\xEF\xBF\xBD") != std::string::npos);
     }
+
+    // check if the string is unchanged (ignoring the quotes) if error_handler_t::keep is used
+    CHECK(json_string == s_kept.substr(1, json_string.size()));
 
     // check that prefix and suffix are preserved
     CHECK(s_ignored2.substr(1, 3) == "abc");

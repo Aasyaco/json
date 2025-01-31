@@ -18750,7 +18750,8 @@ enum class error_handler_t
 {
     strict,  ///< throw a type_error exception in case of invalid UTF-8
     replace, ///< replace invalid UTF-8 sequences with U+FFFD
-    ignore   ///< ignore invalid UTF-8 sequences
+    ignore,  ///< ignore invalid UTF-8 sequences
+    keep     ///< keep invalid UTF-8 sequences
 };
 
 template<typename BasicJsonType>
@@ -19104,6 +19105,13 @@ class serializer
         std::size_t bytes_after_last_accept = 0;
         std::size_t undumped_chars = 0;
 
+        // copy string as-is if error handler is set to keep, and we don't want to ensure ASCII
+        if (error_handler == error_handler_t::keep && !ensure_ascii)
+        {
+            o->write_characters(s.data(), s.size());
+            return;
+        }
+
         for (std::size_t i = 0; i < s.size(); ++i)
         {
             const auto byte = static_cast<std::uint8_t>(s[i]);
@@ -19273,7 +19281,23 @@ class serializer
                             break;
                         }
 
-                        default:            // LCOV_EXCL_LINE
+                        case error_handler_t::keep:
+                        {
+                            // copy undumped chars to string buffer
+                            for (std::size_t j = 0; j < undumped_chars; ++j)
+                            {
+                                string_buffer[bytes++] = s[bytes_after_last_accept + j];
+                            }
+
+                            // add erroneous byte to string buffer
+                            string_buffer[bytes++] = s[i];
+
+                            // continue processing the string
+                            state = UTF8_ACCEPT;
+                            break;
+                        }
+
+                        default:                // LCOV_EXCL_LINE
                             JSON_ASSERT(false); // NOLINT(cert-dcl03-c,hicpp-static-assert,misc-static-assert) LCOV_EXCL_LINE
                     }
                     break;
@@ -19311,6 +19335,20 @@ class serializer
                     JSON_THROW(type_error::create(316, concat("incomplete UTF-8 string; last byte: 0x", hex_bytes(static_cast<std::uint8_t>(s.back() | 0))), nullptr));
                 }
 
+                case error_handler_t::keep:
+                {
+                    // copy undumped chars to string buffer
+                    for (std::size_t j = 0; j < undumped_chars; ++j)
+                    {
+                        string_buffer[bytes++] = s[bytes_after_last_accept + j];
+                    }
+                    undumped_chars = 0;
+
+                    // write all accepted bytes
+                    o->write_characters(string_buffer.data(), bytes);
+                    break;
+                }
+
                 case error_handler_t::ignore:
                 {
                     // write all accepted bytes
@@ -19334,8 +19372,8 @@ class serializer
                     break;
                 }
 
-                default:            // LCOV_EXCL_LINE
-                    JSON_ASSERT(false); // NOLINT(cert-dcl03-c,hicpp-static-assert,misc-static-assert) LCOV_EXCL_LINE
+                default:                    // LCOV_EXCL_LINE
+                    JSON_ASSERT(false);     // NOLINT(cert-dcl03-c,hicpp-static-assert,misc-static-assert) LCOV_EXCL_LINE
             }
         }
     }

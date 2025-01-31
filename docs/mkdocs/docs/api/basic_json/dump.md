@@ -25,10 +25,11 @@ and `ensure_ascii` parameters.
     result consists of ASCII characters only.
 
 `error_handler` (in)
-:   how to react on decoding errors; there are three possible values (see [`error_handler_t`](error_handler_t.md):
-    `strict` (throws and exception in case a decoding error occurs; default), `replace` (replace invalid UTF-8 sequences
-    with U+FFFD), and `ignore` (ignore invalid UTF-8 sequences during serialization; all bytes are copied to the output
-    unchanged)).
+:   how to react on decoding errors; there are four possible values (see [`error_handler_t`](error_handler_t.md)):
+:   - `strict`: throws a [`type_error`](../../home/exceptions.md#type-errors) exception in case a decoding error occurs (this is the default),
+    - `replace`: replace invalid UTF-8 sequences with U+FFFD (� REPLACEMENT CHARACTER),
+    - `ignore`: ignore invalid UTF-8 sequences during serialization (i.e., these bytes are skipped and not copied to the output), and
+    - `keep`: keep invalid UTF-8 sequences during serialization (i.e., all bytes are copied to the output unchanged)
     
 ## Return value
 
@@ -77,3 +78,4 @@ Binary values are serialized as object containing two keys:
 - Indentation character `indent_char`, option `ensure_ascii` and exceptions added in version 3.0.0.
 - Error handlers added in version 3.4.0.
 - Serialization of binary values added in version 3.8.0.
+- Added support for error handler value `keep` in version ???.

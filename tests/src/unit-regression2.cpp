@@ -1004,6 +1004,15 @@ TEST_CASE("regression tests 2")
         CHECK(p.x == 1);
         CHECK(p.y == 2);
     }
+
+    SECTION("issue #4552 - UTF-8 invalid characters are not always ignored when dumping with error_handler_t::ignore")
+    {
+        nlohmann::json node;
+        node["test"] = "test\334\005";
+        CHECK(node.dump(-1, ' ', false, nlohmann::json::error_handler_t::ignore) == "{\"test\":\"test\\u0005\"}");
+        CHECK(node.dump(-1, ' ', false, nlohmann::json::error_handler_t::keep) == "{\"test\":\"test\334\005\"}");
+        CHECK(node.dump(-1, ' ', true, nlohmann::json::error_handler_t::keep) == "{\"test\":\"test\334\005\"}");
+    }
 }
 
 DOCTEST_CLANG_SUPPRESS_WARNING_POP

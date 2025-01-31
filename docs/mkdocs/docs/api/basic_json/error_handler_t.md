@@ -12,13 +12,16 @@ This enumeration is used in the [`dump`](dump.md) function to choose how to trea
 `basic_json` value. Three values are differentiated:
 
 strict
-:   throw a `type_error` exception in case of invalid UTF-8
+:   throw a [`type_error`](../../home/exceptions.md#type-errors) exception in case of invalid UTF-8
 
 replace
 :   replace invalid UTF-8 sequences with U+FFFD (� REPLACEMENT CHARACTER)
 
 ignore
-:   ignore invalid UTF-8 sequences; all bytes are copied to the output unchanged
+:   ignore invalid UTF-8 sequences; these bytes are skipped and not copied to the output
+
+keep
+:   keep invalid UTF-8 sequences; all bytes are copied to the output unchanged
 
 ## Examples
 
@@ -40,3 +43,4 @@ ignore
 ## Version history
 
 - Added in version 3.4.0.
+- Added value `keep` in version ???.
