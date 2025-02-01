@@ -21,12 +21,21 @@ include(test)
 # override standard support
 #############################################################################
 
+# Clang only supports C++14 starting from Clang 3.5 (lesser versions miss std::enable_if_t)
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 3.5)
+    unset(compiler_supports_cpp_14)
+endif()
+
 # Clang only supports C++17 starting from Clang 5.0
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 5.0)
     unset(compiler_supports_cpp_17)
 endif()
 # MSVC 2015 (14.0) does not support C++17
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 19.1)
+    unset(compiler_supports_cpp_17)
+endif()
+# GCC 5 and 6 do claim experimental support for C++17, but do not implement <optional>
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 7.0)
     unset(compiler_supports_cpp_17)
 endif()
 
