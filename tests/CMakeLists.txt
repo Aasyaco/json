@@ -31,7 +31,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_CXX_COMPILER_VERSION VERSIO
     unset(compiler_supports_cpp_17)
 endif()
 # MSVC 2015 (14.0) does not support C++17
-if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 19.1)
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 19.10)
     unset(compiler_supports_cpp_17)
 endif()
 # GCC 5 and 6 do claim experimental support for C++17, but do not implement <optional>
@@ -41,6 +41,10 @@ endif()
 
 # Clang C++20 support appears insufficient prior to Clang 9.0 (based on CI build failure)
 if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 9.0)
+    unset(compiler_supports_cpp_20)
+endif()
+# MSVC 2017 (15.x) does not support C++20
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC" AND CMAKE_CXX_COMPILER_VERSION VERSION_LESS 19.20)
     unset(compiler_supports_cpp_20)
 endif()
 # GCC started supporting C++20 features in 8.0 but a test for #3070 segfaults prior to 9.0
