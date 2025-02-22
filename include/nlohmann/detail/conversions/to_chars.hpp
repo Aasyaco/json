@@ -250,7 +250,8 @@ boundaries compute_boundaries(FloatType value)
     // Determine w- = m- such that e_(w-) = e_(w+).
     const diyfp w_minus = diyfp::normalize_to(m_minus, w_plus.e);
 
-    return {diyfp::normalize(v), w_minus, w_plus};
+    boundaries result {diyfp::normalize(v), w_minus, w_plus};
+    return result;
 }
 
 // Given normalized diyfp w, Grisu needs to find a (normalized) cached

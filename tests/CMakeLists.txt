@@ -58,6 +58,9 @@ target_compile_options(test_main PUBLIC
     $<$<CXX_COMPILER_ID:MSVC>:/W4 /wd4566 /wd4996>
     # https://github.com/nlohmann/json/issues/1114
     $<$<CXX_COMPILER_ID:MSVC>:/bigobj> $<$<BOOL:${MINGW}>:-Wa,-mbig-obj>
+    # MSVC: Set source and execution character sets to UTF-8
+    $<$<CXX_COMPILER_ID:MSVC>:
+        $<$<VERSION_GREATER_EQUAL:${MSVC_VERSION},1900>:/utf-8;>>
 
     # https://github.com/nlohmann/json/pull/3229
     $<$<CXX_COMPILER_ID:Intel>:-diag-disable=2196>
