@@ -4869,11 +4869,12 @@ void get_arithmetic_value(const BasicJsonType& j, ArithmeticType& val)
             break;
         }
 
+
+        case value_t::boolean:
         case value_t::null:
         case value_t::object:
         case value_t::array:
         case value_t::string:
-        case value_t::boolean:
         case value_t::binary:
         case value_t::discarded:
         default:
@@ -4982,7 +4983,7 @@ inline void from_json(const BasicJsonType& j, std::valarray<T>& l)
 }
 
 template<typename BasicJsonType, typename T, std::size_t N>
-auto from_json(const BasicJsonType& j, T (&arr)[N])  // NOLINT(cppcoreguidelines-avoid-c-arrays,hicpp-avoid-c-arrays,modernize-avoid-c-arrays)
+auto from_json(const BasicJsonType& j, T(&arr)[N])  // NOLINT(cppcoreguidelines-avoid-c-arrays,hicpp-avoid-c-arrays,modernize-avoid-c-arrays)
 -> decltype(j.template get<T>(), void())
 {
     for (std::size_t i = 0; i < N; ++i)
@@ -5207,8 +5208,11 @@ inline void from_json(const BasicJsonType& j, ArithmeticType& val)
         }
         case value_t::boolean:
         {
-            val = static_cast<ArithmeticType>(*j.template get_ptr<const typename BasicJsonType::boolean_t*>());
-            break;
+            if (std::is_same<ArithmeticType, bool>::value || std::is_same<ArithmeticType, uint8_t>::value)
+            {
+                val = static_cast<ArithmeticType>(*j.template get_ptr<const typename BasicJsonType::boolean_t*>());
+                break;
+            }
         }
 
         case value_t::null:
@@ -5237,8 +5241,8 @@ std::tuple<> from_json_tuple_impl_base(BasicJsonType& /*unused*/, index_sequence
 template < typename BasicJsonType, class A1, class A2 >
 std::pair<A1, A2> from_json_tuple_impl(BasicJsonType&& j, identity_tag<std::pair<A1, A2>> /*unused*/, priority_tag<0> /*unused*/)
 {
-    return {std::forward<BasicJsonType>(j).at(0).template get<A1>(),
-            std::forward<BasicJsonType>(j).at(1).template get<A2>()};
+    return { std::forward<BasicJsonType>(j).at(0).template get<A1>(),
+             std::forward<BasicJsonType>(j).at(1).template get<A2>() };
 }
 
 template<typename BasicJsonType, typename A1, typename A2>
