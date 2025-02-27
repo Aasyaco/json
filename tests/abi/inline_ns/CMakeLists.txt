@@ -10,3 +10,6 @@ target_link_libraries(abi_compat_inline_ns PRIVATE abi_compat_main)
 add_test(
     NAME test-abi_compat_inline_ns
     COMMAND abi_compat_inline_ns ${DOCTEST_TEST_FILTER})
+set_tests_properties(test-abi_compat_inline_ns PROPERTIES
+    LABELS "offline"
+)
