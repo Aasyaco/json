@@ -1306,6 +1306,27 @@ Use your favorite [**package manager**](https://json.nlohmann.me/integration/pac
 
 The library is part of many package managers. See the [**documentation**](https://json.nlohmann.me/integration/package_managers/) for detailed descriptions and examples.
 
+If you are using [PlatformIO](https://platformio.org/) you can add this repo directly to your `platformio.ini` like this:
+
+```ini
+[env:your_env_name]
+lib_deps =
+  nlohmann-json=https://github.com/nlohmann/json.git
+```
+
+or you can include it as a dependency in your `library.json` like this:
+
+```json
+…
+  "dependencies": [
+    {
+      "name": "nlohmann-json",
+      "version": "https://github.com/nlohmann/json.git"
+    }
+  ]
+ …
+```
+
 ### Pkg-config
 
 If you are using bare Makefiles, you can use `pkg-config` to generate the include flags that point to where the library is installed:
