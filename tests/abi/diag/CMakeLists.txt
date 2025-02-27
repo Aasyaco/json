@@ -17,3 +17,6 @@ target_link_libraries(abi_compat_diag PRIVATE
 add_test(
     NAME test-abi_compat_diag
     COMMAND abi_compat_diag ${DOCTEST_TEST_FILTER})
+set_tests_properties(test-abi_compat_diag PROPERTIES
+    LABELS "offline"
+)
