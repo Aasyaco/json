@@ -1658,7 +1658,7 @@ TEST_CASE("JSON to enum mapping")
 }
 
 #ifdef JSON_HAS_CPP_17
-#ifndef JSON_USE_IMPLICIT_CONVERSIONS
+#if !JSON_USE_IMPLICIT_CONVERSIONS
 TEST_CASE("std::optional")
 {
     SECTION("null")
