@@ -261,3 +261,58 @@ TEST_CASE("bad my_allocator::construct")
         j["test"].push_back("should not leak");
     }
 }
+
+#if (defined(__cpp_exceptions) || defined(__EXCEPTIONS) || defined(_CPPUNWIND))
+namespace
+{
+thread_local bool should_throw = false;
+
+struct QuotaReached : std::exception {};
+
+template<class T>
+struct allocator_controlled_throw : std::allocator<T>
+{
+    allocator_controlled_throw() = default;
+    template <class U>
+    allocator_controlled_throw(allocator_controlled_throw<U> /*unused*/) {}
+
+    template <class U>
+    struct rebind
+    {
+        using other =  allocator_controlled_throw<U>;
+    };
+
+    T* allocate(size_t n)
+    {
+        if (should_throw)
+        {
+            throw QuotaReached{};
+        }
+        return std::allocator<T>::allocate(n);
+    }
+};
+} // namespace
+
+TEST_CASE("controlled my_allocator::allocate")
+{
+    SECTION("~basic_json tolerant of internal exceptions")
+    {
+        using my_alloc_json = nlohmann::basic_json<std::map,
+              std::vector,
+              std::string,
+              bool,
+              std::int64_t,
+              std::uint64_t,
+              double,
+              allocator_controlled_throw>;
+
+        {
+            auto j = my_alloc_json{1, 2, 3, 4};
+            should_throw = true;
+            // `j` is destroyed, ~basic_json is noexcept
+            // if allocation attempted, exception thrown
+            // exception should be internally handled
+        } // should not std::terminate
+    }
+}
+#endif
