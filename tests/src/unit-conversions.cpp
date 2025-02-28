@@ -1657,6 +1657,72 @@ TEST_CASE("JSON to enum mapping")
     }
 }
 
+enum class cards_strict {kreuz, pik, herz, karo};
+
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays,hicpp-avoid-c-arrays,modernize-avoid-c-arrays) - false positive
+NLOHMANN_JSON_SERIALIZE_ENUM_STRICT(cards_strict,
+{
+    {cards_strict::kreuz, "kreuz"},
+    {cards_strict::pik, "pik"},
+    {cards_strict::pik, "puk"},  // second entry for cards::puk; will not be used
+    {cards_strict::herz, "herz"},
+    {cards_strict::karo, "karo"}
+})
+
+enum TaskStateStrict // NOLINT(cert-int09-c,readability-enum-initial-value)
+{
+    TSS_STOPPED,
+    TSS_RUNNING,
+    TSS_COMPLETED,
+};
+
+// NOLINTNEXTLINE(cppcoreguidelines-avoid-c-arrays,hicpp-avoid-c-arrays,modernize-avoid-c-arrays) - false positive
+NLOHMANN_JSON_SERIALIZE_ENUM_STRICT(TaskStateStrict,
+{
+    {TSS_STOPPED, "stopped"},
+    {TSS_RUNNING, "running"},
+    {TSS_COMPLETED, "completed"},
+})
+
+TEST_CASE("JSON to enum mapping")
+{
+    SECTION("enum class")
+    {
+        // enum -> json
+        CHECK(json(cards_strict::kreuz) == "kreuz");
+        CHECK(json(cards_strict::pik) == "pik");
+        CHECK(json(cards_strict::herz) == "herz");
+        CHECK(json(cards_strict::karo) == "karo");
+
+        // json -> enum
+        CHECK(cards_strict::kreuz == json("kreuz"));
+        CHECK(cards_strict::pik == json("pik"));
+        CHECK(cards_strict::herz == json("herz"));
+        CHECK(cards_strict::karo == json("karo"));
+
+        // invalid json
+        const json j = "foo";
+        CHECK_THROWS_WITH_AS(j.template get<cards_strict>(), "[json.exception.type_error.302] deserialization failed: invalid JSON value \"foo\"", json::type_error);
+    }
+
+    SECTION("traditional enum")
+    {
+        // enum -> json
+        CHECK(json(TSS_STOPPED) == "stopped");
+        CHECK(json(TSS_RUNNING) == "running");
+        CHECK(json(TSS_COMPLETED) == "completed");
+
+        // json -> enum
+        CHECK(TSS_STOPPED == json("stopped"));
+        CHECK(TSS_RUNNING == json("running"));
+        CHECK(TSS_COMPLETED == json("completed"));
+
+        // invalid json
+        const json j = "foo";
+        CHECK_THROWS_WITH_AS(j.template get<TaskStateStrict>(), "[json.exception.type_error.302] deserialization failed: invalid JSON value \"foo\"", json::type_error);
+    }
+}
+
 #ifdef JSON_HAS_CPP_17
 #ifndef JSON_USE_IMPLICIT_CONVERSIONS
 TEST_CASE("std::optional")

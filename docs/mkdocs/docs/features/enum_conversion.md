@@ -59,3 +59,22 @@ Other Important points:
 - If an enum or JSON value is specified more than once in your map, the first matching occurrence from the top of the
   map will be returned when converting to or from JSON.
 - To disable the default serialization of enumerators as integers and force a compiler error instead, see [`JSON_DISABLE_ENUM_SERIALIZATION`](../api/macros/json_disable_enum_serialization.md).
+
+An alternative macro [`NLOHMANN_JSON_SERIALIZE_ENUM_STRICT()` macro](../api/macros/nlohmann_json_serialize_enum.md) can be used when a more strict error handling is preferred, throwing in case of serialization errors instead of defaulting to the first enum value defined in the macro.
+
+## Usage
+```cpp
+// example enum type declaration
+enum TaskState {
+    TS_STOPPED,
+    TS_RUNNING,
+    TS_COMPLETED,
+};
+
+// map TaskState values to JSON as strings
+NLOHMANN_JSON_SERIALIZE_ENUM_STRICT( TaskState, {
+    {TS_STOPPED, "stopped"},
+    {TS_RUNNING, "running"},
+    {TS_COMPLETED, "completed"},
+})
+```

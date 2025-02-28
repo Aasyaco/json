@@ -242,6 +242,63 @@
         e = ((it != std::end(m)) ? it : std::begin(m))->first;                                  \
     }
 
+NLOHMANN_JSON_NAMESPACE_BEGIN
+namespace detail
+{
+template<typename T>
+[[noreturn]] inline void json_throw_from_serialize_macro(T&& exception)
+{
+#if (defined(__cpp_exceptions) || defined(__EXCEPTIONS) || defined(_CPPUNWIND)) && !defined(JSON_NOEXCEPTION)
+    throw std::forward<T>(exception);
+#else
+    // Forward the exception (even if unused) and abort
+    std::forward<T>(exception);
+    std::abort();
+#endif
+}
+} // namespace detail
+NLOHMANN_JSON_NAMESPACE_END
+/*!
+@brief macro to briefly define a mapping between an enum and JSON
+@def NLOHMANN_JSON_SERIALIZE_ENUM_STRICT
+@since version 3.11.4
+*/
+#define NLOHMANN_JSON_SERIALIZE_ENUM_STRICT(ENUM_TYPE, ...)                                            \
+    template<typename BasicJsonType>                                                            \
+    inline void to_json(BasicJsonType& j, const ENUM_TYPE& e)                                   \
+    {                                                                                           \
+        /* NOLINTNEXTLINE(modernize-type-traits) we use C++11 */                                \
+        static_assert(std::is_enum<ENUM_TYPE>::value, #ENUM_TYPE " must be an enum!");          \
+        /* NOLINTNEXTLINE(modernize-avoid-c-arrays) we don't want to depend on <array> */       \
+        static const std::pair<ENUM_TYPE, BasicJsonType> m[] = __VA_ARGS__;                     \
+        auto it = std::find_if(std::begin(m), std::end(m),                                      \
+                               [e](const std::pair<ENUM_TYPE, BasicJsonType>& ej_pair) -> bool  \
+        {                                                                                       \
+            return ej_pair.first == e;                                                          \
+        });                                                                                     \
+        if (it == std::end(m)) { \
+            auto value = static_cast<typename std::underlying_type<ENUM_TYPE>::type>(e); \
+            nlohmann::detail::json_throw_from_serialize_macro(nlohmann::detail::type_error::create(302, nlohmann::detail::concat("serialization failed: enum value ", std::to_string(value), " is out of range"), &j)); \
+        } \
+        j = it->second; \
+    }                                                                                           \
+    template<typename BasicJsonType>                                                            \
+    inline void from_json(const BasicJsonType& j, ENUM_TYPE& e)                                 \
+    {                                                                                           \
+        /* NOLINTNEXTLINE(modernize-type-traits) we use C++11 */                                \
+        static_assert(std::is_enum<ENUM_TYPE>::value, #ENUM_TYPE " must be an enum!");          \
+        /* NOLINTNEXTLINE(modernize-avoid-c-arrays) we don't want to depend on <array> */       \
+        static const std::pair<ENUM_TYPE, BasicJsonType> m[] = __VA_ARGS__;                     \
+        auto it = std::find_if(std::begin(m), std::end(m),                                      \
+                               [&j](const std::pair<ENUM_TYPE, BasicJsonType>& ej_pair) -> bool \
+        {                                                                                       \
+            return ej_pair.second == j;                                                         \
+        });                                                                                     \
+        if (it == std::end(m))            \
+            nlohmann::detail::json_throw_from_serialize_macro(nlohmann::detail::type_error::create(302, nlohmann::detail::concat("deserialization failed: invalid JSON value ", j.dump()), &j)); \
+        e = it->first; \
+    }
+
 // Ugly macros to avoid uglier copy-paste when specializing basic_json. They
 // may be removed in the future once the class is split.
 
